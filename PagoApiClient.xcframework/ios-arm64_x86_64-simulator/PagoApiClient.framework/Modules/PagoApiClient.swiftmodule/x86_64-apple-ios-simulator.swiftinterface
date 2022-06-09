@@ -1,0 +1,3338 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 effective-4.2 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios15.5-simulator -enable-objc-interop -enable-library-evolution -swift-version 4.2 -enforce-exclusivity=checked -O -module-name PagoApiClient
+import Alamofire
+import Alamofire/*.Result*/
+import CoreFoundation
+import CoreTelephony
+import Foundation
+import ObjectMapper
+@_exported import PagoApiClient
+import Security
+import Swift
+import UIKit
+import _Concurrency
+public enum Target {
+  case ro
+  case int
+  public static func == (a: PagoApiClient.Target, b: PagoApiClient.Target) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class PagoConfig : ObjectiveC.NSObject {
+  public var target: PagoApiClient.Target
+  public static var shared: PagoApiClient.PagoConfig
+  public var network: PagoApiClient.BaseNetwork {
+    get
+  }
+  public var device: PagoApiClient.BaseDevice {
+    get
+  }
+  public var legal: PagoApiClient.BaseLegal {
+    get
+  }
+  public var referral: PagoApiClient.BaseReferral {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension PagoApiClient.Webservice {
+  final public func setPin(deviceToken: Swift.String, pin: Swift.String) -> PagoApiClient.Resource<()>
+  final public func decrementRetries(deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+  final public func resetRetries(deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+  final public func getPin(deviceToken: Swift.String) -> PagoApiClient.Resource<PagoApiClient.PinDTO>
+  final public func forgotPin(deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+  final public func resetPin(deviceToken: Swift.String, pin: Swift.String, resetToken: Swift.String) -> PagoApiClient.Resource<()>
+}
+public enum GrantType : Swift.String {
+  case Pago, Facebook, Google, Apple
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct RegisterRequestDTO {
+  public let username: Swift.String
+  public let password: Swift.String?
+  public let firstName: Swift.String
+  public let lastName: Swift.String
+  public let email: Swift.String
+  public var dictValue: [Swift.String : Any] {
+    get
+  }
+  public init(username: Swift.String, password: Swift.String?, firstName: Swift.String, lastName: Swift.String, email: Swift.String)
+}
+public struct PayeeTypeDTO : ObjectMapper.ImmutableMappable {
+  public let name: Swift.String
+  public let displayNameTextId: Swift.String
+  public let headerTextId: Swift.String
+  public let colorCode: Swift.String
+  public let iconUrl: Swift.String?
+  public let iconName: Swift.String
+  public let headerUrl: Swift.String?
+  public let headerImageName: Swift.String
+  public let remoteId: Swift.Int
+  public let index: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct ProviderTopDTO {
+  public let remoteId: Swift.Int64
+  public let order: Swift.Int32
+  public let scannable: Swift.Bool
+  public init(remoteId: Swift.Int64, order: Swift.Int32, scannable: Swift.Bool)
+}
+extension PagoApiClient.ApiClient {
+  public func getONGList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.OngDTO]>) -> ())
+  public func getONGDetails(ongId: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.OngDTO>) -> ())
+  public func createDonation(ongId: Swift.Int, amount: Swift.Double, isAnnon: Swift.Bool = false, completionBlock: @escaping (Alamofire.Result<PagoApiClient.OngPaymentItem>) -> ())
+  public func paymentStatusDonation(offerId: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.SubscriptionStatusDTO>) -> ())
+  public func activateRecurringDonation(ongId: Swift.Int, amount: Swift.Double, cardId: Swift.Int, nextDueDate: Swift.String, isAnnon: Swift.Bool = false, completionBlock: @escaping (Alamofire.Result<PagoApiClient.OngRecurrentPaymentItem>) -> ())
+  public func getCurrentRecurringStatusForONG(ongId: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.OngRecurrentPaymentItem>) -> ())
+  public func deactivateRecurringDonation(ongId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func createWebDonation(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.WebDonationDTO>) -> ())
+  public func getONGpaymentItem(uuid: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.OngDeepLinkPaymentItemDTO>) -> ())
+  public func getRecurringONG(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.OngRecurrentSettings]>) -> ())
+}
+public protocol BaseDevice {
+  var deviceTokenKey: Swift.String { get }
+}
+public struct PosEnrollmentResponseDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let uuid: Swift.String
+  public let posOS: Swift.String
+  public let posBuild: Swift.String
+  public let buildVersion: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct MoneyTransferCampaignAvailableProductDTO : ObjectMapper.ImmutableMappable {
+  public var productId: Swift.Int64
+  public var name: Swift.String
+  public var price: Swift.Double
+  public var nrOfBenefits: Swift.Int
+  public var logoUrl: Swift.String
+  public var productType: Swift.String
+  public var benefits: Swift.String
+  public var weight: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.ApiClient {
+  public func getFeatures(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.FeatureDTO]>) -> ())
+}
+public struct UserProductWCampaignDTO : ObjectMapper.ImmutableMappable {
+  public var userProductId: Swift.Int64
+  public var availabilityStart: Swift.String?
+  public var availabilityEnd: Swift.String?
+  public var expiredDate: Swift.String?
+  public var productCampaign: PagoApiClient.MoneyTransferCampaignProductDTO?
+  public var product: PagoApiClient.MoneyTransferProduct
+  public init(map: ObjectMapper.Map) throws
+}
+extension Swift.Collection {
+  public subscript(safe index: Self.Index) -> Self.Element? {
+    get
+  }
+}
+extension PagoApiClient.ApiClient {
+  public func getAddressByZip(postalCode: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadPostalCodeAddressesDTO>) -> ())
+  public func getAddresses(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PadAddressDTO]>) -> ())
+  public func saveAddress(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadAddressDTO>) -> ())
+  public func getBuildingOptions(completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadBuildingOptionsDTO>) -> ())
+  public func saveBuilding(body: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadBuildingDTO>) -> ())
+  public func updatePAD(padBuildingDTO: PagoApiClient.PadBuildingDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadBuildingDTO>) -> ())
+  public func getPadPolicyInfo(padPolicyInfoReqDTO: PagoApiClient.PadPolicyInfoReqDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadPolicyInfoResDTO>) -> ())
+  public func savePADOffer(offerId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<(PagoApiClient.HouseSaveOfferDTO)>) -> ())
+  public func getPADOffers(houseId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<(PagoApiClient.HouseOffersDTO)>) -> ())
+  public func getHouseDetails(houseId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<(PagoApiClient.PadPropertyDetailsDTO)>) -> ())
+}
+public struct CardResponseDTO : ObjectMapper.ImmutableMappable {
+  public let digits: Swift.String
+  public let order: Swift.String
+  public let remoteId: Swift.Int64
+  public let type: Swift.String
+  public let defaultCard: Swift.Bool
+  public let last4: Swift.String?
+  public let alias: Swift.String?
+  public let cardType: Swift.String?
+  public var threeDSAcsurl: Swift.String?
+  public var threeDSTrxId: Swift.String?
+  public var deviceFingerprintHTML: Swift.String?
+  public var cardStatus: Swift.String
+  public init(digits: Swift.String, orderId: Swift.String, remoteId: Swift.Int64, type: Swift.String, defaultCard: Swift.Bool, last4: Swift.String?, alias: Swift.String?, cardType: Swift.String?, cardStatus: Swift.String?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.ApiClient {
+  public func getReferralCode(completionBlock: @escaping (Alamofire.Result<PagoApiClient.ReferralCodeDTO>) -> ())
+  public func getRefereesStatusList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.RefereeStatusDTO]>) -> ())
+  public func updateRefereeByCode(code: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func remindReferrer(userId: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension Swift.String {
+  public var cleanString: Swift.String {
+    get
+  }
+  public func matches(for regex: Swift.String) -> [Swift.String]
+  public func groupMatches(for regex: Swift.String) -> [[Swift.String]]
+}
+extension PagoApiClient.Webservice {
+  final public func getVisaPromoStats() -> PagoApiClient.Resource<PagoApiClient.VisaPromoStatDTO>
+  final public func getVisaPromoText() -> PagoApiClient.Resource<PagoApiClient.TextDTO>
+}
+public struct VisaPromoStatDTO : ObjectMapper.ImmutableMappable {
+  public let feature: Swift.String?
+  public let invoiceChances: Swift.Int64?
+  public let refererChances: Swift.Int64?
+  public let invoiceChancesMultiplier: Swift.Int64?
+  public let refererChancesMultiplier: Swift.Int64?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct TextDTO : ObjectMapper.ImmutableMappable {
+  public let category: Swift.Int64
+  public let locale: Swift.String
+  public let localeValue: Swift.String
+  public let key: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct AccountStatsDTO : ObjectMapper.ImmutableMappable {
+  public let topUsers: Swift.Int
+  public let categories: PagoApiClient.AccountStatsCategoriesDTO?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct AccountStatsCategoriesDTO : ObjectMapper.ImmutableMappable {
+  public var paidInPagoRecharge: Swift.String?
+  public var paidInPagoDonation: Swift.String?
+  public var paidInPagoRca: Swift.String?
+  public var paidInPagoTax: Swift.String?
+  public var pointsEarned: Swift.String?
+  public var pointsMoneySaved: Swift.String?
+  public var generalPaymentCount: Swift.String?
+  public var generalTimeSaved: Swift.String?
+  public var generalTimeSavedFormatted: Swift.String?
+  public var paidInTimeBillsCount: Swift.String?
+  public var paidInTimeCount: Swift.String?
+  public var paidInTimeTopPayments: Swift.String?
+  public var paidInTimeProvidersCount: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct AccountStatsKeyDTO : ObjectMapper.ImmutableMappable {
+  public let key: Swift.String?
+  public let value: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.ApiClient {
+  public func preAuth(points: Swift.Int, items: [PagoApiClient.PaymentItemDTO], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func preAuth(invoices: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func preAuthCredorax(invoices: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthCredoraxDTO>) -> ())
+  public func preaAuth(reqDto: ObjectMapper.ImmutableMappable, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func preAuth(dto: PagoApiClient.PagoBillPreauthRequestDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func preAuthWithoutPayment(usage: PagoApiClient.CardUsage, paymentProcessor: Swift.String? = nil, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func romcardBackrefCall(urlString: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CardResponseDTO>) -> ())
+  public func continue3ds(id: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CardResponseDTO>) -> ())
+  public func pollBymdOrder(mdOrder: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.SaleResponse>) -> ())
+  public func romcardBackrefCall(urlString: Swift.String, retryCount: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CardResponseDTO>) -> ())
+  public func backrefCallNoResponse(urlString: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func cardInvoiceList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardOtherList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardTransferList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardInsuranceList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardFreemiumList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardDonationList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func cardProductList(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CardResponseDTO]>) -> ())
+  public func freemiumCard(completionBlock: @escaping (Alamofire.Result<[Swift.String : Any]>) -> ())
+  public func setFreemiumCard(cardId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func recurringPayment(dto: PagoApiClient.RecurringPaymentDTO, completionBlock: @escaping (Alamofire.Result<[PagoApiClient.SaleResponse]>) -> ())
+  public func makePayment(item: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<[PagoApiClient.SaleResponse]>) -> ())
+  public func makePaymentMoneyTransfer(body: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.MoneyTransferSaleResponse>) -> ())
+  public func recurringBillPayment(dto: PagoApiClient.RecurringBillsPaymentDTO, completionBlock: @escaping (Alamofire.Result<[PagoApiClient.SaleResponse]>) -> ())
+  public func recurringVignettePayment(dto: PagoApiClient.RecurringVignettePaymentDTO, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func recurringPrepaidPayment(dto: PagoApiClient.RecurringPrepaidPaymentDTO, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func setCardState(cardId: Swift.String, state: PagoApiClient.CardState, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func paymentConfirmation(type: Swift.String, id: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func markAsSeen(bills: [Swift.Int64] = [], prepaidRecharges: [Swift.Int64] = [], vignettes: [Swift.Int64] = [], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func removeCard(cardId: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func changeCard(oldCardId: Swift.String, newCardId: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func markAsPrimary(cardId: Swift.String, cardType: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func resetPendingItems(params: [[Swift.String : Any]], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+public struct ProviderLogoDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.String
+  public let imageUrl: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct RecurringPaymentDTO : ObjectMapper.ImmutableMappable {
+  public let cardId: Swift.String
+  public let points: Swift.Int
+  public let itemList: [Swift.Int]
+  public let itemType: PagoApiClient.PaymentItemType
+  public init(points: Swift.Int, cardId: Swift.String, itemList: [Swift.Int], itemType: PagoApiClient.PaymentItemType)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct InsuranceTravelScopeDTO : ObjectMapper.ImmutableMappable {
+  public let key: Swift.String
+  public let name: Swift.String
+  public let offerers: [PagoApiClient.InsuranceTravelOffererDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func fetchPointsRewards() -> PagoApiClient.Resource<[PagoApiClient.RewardDTO]>
+  final public func fetchPointsAchivments() -> PagoApiClient.Resource<[PagoApiClient.AchievementDTO]>
+  final public func fetchPointsSpendings() -> PagoApiClient.Resource<[PagoApiClient.PointSpendingDTO]>
+  final public func getUnseenPoints() -> PagoApiClient.Resource<PagoApiClient.PointUnseenDTO>
+  final public func markeSeen(ids: [Swift.Int]) -> PagoApiClient.Resource<()>
+  final public func getPointsBySharingActivity(deviceToken: Swift.String, activity: Swift.String) -> PagoApiClient.Resource<()>
+  final public func pointsTermsInformed() -> PagoApiClient.Resource<()>
+}
+public struct RewardDTO : ObjectMapper.ImmutableMappable {
+  public var rewardId: Swift.Int?
+  public var actionKey: Swift.String?
+  public var enabled: Swift.Bool?
+  public var attainable: Swift.Bool?
+  public var title: Swift.String?
+  public var description: Swift.String?
+  public var subtitle: Swift.String?
+  public var imageUrl: Swift.String?
+  public var colorStart: Swift.String?
+  public var colorEnd: Swift.String?
+  public var rewardUniqueActionId: Swift.Int?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct AchievementDTO : ObjectMapper.ImmutableMappable {
+  public var achievementId: Swift.Int?
+  public var rewardId: Swift.Int?
+  public var earnedPoints: Swift.Int?
+  public var earnedDate: Foundation.TimeInterval?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PointSpendingDTO : ObjectMapper.ImmutableMappable {
+  public var spendingId: Swift.Int?
+  public var posUserId: Swift.Int?
+  public var points: Swift.Int?
+  public var saleOrder: Swift.String?
+  public var spentDate: Foundation.TimeInterval?
+  public var payableEntityId: Swift.Int?
+  public var payableEntityType: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PointUnseenDTO : ObjectMapper.ImmutableMappable {
+  public var totalPoints: Swift.Int?
+  public var pointsToExpire: Swift.Int?
+  public var latestAchievements: [PagoApiClient.AchievementDTO]?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct DTOPointsConstants {
+  public static let rewardRewardId: Swift.String
+  public static let rewardActionKey: Swift.String
+  public static let rewardEnabled: Swift.String
+  public static let rewardTitleRo: Swift.String
+  public static let rewardTitleEn: Swift.String
+  public static let rewardImageUrl: Swift.String
+  public static let rewardDescriptionRo: Swift.String
+  public static let rewardDescriptionEn: Swift.String
+  public static let rewardColorStart: Swift.String
+  public static let rewardColorEnd: Swift.String
+  public static let rewardAttainable: Swift.String
+  public static let rewardUniqueActionId: Swift.String
+  public static let achivmentAchievementId: Swift.String
+  public static let achivmentPosUserId: Swift.String
+  public static let achivmentRewardId: Swift.String
+  public static let achivmentEarnedPoints: Swift.String
+  public static let achivmentEarnedDate: Swift.String
+  public static let achivmentSeenDate: Swift.String
+  public static let achivmentAuditId: Swift.String
+  public static let spendingId: Swift.String
+  public static let spendingPosUserId: Swift.String
+  public static let spendingPoints: Swift.String
+  public static let spendingSaleOrder: Swift.String
+  public static let spendingSpentDate: Swift.String
+  public static let spendingPayableEntityId: Swift.String
+  public static let spendingPayableEntityType: Swift.String
+  public static let unseenTotalPoints: Swift.String
+  public static let unseenLatestAchievements: Swift.String
+}
+extension PagoApiClient.ApiClient {
+  public func getUserProfile(completionBlock: @escaping (Alamofire.Result<PagoApiClient.ProfileDTO>) -> ())
+  public func saveUserProfile(dic: [Swift.String : Swift.String], completionBlock: @escaping (Alamofire.Result<Swift.String>) -> ())
+  public func getUserAddresses(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.AddressDTO]>) -> ())
+  public func updateUserAddress(dic: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.AddressDTO>) -> ())
+  public func deleteAddress(addressId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func setDefaultAddress(addressId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func saveCardAlias(cardId: Swift.Int, cardAlias: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CardResponseDTO>) -> ())
+  public func deleteAccount(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getUserSettings(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserSettingsDTO>) -> ())
+  public func getAccountStats(completionBlock: @escaping (Alamofire.Result<PagoApiClient.AccountStatsDTO>) -> ())
+  public func putUserSettings(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserSettingsDTO>) -> ())
+  public func authorizeDevice(pin: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getUserExtraInfo(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.UserExtraInfo]>) -> ())
+  public func saveUserExtraInfo(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+public struct PaymentItemDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let type: PagoApiClient.PaymentItemType
+  public init(id: Swift.Int, type: PagoApiClient.PaymentItemType)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PaymentDetailsDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let amount: Swift.Double
+  public let paidAmount: Swift.Double
+  public let status: Swift.String
+  public let error: Swift.String
+  public let errorCode: Swift.String
+  public let cardId: Swift.Int64
+  public let points: Swift.Int
+  public let paymentTimestamp: Swift.Int64
+  public let autoPayment: Swift.Bool
+  public let paymentEntityType: Swift.String
+  public let payableEntityId: Swift.Int64
+  public let gaming: PagoApiClient.PaymentDetailsGamingDTO?
+  public let invoice: PagoApiClient.PaymentDetailsInvoiceDTO?
+  public let rca: PagoApiClient.PaymentDetailsRCADTO?
+  public let recharge: PagoApiClient.PaymentDetailsRechargeDTO?
+  public let subscription: PagoApiClient.PaymentDetailsSubscriptionDTO?
+  public let travel: PagoApiClient.PaymentDetailsTravelDTO?
+  public let tax: PagoApiClient.PaymentDetailsTaxDTO?
+  public let donation: PagoApiClient.PaymentDetailsDonationDTO?
+  public let transfer: PagoApiClient.MoneyTransferDetailsDTO?
+  public let pad: PagoApiClient.PaymentDetailsPadDTO?
+  public let userProduct: PagoApiClient.UserProductDetailsDTO?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsGamingDTO : ObjectMapper.ImmutableMappable {
+  public let epinGamingVoucherId: Swift.Int64
+  public let gamingVoucher: Swift.String
+  public let gamingProduct: Swift.String
+  public let gamingProvider: Swift.String
+  public let gamingProviderLogo: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsRechargeDTO : ObjectMapper.ImmutableMappable {
+  public let prepayRechargeId: Swift.Int64
+  public let phoneNumber: Swift.String
+  public let prepayOfferName: Swift.String
+  public let operatorName: Swift.String
+  public let operatorLogo: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsPadDTO : ObjectMapper.ImmutableMappable {
+  public let padId: Swift.Int64
+  public let padTitle: Swift.String
+  public let houseName: Swift.String
+  public let houseIcon: Swift.String
+  public let padExpirationDate: Swift.Int64?
+  public let padInsuranceOffererLogo: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct UserProductDetailsDTO : ObjectMapper.ImmutableMappable {
+  public var productId: Swift.Int64
+  public var userProductId: Swift.Int64
+  public var availabilityEnd: Swift.String
+  public var availabilityStart: Swift.String
+  public var benefits: Swift.String
+  public var logoUrl: Swift.String
+  public var name: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct MoneyTransferDetailsDTO : ObjectMapper.ImmutableMappable {
+  public var transferId: Swift.Int64
+  public var amount: Swift.Double
+  public var fee: Swift.Double?
+  public var description: Swift.String?
+  public var gifUrl: Swift.String?
+  public var to: PagoApiClient.TransferParticipantDTO
+  public var from: PagoApiClient.TransferParticipantDTO
+  public var sender: Swift.Bool
+  public var request: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsDonationDTO : ObjectMapper.ImmutableMappable {
+  public let donationId: Swift.Int64
+  public let ngoId: Swift.Int64
+  public let ngoName: Swift.String
+  public let ngoLogoUrl: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsInvoiceDTO : ObjectMapper.ImmutableMappable {
+  public let invoiceId: Swift.Int64
+  public let locationId: Swift.Int64
+  public let providerUri: Swift.String
+  public let providerImgUrl: Swift.String
+  public let locationType: Swift.String
+  public let locationAlias: Swift.String
+  public let isScannedAccount: Swift.Bool
+  public var paidInPago: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsRCADTO : ObjectMapper.ImmutableMappable {
+  public let offerId: Swift.Int64
+  public let carId: Swift.Int64
+  public let personId: Swift.Int64
+  public let legalEntityId: Swift.Int64
+  public let registrationNumber: Swift.String
+  public let insurerName: Swift.String
+  public let insuranceDuration: Swift.Int64
+  public let insuranceEnd: Swift.Int64
+  public let insuranceOffererLogo: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsSubscriptionDTO : ObjectMapper.ImmutableMappable {
+  public let userSubscriptionId: Swift.Int64
+  public let subscriptionId: Swift.Int64
+  public let subscriptionName: Swift.String
+  public let subscriptionLogo: Swift.String
+  public let subscriptionDuration: Swift.Int
+  public let subscriptionEnd: Swift.Int64
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsTaxDTO : ObjectMapper.ImmutableMappable {
+  public let taxOrderNumber: Swift.String
+  public let debtPaymentHistoryId: Swift.Int64
+  public let institutionName: Swift.String
+  public let taxIconUrl: Swift.String
+  public let taxName: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PaymentDetailsTravelDTO : ObjectMapper.ImmutableMappable {
+  public let travelId: Swift.Int64
+  public let travelPersonId: Swift.Int64
+  public let travelInsuranceStart: Swift.Int64
+  public let travelInsuranceEnd: Swift.Int64
+  public let travelOfferName: Swift.String
+  public let travelInsuranceOffererLogo: Swift.String
+  public let travelFirstName: Swift.String
+  public let travelLastName: Swift.String
+  public let travelCountryId: Swift.Int64
+  public let travelCountryName: Swift.String
+  public let travelScope: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.ApiClient {
+  public func getVisaPromoStats(completionBlock: @escaping (Alamofire.Result<PagoApiClient.VisaPromoStatDTO>) -> ())
+  public func getVisaPromoText(completionBlock: @escaping (Alamofire.Result<PagoApiClient.TextDTO>) -> ())
+}
+public struct MoneyTransferCampaignDTO : ObjectMapper.ImmutableMappable {
+  public var productCampaign: PagoApiClient.MoneyTransferCampaignProductDTO?
+  public var availableBenefits: Swift.Int
+  public var availableBenefitsMessage: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct AddressDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int?
+  public var addressName: Swift.String?
+  public var street: Swift.String?
+  public var streetNumber: Swift.String?
+  public var building: Swift.String?
+  public var entrance: Swift.String?
+  public var floor: Swift.String?
+  public var apartment: Swift.String?
+  public var city: Swift.String?
+  public var county: Swift.String?
+  public var postalCode: Swift.String?
+  public var iconId: Swift.String?
+  public var lastModified: Swift.Int?
+  public var createdAt: Swift.Double?
+  public var defaultAddress: Swift.Bool?
+  public var contactPersonName: Swift.String?
+  public var contactPersonPhone: Swift.String?
+  public init(id: Swift.Int?, addressName: Swift.String?, street: Swift.String, streetNumber: Swift.String?, building: Swift.String?, entrance: Swift.String?, floor: Swift.String?, apartment: Swift.String?, city: Swift.String?, county: Swift.String?, postalCode: Swift.String?, iconId: Swift.String?, lastModified: Swift.Int?, createdAt: Swift.Double?, defaultAddress: Swift.Bool?, contactPersonName: Swift.String?, contactPersonPhone: Swift.String?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PagoPreAuthResponseDTO : ObjectMapper.ImmutableMappable {
+  public let nonce: Swift.String
+  public let terminal: Swift.String
+  public let currency: Swift.String
+  public let order: Swift.String
+  public let email: Swift.String
+  public let backref: Swift.String
+  public let desc: Swift.String
+  public let merchName: Swift.String
+  public let merchUrl: Swift.String
+  public let timestamp: Swift.String
+  public let merchant: Swift.String
+  public let trtype: Swift.Int
+  public let pSign: Swift.String
+  public let amount: Swift.String
+  public var recurFreq: Swift.Int?
+  public var recurExp: Swift.String?
+  public var paymentProcessor: Swift.String
+  public var url: Swift.String
+  public var mInfo: Swift.String?
+  public var dom: Swift.String
+  public let keys: PagoApiClient.RomcardPreAuthRequestDTO.Keys.Type
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PagoPreAuthCredoraxDTO : ObjectMapper.ImmutableMappable {
+  public let backref: Swift.String
+  public let paymentProcessor: Swift.String
+  public let url: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public protocol BaseLegal {
+  var tcUrl: PagoApiClient.LegalData { get }
+  var privacyUrl: PagoApiClient.LegalData { get }
+  var pointsUrl: PagoApiClient.LegalData { get }
+  var supportMail: Swift.String { get }
+  var visaPlTerms: PagoApiClient.LegalData { get }
+  var campaignUrl: PagoApiClient.LegalData { get }
+  var mtLegal: PagoApiClient.LegalData { get }
+  var mtCampaignLegal: PagoApiClient.LegalData { get }
+}
+public struct LegalData {
+  public var main: Swift.String
+  public var en: Swift.String
+}
+extension PagoApiClient.Webservice {
+  final public func getInternationalizationText(categoryId: Swift.Int64) -> PagoApiClient.Resource<[PagoApiClient.InternationalizationLabelDTO]>
+}
+public struct InternationalizationLabelDTO : ObjectMapper.ImmutableMappable {
+  public var category: Swift.Int64
+  public var locale: Swift.String
+  public var localeValue: Swift.String
+  public var key: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.PersonDTO {
+  public var name: Swift.String {
+    get
+  }
+}
+public struct OngDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let name: Swift.String
+  public let shortName: Swift.String?
+  public let category: Swift.String
+  public let logoUrl: Swift.String
+  public let motto: Swift.String?
+  public let ongUrl: Swift.String?
+  public let headerUrl: Swift.String?
+  public let fbUrl: Swift.String?
+  public let igUrl: Swift.String?
+  public let twUrl: Swift.String?
+  public let ytUrl: Swift.String?
+  public let liUrl: Swift.String?
+  public let amountGoal: Swift.Double?
+  public var amount: Swift.Double?
+  public var active: Swift.Bool
+  public var edition: Swift.Int64?
+  public var story: PagoApiClient.OngStoryDTO?
+  public var milestones: [PagoApiClient.OngMilestoneDTO]
+  public let donations: [PagoApiClient.OngDonationDTO]?
+  public let projects: [PagoApiClient.OngProjectDTO]?
+  public let blogs: [PagoApiClient.OngBlogDTO]?
+  public init(map: ObjectMapper.Map) throws
+  public init(recurrentSettings: PagoApiClient.OngRecurrentSettings)
+  public func getColorForCategory() -> UIKit.UIColor
+}
+public struct OngMilestoneDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let name: Swift.String
+  public let amount: Swift.Double
+  public let goal: Swift.Double
+  public let desc: Swift.String
+  public let achieved: Swift.Int
+  public let story: PagoApiClient.OngStoryDTO?
+  public let logoUrl: Swift.String?
+  public let orderIndex: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+  public func isAchieved() -> Swift.Bool
+}
+public struct OngDonationDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let amount: Swift.Double
+  public let userId: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngStoryDTO : ObjectMapper.ImmutableMappable {
+  public let title: Swift.String
+  public var storyItems: [PagoApiClient.OngStoryItemDTO]?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngStoryItemDTO : ObjectMapper.ImmutableMappable {
+  public enum StoryType : Swift.String {
+    case text
+    case image
+    case gallery
+    case link
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let id: Swift.Int
+  public let title: Swift.String?
+  public let desc: Swift.String?
+  public let type: PagoApiClient.OngStoryItemDTO.StoryType
+  public let value: Swift.String
+  public let orderIndex: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngProjectDTO : ObjectMapper.ImmutableMappable {
+  public let title: Swift.String
+  public let desc: Swift.String
+  public let imageUrl: Swift.String?
+  public let url: Swift.String?
+  public let story: PagoApiClient.OngStoryItemDTO?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngBlogDTO : ObjectMapper.ImmutableMappable {
+  public let title: Swift.String
+  public let desc: Swift.String
+  public let date: Swift.String?
+  public let imageUrl: Swift.String?
+  public let url: Swift.String
+  public let tags: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngPaymentItem : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let amount: Swift.Double
+  public let ongId: Swift.Int
+  public let userId: Swift.Int?
+  public let milestone: PagoApiClient.OngMilestoneDTO?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngRecurrentPaymentItem : ObjectMapper.ImmutableMappable {
+  public let ongId: Swift.Int
+  public let cardId: Swift.Int?
+  public let dayOfMonth: Swift.Int?
+  public let amount: Swift.Double
+  public let enabled: Swift.Int
+  public let nextDueDate: Swift.String?
+  public let isAnnon: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+  public func isEnabled() -> Swift.Bool
+}
+public struct OngRecurrentSettings : ObjectMapper.ImmutableMappable {
+  public var cardId: Swift.Int64
+  public var dayOfMonth: Swift.Int64
+  public var enabled: Swift.Bool
+  public var ngoId: Swift.Int64
+  public var amount: Swift.Double
+  public var anonymous: Swift.Bool
+  public var ngoName: Swift.String
+  public var logoUrl: Swift.String?
+  public var motto: Swift.String
+  public var edition: Swift.Int64
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngHistoryItemDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let paymentTimestamp: Foundation.Date?
+  public let status: PagoApiClient.OngHistoryItemDTO.DonateHistoryState?
+  public let amount: Swift.Double?
+  public let ngoName: Swift.String?
+  public let ngo: Swift.Int?
+  public let cardId: Swift.Int?
+  public let iconURL: Swift.String?
+  public let points: Swift.Int?
+  public let posUserId: Swift.Int?
+  public enum DonateHistoryState : Swift.String {
+    case notProcessed
+    case processed
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(map: ObjectMapper.Map) throws
+}
+public struct OngDeepLinkPaymentItemDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let ngoId: Swift.Int
+  public let amount: Swift.Float?
+  public let details: Swift.String?
+  public let ngoName: Swift.String?
+  public let ngoUrl: Swift.String?
+  public let orderTypeId: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.ApiClient {
+  public func getBtPayCode(completionBlock: @escaping (Alamofire.Result<PagoApiClient.BTPayMigrationCode>) -> ())
+}
+public struct TransferFeeInfoDTO : ObjectMapper.ImmutableMappable {
+  public var transfer: PagoApiClient.TransferDTO
+  public var remainingBenefits: Swift.Int
+  public var benefitsMessage: Swift.String?
+  public var campaignTypeLogo: Swift.String?
+  public var packageActivationMessage: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.Webservice {
+  final public func getFeatures() -> PagoApiClient.Resource<[PagoApiClient.FeatureDTO]>
+}
+public struct FeatureDTO : ObjectMapper.ImmutableMappable {
+  public var feature: Swift.String
+  public var enabled: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PayableDTO : ObjectMapper.ImmutableMappable {
+  public let amount: Foundation.NSDecimalNumber
+  public let amountDue: Foundation.NSDecimalNumber
+  public let status: Swift.String
+  public let id: Swift.Int
+  public let statusDate: Foundation.Date?
+  public let message: Swift.String?
+  public let errorCode: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct WBInvoiceDTO : ObjectMapper.ImmutableMappable {
+  public let amountDue: Foundation.NSDecimalNumber
+  public let amount: Foundation.NSDecimalNumber
+  public let issueDate: Foundation.Date
+  public let dueDate: Foundation.Date
+  public let createdAt: Foundation.Date
+  public let pdfUri: Swift.String?
+  public let ref: Swift.String
+  public let status: Swift.String
+  public let id: Swift.Int64
+  public let seen: Swift.Bool
+  public let statusDate: Foundation.Date
+  public let paidInPago: Swift.Bool?
+  public let message: Swift.String?
+  public let errorCode: Swift.String?
+  public let barCode: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct DesyncAccountDTO : ObjectMapper.ImmutableMappable {
+  public let username: Swift.String
+  public let uri: Swift.String
+  public let id: Swift.Int64
+  public init(map: ObjectMapper.Map) throws
+  public init(username: Swift.String, uri: Swift.String, id: Swift.Int64)
+}
+public struct InsuranceTravelOffererDTO : ObjectMapper.ImmutableMappable {
+  public let key: Swift.String
+  public let name: Swift.String
+  public let features: [PagoApiClient.InsuranceTravelFeatureDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PreAuthRequestDTO : PagoApiClient.DTO {
+  public var amount: Foundation.NSDecimalNumber
+  public var currency: Swift.String
+  public var order: Swift.String
+  public var desc: Swift.String
+  public var timestamp: Swift.String
+  public var nonce: Swift.String
+  public var backref: Swift.String
+  public static func modelsFromDictionaryArray(_ array: [[Swift.String : Any]]) -> [PagoApiClient.PreAuthRequestDTO]
+  public init(amount: Foundation.NSDecimalNumber, currency: Swift.String, order: Swift.String, desc: Swift.String, timestamp: Swift.String, nonce: Swift.String, backref: Swift.String)
+  public init?(dictionary: [Swift.String : Any])
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+}
+public struct RecurringVignettePaymentDTO : ObjectMapper.ImmutableMappable {
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension Foundation.DateFormatter {
+  @nonobjc public static let romcardFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteResponseFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteResponseFormat2: Foundation.DateFormatter
+  @nonobjc public static let dayMonthAndYear: Foundation.DateFormatter
+  @nonobjc public static let dayMonthHourAndSecond: Foundation.DateFormatter
+  @nonobjc public static let dayAndMonth: Foundation.DateFormatter
+  @nonobjc public static let dashedDayMonthAndYear: Foundation.DateFormatter
+  @nonobjc public static let dashedDayMonthAndYearInclTimezone: Foundation.DateFormatter
+  @nonobjc public static let dashedYearMonthAndDay: Foundation.DateFormatter
+  @nonobjc public static let yearMonthAndDay: Foundation.DateFormatter
+  @nonobjc public static let dashedYearMonthAndDayInclTimezone: Foundation.DateFormatter
+  @nonobjc public static let datePickerControlFormat: Foundation.DateFormatter
+  @nonobjc public static let createdAtFormatter: Foundation.DateFormatter
+}
+extension PagoApiClient.Webservice {
+  final public func parseDTOArrayWithoutFailingAllItems<T>(_ data: Foundation.Data) -> Alamofire.Result<[T]> where T : ObjectMapper.ImmutableMappable
+  final public func parseToDTO<DTO>(data: Foundation.Data) -> Alamofire.Result<DTO> where DTO : ObjectMapper.ImmutableMappable
+}
+public struct PaymentDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let ref: Swift.String
+  public let details: Swift.String?
+  public let date: Foundation.Date
+  public let amount: Foundation.NSDecimalNumber
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension Foundation.NSNumber {
+  public var twoUnitAndDecimalsPlaces: Swift.String {
+    get
+  }
+  @nonobjc public static let twoUnitAndDecimalsPlacesFormatter: Foundation.NumberFormatter
+  public var twoDecimals: Swift.String {
+    get
+  }
+  @nonobjc public static let twoDecimalsFormatter: Foundation.NumberFormatter
+}
+public struct PrepaidRechargeDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let phone: Swift.String
+  public let offerId: Swift.String
+  public let internalRef: Swift.String?
+  public let status: Swift.String
+  public let amount: Foundation.NSDecimalNumber
+  public let date: Foundation.Date
+  public let providerName: Swift.String
+  public let desc: Swift.String?
+  public let message: Swift.String?
+  public let eurPrice: Foundation.NSDecimalNumber
+  public var statusEnum: PagoApiClient.PaymentStatus {
+    get
+  }
+  public let seen: Swift.Bool
+  public let statusDate: Foundation.Date
+  public let errorCode: Swift.String?
+  public let show: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PrepaidRechargeRequestDTO : ObjectMapper.ImmutableMappable {
+  public let phone: Swift.String
+  public let offerId: Swift.String
+  public init(phone: Swift.String, offerId: Swift.String)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PrepaidOffersCategoryListDTO : ObjectMapper.ImmutableMappable {
+  public let creditCategory: PagoApiClient.PrepaidOffersCategoryDTO
+  public let internetCategory: PagoApiClient.PrepaidOffersCategoryDTO?
+  public let optionCategory: PagoApiClient.PrepaidOffersCategoryDTO?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PrepaidOffersCategoryDTO : ObjectMapper.ImmutableMappable {
+  public let name: Swift.String?
+  public let offers: [PagoApiClient.PrepaidOfferDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PrepaidOfferDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let offerId: Swift.String
+  public let eurPrice: Foundation.NSDecimalNumber
+  public let ronPrice: Foundation.NSDecimalNumber
+  public let description: Swift.String
+  public let rechargeCount: Swift.Int
+  public let _operator: Swift.String
+  public init(id: Swift.Int, offerid: Swift.String, eurPrice: Foundation.NSDecimalNumber, ronPrice: Foundation.NSDecimalNumber, description: Swift.String, operator: Swift.String = "")
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PrepayAutoPaymentSettingDTO : ObjectMapper.ImmutableMappable {
+  public let phoneNumberId: Swift.Int64?
+  public let offerId: Swift.String
+  public let description: Swift.String?
+  public let `operator`: Swift.String?
+  public let phone: Swift.String
+  public let eurPrice: Foundation.NSDecimalNumber?
+  public let validityPeriod: Swift.Int?
+  public let cardId: Swift.Int64
+  public let nextDueDate: Foundation.Date?
+  public let appTimestamp: Foundation.Date?
+  public init(phoneNumberId: Swift.Int64? = nil, offerId: Swift.String, description: Swift.String? = nil, operator: Swift.String? = nil, phone: Swift.String, eurPrice: Foundation.NSDecimalNumber? = nil, validityPeriod: Swift.Int? = nil, cardId: Swift.Int64, nextDueDate: Foundation.Date? = nil, appTimestamp: Foundation.Date? = nil)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func prepaidOffers(deviceToken: Swift.String, phoneNumber: Swift.String, maxOffers: Swift.Int = 20, session: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<[PagoApiClient.PrepaidOfferDTO]>
+  final public func prepaidOffersV2(deviceToken: Swift.String, phoneNumber: Swift.String, maxOffers: Swift.Int = 20, session: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<PagoApiClient.PrepaidOffersCategoryListDTO>
+  final public func prepaidRechargeHistory(deviceToken: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.PrepaidRechargeDTO]>
+  final public func prepaidStatus(entityId: Swift.Int64) -> PagoApiClient.Resource<PagoApiClient.PrepaidRechargeDTO>
+  final public func rechargePrepaidNumber(deviceToken: Swift.String, dto: PagoApiClient.PrepaidRechargeRequestDTO) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func hideRechargeHistory(id: Swift.String) -> PagoApiClient.Resource<()>
+  final public func validatePrepaidRecharge(deviceToken: Swift.String, dto: PagoApiClient.PrepaidRechargeRequestDTO) -> PagoApiClient.Resource<Swift.String>
+  final public func preauthPrepaidRecharge(deviceToken: Swift.String, id: Swift.String) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func prepaidSale(deviceToken: Swift.String, prepaidRechargeId: Swift.String, cardId: Swift.String) -> PagoApiClient.Resource<()>
+  final public func singlePrepaidRechargeStatus(prepaidRechargeId: Swift.String) -> PagoApiClient.Resource<PagoApiClient.PrepaidRechargeDTO>
+  final public func createPrepaidAutoPayment(_ dto: PagoApiClient.PrepayAutoPaymentSettingDTO) -> PagoApiClient.Resource<PagoApiClient.PrepayAutoPaymentSettingDTO>
+  final public func updatePrepaidAutoPayment(_ dto: PagoApiClient.PrepayAutoPaymentSettingDTO) -> PagoApiClient.Resource<PagoApiClient.PrepayAutoPaymentSettingDTO>
+  final public func deletePrepaidAutoPayment(phoneNumberId: Swift.String) -> PagoApiClient.Resource<()>
+  final public func getPrepaidAutoPayments() -> PagoApiClient.Resource<[PagoApiClient.PrepayAutoPaymentSettingDTO]>
+}
+extension PagoApiClient.Webservice {
+  final public func getBtPayCode() -> PagoApiClient.Resource<PagoApiClient.BTPayMigrationCode>
+}
+public struct BTPayMigrationCode : ObjectMapper.ImmutableMappable {
+  public var migrationCode: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct EncodedData : Alamofire.ParameterEncoding {
+  public init(contentType: Swift.String?, data: Foundation.Data)
+  public func encode(_ urlRequest: Alamofire.URLRequestConvertible, with parameters: Alamofire.Parameters?) throws -> Foundation.URLRequest
+}
+public enum CountryPickerMode {
+  case language
+  case country
+  public static func == (a: PagoApiClient.CountryPickerMode, b: PagoApiClient.CountryPickerMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LanguageCode : Swift.String {
+  case en, ro, pl, hr, en_pl, it, en_it
+  case hu_ro
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.LanguageCode {
+  public func currency() -> Swift.String
+}
+extension PagoApiClient.LanguageCode {
+  public var image: UIKit.UIImage? {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  public var imageName: Swift.String {
+    get
+  }
+  public var code: Swift.String {
+    get
+  }
+  public var iso: Swift.String {
+    get
+  }
+}
+public struct BillPaymentDTO : ObjectMapper.ImmutableMappable {
+  public let amount: Foundation.NSDecimalNumber
+  public let invoiceId: Swift.Int
+  public init(amount: Foundation.NSDecimalNumber, invoiceId: Swift.Int)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct ProviderBarcodeDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let amountDecimals: Swift.Int64?
+  public let amountDecimalDot: Swift.Bool?
+  public let amountInterval: Swift.String?
+  public let barcodeLength: Swift.Int64
+  public let pattern: Swift.String?
+  public let customRef: Swift.Bool?
+  public let customClientCode: Swift.Bool?
+  public let customAmount: Swift.Bool?
+  public init(id: Swift.Int64, amountDecimals: Swift.Int64?, amountDecimalDot: Swift.Bool?, amountInterval: Swift.String?, barcodeLength: Swift.Int64, pattern: Swift.String?, customRef: Swift.Bool?, customClientCode: Swift.Bool?, customAmount: Swift.Bool?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PinDTO : ObjectMapper.ImmutableMappable {
+  public var pin: Swift.String?
+  public var retries: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+public struct Resource<A> {
+  public let path: Swift.String
+  public let parse: (Foundation.Data) -> Alamofire.Result<A>
+  public let method: Alamofire.HTTPMethod
+  public let host: PagoApiClient.Host
+  public let authType: PagoApiClient.AuthenticationType
+  public let params: PagoApiClient.JSONDictionary?
+  public let encoding: Alamofire.ParameterEncoding
+  public init(path: Swift.String, parse: @escaping (Foundation.Data) -> Alamofire.Result<A>, method: Alamofire.HTTPMethod = .get, host: PagoApiClient.Host = .api, authType: PagoApiClient.AuthenticationType = .basic, params: PagoApiClient.JSONDictionary? = nil, encoding: Alamofire.ParameterEncoding = URLEncoding())
+}
+public struct ProviderAccountDTO : ObjectMapper.ImmutableMappable {
+  public let username: Swift.String
+  public let providerUri: Swift.String
+  public let id: Swift.Int
+  public let active: Swift.Bool
+  public let scanned: Swift.Bool
+  public let locations: [PagoApiClient.LocationDataDTO]
+  public let pending: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.Webservice {
+  final public func auth(_ username: Swift.String, password: Swift.String?) -> PagoApiClient.Resource<PagoApiClient.PagoSession>
+  final public func auth(_ username: Swift.String?, password: Swift.String?, grantType: PagoApiClient.GrantType) -> PagoApiClient.Resource<PagoApiClient.PagoSession>
+  final public func refreshToken(_ token: Swift.String, anonymous: Swift.Bool = false) -> PagoApiClient.Resource<PagoApiClient.PagoSession>
+  final public func anonymousAuth() -> PagoApiClient.Resource<PagoApiClient.PagoSession>
+  final public func register(_ reqDto: PagoApiClient.RegisterRequestDTO, deviceToken: Swift.String, session: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<Swift.String>
+  final public func agreedToTerms(deviceToken: Swift.String) -> PagoApiClient.Resource<Swift.Bool>
+  final public func agreeToTerms(deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+  final public func registerDevice(username: Swift.String, grantType: Swift.String, deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+  final public func forgotPassword(deviceToken: Swift.String, email: Swift.String, authType: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<()>
+  final public func resetPassword(deviceToken: Swift.String, email: Swift.String, password: Swift.String, token: Swift.String, authType: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<()>
+}
+extension PagoApiClient.ApiClient {
+  public func fetchPointsRewards(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.RewardDTO]>) -> ())
+  public func fetchPointsAchivments(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.AchievementDTO]>) -> ())
+  public func fetchPointsSpendings(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PointSpendingDTO]>) -> ())
+  public func getUnseenPoints(completionBlock: @escaping (Alamofire.Result<PagoApiClient.PointUnseenDTO>) -> ())
+  public func markeSeen(ids: [Swift.Int], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getPointsBySharingActivity(activity: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func pointsTermsInformed(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension PagoApiClient.ApiClient {
+  public func checkVersion(completionBlock: @escaping (Alamofire.Result<Swift.Bool>) -> ())
+  public func getAppConfig(completionBlock: @escaping (Alamofire.Result<PagoApiClient.AppConfigDTO>) -> ())
+  public func accessDisabledSection(section: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension PagoApiClient.Webservice {
+  final public func fetchInsurancePersons() -> PagoApiClient.Resource<[PagoApiClient.PersonDTO]>
+  final public func fetchInsuranceLegalEntity() -> PagoApiClient.Resource<[PagoApiClient.LegalEntityDTO]>
+  final public func getInsuranceConfig() -> PagoApiClient.Resource<PagoApiClient.ConfigDTO>
+  final public func valitateCNP(cnp: Swift.String) -> PagoApiClient.Resource<Swift.Bool>
+  final public func savePerson(person: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PersonDTO>
+  final public func savePersonPAD(person: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PersonPADDTO>
+  final public func getLegalEntityByCUI(cui: Swift.String) -> PagoApiClient.Resource<PagoApiClient.LegalEntityDTO>
+  final public func saveLegalEntity(dic: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.LegalEntityDTO>
+  final public func deletePerson(personId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func deleteLegalEntity(legalEntityId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func getCarByRegistrationNumber(number: Swift.String) -> PagoApiClient.Resource<PagoApiClient.CarDTO>
+  final public func getCarByVIN(vin: Swift.String) -> PagoApiClient.Resource<PagoApiClient.CarDTO>
+  final public func getCarBrands() -> PagoApiClient.Resource<[PagoApiClient.CarBrandDTO]>
+  final public func getCarModel(brand: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.CarBrandDTO]>
+  final public func createUpdateCar(car: PagoApiClient.CarDTO) -> PagoApiClient.Resource<PagoApiClient.CarDTO>
+  final public func getCars() -> PagoApiClient.Resource<[PagoApiClient.CarDTO]>
+  final public func deleteCar(carId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func getOffers(offersRequest: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.InsuranceOffersResponseDTO>
+  final public func getLeasingEntities() -> PagoApiClient.Resource<[PagoApiClient.LeasingEntitiesResponseDTO]>
+  final public func getRCAInfoFromNotification(id: Swift.String) -> PagoApiClient.Resource<(PagoApiClient.CarRCAReminderDTO)>
+  final public func setRCAExpireDate(_ date: Foundation.Date, for carId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func setRCACarReminder(registrationNumber: Swift.String, daysNumber: Swift.Int, carID: Swift.Int, sendTime: Swift.Double) -> PagoApiClient.Resource<Swift.String>
+  final public func saveRegistrationNumber(registrationNumber: Swift.String) -> PagoApiClient.Resource<()>
+  final public func getBrandLogo(brand: Swift.String) -> PagoApiClient.Resource<UIKit.UIImage>
+  final public func saveOffer(offerId: Swift.Int) -> PagoApiClient.Resource<PagoApiClient.SaveOfferResponseDTO>
+  final public func insuranceSale(points: Swift.Int, offerId: Swift.String, cardId: Swift.String, type: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.SaleResponse]>
+  final public func checkInsuranceStatusSale(offerId: Swift.String, type: Swift.String?) -> PagoApiClient.Resource<PagoApiClient.InsuranceSale>
+  final public func checkInsurancePdf(offerId: Swift.String, type: Swift.String?) -> PagoApiClient.Resource<PagoApiClient.InsurancePDFGenerated>
+  final public func requestOriginalPolicy(offerIds: [Swift.String]) -> PagoApiClient.Resource<()>
+  final public func getPendingInsuranceOffers() -> PagoApiClient.Resource<[PagoApiClient.InsuranceSale]>
+  final public func insuranceDocument(offerId: Swift.String) -> PagoApiClient.Resource<Foundation.Data>
+  final public func insuranceTravelDocument(travelId: Swift.String) -> PagoApiClient.Resource<Foundation.Data>
+  final public func getInsuranceCountries() -> PagoApiClient.Resource<PagoApiClient.InsuranceCountriesDTO>
+  final public func getInsuranceTravelPrograms() -> PagoApiClient.Resource<[PagoApiClient.InsuranceTravelProgramDTO]>
+  final public func getInsuranceTravelOffers(offersRequest: [Swift.String : Any]) -> PagoApiClient.Resource<[PagoApiClient.InsuranceOffersResponseDTO]>
+  final public func saveInsuranceTravelOffer(offerId: Swift.Int) -> PagoApiClient.Resource<PagoApiClient.SaveTravelOfferResponseDTO>
+}
+public struct SaveOfferResponseDTO : ObjectMapper.ImmutableMappable {
+  public let insurerErrorMsg: Swift.String?
+  public let insurerSavedStatus: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct SaveTravelOfferResponseDTO : ObjectMapper.ImmutableMappable {
+  public let saveErrorMsg: Swift.String?
+  public let saveId: Swift.Int?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct InsurancePDFGenerated : ObjectMapper.ImmutableMappable {
+  public let issued: Swift.Bool?
+  public let pdfGenerated: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct InsuranceSale : ObjectMapper.ImmutableMappable {
+  public let offerId: Swift.Int?
+  public let carId: Swift.Int?
+  public let carOwnerId: Swift.Int?
+  public let driverList: [Swift.Int]?
+  public let price: Swift.Double?
+  public let date: Swift.Double?
+  public let startDate: Swift.Double?
+  public let period: Swift.Int?
+  public let insuranceName: Swift.String?
+  public let carLicenseNumber: Swift.String?
+  public let errorCode: Swift.String?
+  public let status: Swift.String?
+  public let deliveryAddressId: Swift.Int?
+  public let statusTimestamp: Swift.Int64?
+  public let travelScope: Swift.Int?
+  public let insuranceDuration: Swift.Int?
+  public let expireDate: Foundation.Date?
+  public let destinationCountry: Swift.Int?
+  public let travelId: Swift.Int?
+  public let deliverPolicy: Swift.Bool
+  public let deliverPolicyTimestamp: Swift.Double?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PersonDTO : ObjectMapper.ImmutableMappable {
+  public let createdAt: Swift.Int64?
+  public let lastModified: Swift.Int64?
+  public let personId: Swift.Int64
+  public let firstName: Swift.String
+  public let lastName: Swift.String
+  public let cnp: Swift.Int64
+  public let ci: Swift.String
+  public let directInsurancePolicy: Swift.String?
+  public let driverLicenseStartDate: Swift.Int64?
+  public let married: Swift.Bool?
+  public let hasMinorChildren: Swift.Bool?
+  public let retired: Swift.Bool?
+  public let locomotorDisability: Swift.Bool
+  public let stateEmployees: Swift.Int64?
+  public var county: Swift.String?
+  public var city: Swift.String?
+  public let streetType: Swift.String?
+  public var street: Swift.String?
+  public let streetPostalCode: Swift.Int64?
+  public var streetNumber: Swift.String?
+  public var blockNumber: Swift.String?
+  public var apartmentNumber: Swift.String?
+  public let phoneNumber: Swift.String?
+  public let hasDriverLicense: Swift.Bool
+  public let mail: Swift.String?
+  public let passport: Swift.String?
+  public let student: Swift.Bool
+  public var diseasesNeuro: Swift.Bool
+  public var diseasesCardio: Swift.Bool
+  public var diseasesInternal: Swift.Bool
+  public var diseasesRespiratory: Swift.Bool
+  public var diseasesDisabledPerson: Swift.Bool
+  public var diseasesTerminalIllness: Swift.Bool
+  public var diseasesOther: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PersonPADDTO : ObjectMapper.ImmutableMappable {
+  public let createdAt: Swift.Int64
+  public let lastModified: Swift.Int64
+  public let personId: Swift.Int64
+  public let firstName: Swift.String?
+  public let lastName: Swift.String?
+  public let cnp: Swift.Int64
+  public let ci: Swift.String?
+  public let directInsurancePolicy: Swift.String?
+  public let driverLicenseStartDate: Swift.Int64?
+  public let married: Swift.Bool?
+  public let hasMinorChildren: Swift.Bool?
+  public let retired: Swift.Bool?
+  public let locomotorDisability: Swift.Bool?
+  public let stateEmployees: Swift.Int64?
+  public var county: Swift.String?
+  public var city: Swift.String?
+  public let streetType: Swift.String?
+  public var street: Swift.String?
+  public let streetPostalCode: Swift.Int64?
+  public var streetNumber: Swift.String?
+  public var blockNumber: Swift.String?
+  public var apartmentNumber: Swift.String?
+  public let phoneNumber: Swift.String?
+  public let hasDriverLicense: Swift.Bool?
+  public let mail: Swift.String?
+  public let passport: Swift.String?
+  public let student: Swift.Bool?
+  public var diseasesNeuro: Swift.Bool?
+  public var diseasesCardio: Swift.Bool?
+  public var diseasesInternal: Swift.Bool?
+  public var diseasesRespiratory: Swift.Bool?
+  public var diseasesDisabledPerson: Swift.Bool?
+  public var diseasesTerminalIllness: Swift.Bool?
+  public var diseasesOther: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct ConfigDTO : ObjectMapper.ImmutableMappable {
+  public let typeOfRegistration: [PagoApiClient.ConfigItemDTO]
+  public let itemsPolicy: [PagoApiClient.ConfigItemDTO]
+  public let fuelType: [PagoApiClient.ConfigItemDTO]
+  public let indexAutoCategory: [PagoApiClient.ConfigGroupItemDTO]
+  public let numberOfInstallments: [PagoApiClient.ConfigItemDTO]
+  public let vehiclePurpose: [PagoApiClient.ConfigItemDTO]
+  public let userType: [PagoApiClient.ConfigItemDTO]
+  public let activitySubtype: [PagoApiClient.ConfigItemDTO]
+  public let cascoPolicy: [PagoApiClient.ConfigItemDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct ConfigItemDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.String
+  public let value: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarBrandDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let value: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct ConfigGroupItemDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let value: Swift.String
+  public let items: [PagoApiClient.ConfigItemDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct LegalEntityDTO : ObjectMapper.ImmutableMappable {
+  public let createdAt: Swift.Int?
+  public let lastModified: Swift.Int?
+  public let legalEntityId: Swift.Int
+  public let name: Swift.String
+  public let cui: Swift.String
+  public let county: Swift.String?
+  public let city: Swift.String?
+  public let street: Swift.String?
+  public let streetType: Swift.String?
+  public let postalCode: Swift.Int?
+  public let streetNumber: Swift.String?
+  public let blockNumber: Swift.String?
+  public let apartmentNumber: Swift.String?
+  public let caen: Swift.Int?
+  public let activitySubtype: Swift.String?
+  public let errorMessage: Swift.String?
+  public let leasing: Swift.Bool?
+  public init?(createdAt: Swift.Int?, lastModified: Swift.Int?, legalEntityId: Swift.Int, name: Swift.String, cui: Swift.String, county: Swift.String?, city: Swift.String?, street: Swift.String?, streetType: Swift.String?, postalCode: Swift.Int?, streetNumber: Swift.String?, blockNumber: Swift.String?, apartmentNumber: Swift.String?, caen: Swift.Int?, activitySubtype: Swift.String?, errorMessage: Swift.String?, leasing: Swift.Bool?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarRCAReminderValuesDTO : ObjectMapper.ImmutableMappable {
+  public let car: Swift.Int?
+  public let person: Swift.Int?
+  public let drivers: [Swift.Int]?
+  public let insuranceEndDate: Swift.String?
+  public let endValidityDate: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct CarRCAReminderDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let values: PagoApiClient.CarRCAReminderValuesDTO?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct CarDetailDTO : ObjectMapper.ImmutableMappable {
+  public let detailType: Swift.String?
+  public let valueTimestamp: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct CarDTO : ObjectMapper.ImmutableMappable, Swift.Equatable {
+  public var rcaEndValidity: Swift.String?
+  public var rcaEndEditable: Swift.Bool?
+  public let createdAt: Swift.Double?
+  public let lastModified: Swift.Double?
+  public let carId: Swift.Int?
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public var category: Swift.String? {
+    get
+    set
+  }
+  public var brand: Swift.String?
+  public var model: Swift.String?
+  public var vin: Swift.String?
+  public var cc: Swift.Int?
+  public var seats: Swift.Int?
+  public var power: Swift.Int?
+  public var maxWeight: Swift.Int?
+  public var year: Swift.Int?
+  public var color: Swift.String?
+  public var fuelType: Swift.String?
+  public var km: Swift.String?
+  public var vehiclePurpose: Swift.String?
+  public var inLeasing: Swift.Bool?
+  public var idOfLeasingCompany: Swift.String?
+  public var registrationNumber: Swift.String?
+  public var identityCard: Swift.String?
+  public var firstRegistration: Swift.Int?
+  public let errorMessage: Swift.String?
+  public let leasingLegalEntity: PagoApiClient.LeasingEntitiesResponseDTO?
+  public var county: Swift.String?
+  public var city: Swift.String?
+  public var street: Swift.String?
+  public var streetNumber: Swift.String?
+  public var blockNumber: Swift.String?
+  public var apartmentNumber: Swift.String?
+  public var carDetails: [PagoApiClient.CarDetailDTO]?
+  public init?()
+  public init?(createdAt: Swift.Double?, lastModified: Swift.Double?, carId: Swift.Int?, firstName: Swift.String?, lastName: Swift.String?, category: Swift.String?, brand: Swift.String?, model: Swift.String?, vin: Swift.String?, cc: Swift.Int?, seats: Swift.Int?, power: Swift.Int?, maxWeight: Swift.Int?, year: Swift.Int?, color: Swift.String?, fuelType: Swift.String?, km: Swift.String?, vehiclePurpose: Swift.String?, inLeasing: Swift.Bool?, registrationNumber: Swift.String?, identityCard: Swift.String?, firstRegistration: Swift.Int?, errorMessage: Swift.String?, idOfLeasingCompany: Swift.String?, leasingLegalEntity: PagoApiClient.LeasingEntitiesResponseDTO?, county: Swift.String?, city: Swift.String?, street: Swift.String?, streetNumber: Swift.String?, blockNumber: Swift.String?, apartmentNumber: Swift.String?, carDetails: [PagoApiClient.CarDetailDTO]? = nil, rcaEndEditable: Swift.Bool? = nil, rcaEndValidity: Swift.String? = nil)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+  public static func == (lhs: PagoApiClient.CarDTO, rhs: PagoApiClient.CarDTO) -> Swift.Bool
+  public static func != (lhs: PagoApiClient.CarDTO, rhs: PagoApiClient.CarDTO) -> Swift.Bool
+}
+public struct InsuranceOfferDTO : ObjectMapper.ImmutableMappable {
+  public var createdAt: Swift.Double?
+  public var lastModified: Swift.Double?
+  public var name: Swift.String
+  public var id: Swift.Int?
+  public var insurerId: Swift.Int?
+  public var price: Swift.Double
+  public let currency: Swift.String?
+  public var discharge: Swift.Double?
+  public var infoCv: Swift.String?
+  public var higherRisk: Swift.String?
+  public var insurerOfferId: Swift.String?
+  public var insurerClass: Swift.String?
+  public var insurerCommission: Swift.Double?
+  public var insurerDirectInsurancePolicy: Swift.String?
+  public var insurerStatusResponse: Swift.String?
+  public var insurerErrorMessage: Swift.String?
+  public var insurerInfo: Swift.String?
+  public var insuranceProgram: Swift.String?
+  public var statusResponse: Swift.Bool?
+  public var linkTc: Swift.String?
+  public var personId: Swift.Int?
+  public var groupId: [Swift.Int]
+  public var peopleId: [Swift.Int]
+  public var pid: Swift.String?
+  public init?()
+  public init?(createdAt: Swift.Double?, lastModified: Swift.Double?, name: Swift.String, id: Swift.Int?, insurerId: Swift.Int?, price: Swift.Double, currency: Swift.String?, discharge: Swift.Double?, infoCv: Swift.String?, higherRisk: Swift.String?, insurerOfferId: Swift.String?, insurerClass: Swift.String?, insurerCommission: Swift.Double?, insurerDirectInsurancePolicy: Swift.String?, insurerStatusResponse: Swift.String?, insurerErrorMessage: Swift.String?, insurerInfo: Swift.String?, insuranceProgram: Swift.String?, statusResponse: Swift.Bool?, linkTc: Swift.String?, pid: Swift.String?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct InsuranceOffersResponseDTO : ObjectMapper.ImmutableMappable {
+  public var createdAt: Swift.Double?
+  public var lastModified: Swift.Double?
+  public var errorMessage: Swift.String?
+  public var description: Swift.String?
+  public var secToWait: Swift.String?
+  public var responseTimeSec: Swift.String?
+  public var offers: [PagoApiClient.InsuranceOfferDTO]?
+  public var id: Swift.Int?
+  public var personId: Swift.Int?
+  public var errorWs: Swift.String?
+  public init?()
+  public init?(createdAt: Swift.Double?, lastModified: Swift.Double?, errorMessage: Swift.String?, description: Swift.String?, secToWait: Swift.String?, responseTimeSec: Swift.String?, offers: [PagoApiClient.InsuranceOfferDTO]?, id: Swift.Int?, personId: Swift.Int?, errorWs: Swift.String?)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct LeasingEntitiesResponseDTO : ObjectMapper.ImmutableMappable, Swift.Equatable {
+  public var id: Swift.Int
+  public var name: Swift.String
+  public init?()
+  public init?(id: Swift.Int, name: Swift.String)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+  public static func == (lhs: PagoApiClient.LeasingEntitiesResponseDTO, rhs: PagoApiClient.LeasingEntitiesResponseDTO) -> Swift.Bool
+}
+public struct DTOInsuranceConstants {
+  public static let leasingID: Swift.String
+  public static let leasingName: Swift.String
+  public static let personCreatedAt: Swift.String
+  public static let personLastModified: Swift.String
+  public static let personPersonId: Swift.String
+  public static let personFirstName: Swift.String
+  public static let personLastName: Swift.String
+  public static let personCnp: Swift.String
+  public static let personCi: Swift.String
+  public static let personDirectInsurancePolicy: Swift.String
+  public static let personDriverLicenseStartDate: Swift.String
+  public static let personMarried: Swift.String
+  public static let personHasMinorChildren: Swift.String
+  public static let personRetired: Swift.String
+  public static let personLocomotorDisability: Swift.String
+  public static let personStateEmployees: Swift.String
+  public static let personCounty: Swift.String
+  public static let personCity: Swift.String
+  public static let personStreetType: Swift.String
+  public static let personStreet: Swift.String
+  public static let personStreetPostalCode: Swift.String
+  public static let personStreetNumber: Swift.String
+  public static let personBlockNumber: Swift.String
+  public static let personApartmentNumber: Swift.String
+  public static let personPhoneNumber: Swift.String
+  public static let personMail: Swift.String
+  public static let personHasDriverLicense: Swift.String
+  public static let personPassport: Swift.String
+  public static let personStudent: Swift.String
+  public static let diseasesNeuro: Swift.String
+  public static let diseasesCardio: Swift.String
+  public static let diseasesInternal: Swift.String
+  public static let diseasesRespiratory: Swift.String
+  public static let diseasesDisabledPerson: Swift.String
+  public static let diseasesTerminalIllness: Swift.String
+  public static let diseasesOther: Swift.String
+  public static let configTypeOfRegistration: Swift.String
+  public static let configItemsPolicy: Swift.String
+  public static let configFuelType: Swift.String
+  public static let configIndexAutoCategory: Swift.String
+  public static let configNumberOfInstallments: Swift.String
+  public static let configVehiclePurpose: Swift.String
+  public static let configUserType: Swift.String
+  public static let configActivitySubtype: Swift.String
+  public static let configCascoPolicy: Swift.String
+  public static let configItemId: Swift.String
+  public static let configItemValue: Swift.String
+  public static let configGroupItemId: Swift.String
+  public static let configGroupItems: Swift.String
+  public static let configGroupItemValue: Swift.String
+  public static let legalEntityCreatedAt: Swift.String
+  public static let legalEntityLastModified: Swift.String
+  public static let legalEntityLegalEntityId: Swift.String
+  public static let legalEntityName: Swift.String
+  public static let legalEntityCui: Swift.String
+  public static let legalEntityCounty: Swift.String
+  public static let legalEntityCity: Swift.String
+  public static let legalEntityStreet: Swift.String
+  public static let legalEntityStreetType: Swift.String
+  public static let legalEntityPostalCode: Swift.String
+  public static let legalEntityStreetNumber: Swift.String
+  public static let legalEntityBlockNumber: Swift.String
+  public static let legalEntityApartmentNumber: Swift.String
+  public static let legalEntityCaen: Swift.String
+  public static let legalEntityActivitySubtype: Swift.String
+  public static let legalEntityErrorMessage: Swift.String
+  public static let legalEntityLeasing: Swift.String
+  public static let carCreatedAt: Swift.String
+  public static let carLastModified: Swift.String
+  public static let carCarId: Swift.String
+  public static let carFirstName: Swift.String
+  public static let carLastName: Swift.String
+  public static let carCategory: Swift.String
+  public static let carBrand: Swift.String
+  public static let carModel: Swift.String
+  public static let carVin: Swift.String
+  public static let carCC: Swift.String
+  public static let carCeats: Swift.String
+  public static let carPower: Swift.String
+  public static let carMaxWeight: Swift.String
+  public static let carYear: Swift.String
+  public static let carColor: Swift.String
+  public static let carFuelType: Swift.String
+  public static let carKM: Swift.String
+  public static let carVehiclePurpose: Swift.String
+  public static let carInLeasing: Swift.String
+  public static let carRegistrationNumber: Swift.String
+  public static let carIdentityCard: Swift.String
+  public static let carFirstRegistration: Swift.String
+  public static let carErrorMessage: Swift.String
+  public static let carIdOfLeasingCompany: Swift.String
+  public static let carLegalEntityLeasing: Swift.String
+  public static let carAddressCity: Swift.String
+  public static let carAddressCounty: Swift.String
+  public static let carAddressStreet: Swift.String
+  public static let carAddressStreetNumber: Swift.String
+  public static let carAddressBlockNumber: Swift.String
+  public static let carAddressApartmentNumber: Swift.String
+  public static let carDetails: Swift.String
+  public static let carRcaEndEditable: Swift.String
+  public static let carRcaEndValidity: Swift.String
+  public static let offerCreatedAt: Swift.String
+  public static let offerLastModified: Swift.String
+  public static let offerName: Swift.String
+  public static let offerId: Swift.String
+  public static let offerInsurerId: Swift.String
+  public static let offerPrice: Swift.String
+  public static let offerDischarge: Swift.String
+  public static let offerInfoCv: Swift.String
+  public static let offerHigherRisk: Swift.String
+  public static let offerInsurerOfferId: Swift.String
+  public static let offerInsurerClass: Swift.String
+  public static let offerInsurerCommission: Swift.String
+  public static let offerInsurerDirectInsurancePolicy: Swift.String
+  public static let offerInsurerStatusResponse: Swift.String
+  public static let offerInsurerErrorMessage: Swift.String
+  public static let offerInsurerInfo: Swift.String
+  public static let offerTravelErrorMessage: Swift.String
+  public static let offerTravelStatusResponse: Swift.String
+  public static let offerInsuranceProgram: Swift.String
+  public static let offerInsuranceTc: Swift.String
+  public static let offerResponseCreatedAt: Swift.String
+  public static let offerResponseLastModified: Swift.String
+  public static let offerResponseErrorMessage: Swift.String
+  public static let offerResponseDescription: Swift.String
+  public static let offerResponseSecToWait: Swift.String
+  public static let offerResponseResponseTimeSec: Swift.String
+  public static let offerResponseOffers: Swift.String
+  public static let offerResponseId: Swift.String
+  public static let offerResponsePersonId: Swift.String
+  public static let offerResponseErrorWs: Swift.String
+  public static let insurerErrorMsg: Swift.String
+  public static let insurerSavedStatus: Swift.String
+  public static let saveOfferErrorMsg: Swift.String
+  public static let saveOfferId: Swift.String
+  public static let saleOfferId: Swift.String
+  public static let carId: Swift.String
+  public static let carOwnerId: Swift.String
+  public static let driverList: Swift.String
+  public static let price: Swift.String
+  public static let currency: Swift.String
+  public static let date: Swift.String
+  public static let startDate: Swift.String
+  public static let period: Swift.String
+  public static let insuranceName: Swift.String
+  public static let carLicenseNumber: Swift.String
+  public static let errorCode: Swift.String
+  public static let status: Swift.String
+  public static let deliveryAddressId: Swift.String
+  public static let statusTimestamp: Swift.String
+  public static let travelScope: Swift.String
+  public static let insuranceDuration: Swift.String
+  public static let deliverPolicy: Swift.String
+  public static let deliverPolicyTimestamp: Swift.String
+  public static let expireDate: Swift.String
+  public static let destinationCountry: Swift.String
+  public static let travelId: Swift.String
+  public static let issued: Swift.String
+  public static let pdfGenerated: Swift.String
+}
+extension PagoApiClient.ApiClient {
+  public func runWithAuthToken<T>(completionBlock: @escaping (Alamofire.Result<T>) -> (), block: @escaping (_ session: PagoApiClient.AuthenticationType) -> ())
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CountryManager : ObjectiveC.NSObject {
+  public static var shared: PagoApiClient.CountryManager
+  public var languageCode: PagoApiClient.LanguageCode? {
+    get
+    set
+  }
+  public var providerCode: Swift.String? {
+    get
+  }
+  public var didSelectPrefferedCountry: Swift.Bool {
+    get
+    set
+  }
+  public var courierCountryCode: PagoApiClient.LanguageCode? {
+    get
+    set
+  }
+  public func saveUserSelection(country: PagoApiClient.LanguageCode, language: PagoApiClient.LanguageCode)
+  public var isPoland: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+public struct RegisterResponse {
+  public struct Constants {
+  }
+  public let id: Swift.Int
+  public let username: Swift.String
+  public let firstName: Swift.String
+  public let lastName: Swift.String
+  public let email: Swift.String
+  public typealias Role = (id: Swift.Int, code: Swift.String, name: Swift.String, state: Swift.String)
+  public let roles: [PagoApiClient.RegisterResponse.Role]
+  public let posList: [Swift.String]
+  public init?(dict: [Swift.String : Any])
+}
+public struct TransactionDTO : ObjectMapper.ImmutableMappable {
+  public let type: Swift.String
+  public let id: Swift.Int64
+  public let payableEntityId: Swift.Int64?
+  public let locationId: Swift.Int64?
+  public let amount: Foundation.NSDecimalNumber
+  public let status: PagoApiClient.PaymentStatus
+  public let error: Swift.String
+  public let errorCode: Swift.String?
+  public let timestamp: Foundation.Date
+  public let points: Swift.Int
+  open class PaymentStatusTransform : ObjectMapper.TransformType {
+    public typealias Object = PagoApiClient.PaymentStatus
+    public typealias JSON = Swift.String
+    public init()
+    open func transformFromJSON(_ value: Any?) -> PagoApiClient.PaymentStatus?
+    open func transformToJSON(_ value: PagoApiClient.PaymentStatus?) -> Swift.String?
+    @objc deinit
+  }
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func fetchPagoTransactionsDetails(type: Swift.String = "all") -> PagoApiClient.Resource<[PagoApiClient.PaymentDetailsDTO]>
+  final public func deleteInvoice(id: Swift.Int, deviceToken: Swift.String) -> PagoApiClient.Resource<()>
+}
+extension Swift.Sequence {
+  public func failingFlatMap<T>(transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T]?
+}
+extension PagoApiClient.ApiClient {
+  public func setPin(pin: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getPin(completionBlock: @escaping (Alamofire.Result<(PagoApiClient.PinDTO)>) -> ())
+  public func forgotPin(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func resetPin(pin: Swift.String, resetToken: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func resetRetries(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func decrementRetries(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension PagoApiClient.Webservice {
+  final public func checkForFreeTrial() -> PagoApiClient.Resource<[Swift.String : Any]>
+  final public func getAllSubscriptions(localeID: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.SubscriptionDTO]>
+  final public func subscribe(subscriptionID: Swift.Int, period: Swift.Int, campaignId: Swift.Int? = nil, forceFreeTrial: Swift.Bool = false) -> PagoApiClient.Resource<()>
+  final public func unsubscribe() -> PagoApiClient.Resource<()>
+  final public func upgrade(subscriptionID: Swift.Int, period: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func downgrade(subscriptionID: Swift.Int, period: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func activeSubscription() -> PagoApiClient.Resource<PagoApiClient.UserSubscriptionDTO>
+  final public func unpaidSubscription() -> PagoApiClient.Resource<PagoApiClient.UserSubscriptionDTO>
+  final public func historySubscriptions() -> PagoApiClient.Resource<[PagoApiClient.UserSubscriptionDTO]>
+  final public func checkSubscriptionPaymentStatus(statusId: Swift.String) -> PagoApiClient.Resource<(PagoApiClient.SubscriptionStatusDTO)>
+  final public func renewSubscription(subscriptionID: Swift.Int, period: Swift.Int, userSubscriptionId: Swift.Int? = nil, campaignId: Swift.Int? = nil) -> PagoApiClient.Resource<()>
+  final public func getUserRenew() -> PagoApiClient.Resource<PagoApiClient.UserSubscriptionDTO>
+  final public func getUsage() -> PagoApiClient.Resource<PagoApiClient.SubscriptionUsageDTO>
+  final public func changeFreeTrial(params: [Swift.String : Any]) -> PagoApiClient.Resource<()>
+  final public func upgradeWithBonus(params: [Swift.String : Any]) -> PagoApiClient.Resource<()>
+  final public func getCampaign() -> PagoApiClient.Resource<[PagoApiClient.FreemiumCampaignDTO]>
+}
+public struct SubscriptionUsageDTO : ObjectMapper.ImmutableMappable {
+  public var features: [PagoApiClient.SubscriptionUsageFeatureDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct SubscriptionUsageFeatureDTO : ObjectMapper.ImmutableMappable {
+  public var key: Swift.String
+  public var values: [Swift.String]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct SubscriptionStatusDTO : ObjectMapper.ImmutableMappable {
+  public var status: Swift.String?
+  public var errorCode: Swift.String?
+  public var cardId: Swift.Int?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct SubscriptionDTO : ObjectMapper.ImmutableMappable {
+  public var subscriptionId: Swift.Int?
+  public var subscriptionName: Swift.String?
+  public var monthlyPrice: Swift.Double?
+  public var yearlyPrice: Swift.Double?
+  public var discount: Swift.Float?
+  public var pointsFactor: Swift.Float?
+  public var specialOffers: Swift.Bool?
+  public var supportTag: Swift.String?
+  public var moneyTransfer: Swift.Bool?
+  public var taxes: Swift.Bool?
+  public var newFunctionalities: Swift.Bool?
+  public var visible: Swift.Bool?
+  public var freeTrialDays: Swift.Int?
+  public var monthlyInvoices: Swift.Int?
+  public var weight: Swift.Int?
+  public var graceDays: Swift.Int?
+  public var customSupplier: Swift.Bool?
+  public var alerts: Swift.Bool?
+  public var freePlan: Swift.Bool?
+  public var premiumPayments: Swift.Int32?
+  public var premiumSuppliers: Swift.Int32?
+  public var subscriptionFeatures: [PagoApiClient.SubscriptionFeatureDTO]?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct SubscriptionFeatureDTO : ObjectMapper.ImmutableMappable {
+  public var subscriptionFeatureId: Swift.Int?
+  public var featureKey: Swift.String?
+  public var featureName: Swift.String?
+  public var featureDescription: Swift.String?
+  public var comingSoon: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct FreemiumCampaignDTO : ObjectMapper.ImmutableMappable {
+  public var campaignName: Swift.String
+  public var campaignId: Swift.Int
+  public var active: Swift.Bool
+  public var campaignAvailability: Swift.Int
+  public var campaignStart: Swift.String
+  public var campaignEnd: Swift.String
+  public var premiumMonthlyDiscount: Swift.Int
+  public var premiumYearlyDiscount: Swift.Int
+  public var limitlessMonthlyDiscount: Swift.Int
+  public var limitlessYearlyDiscount: Swift.Int
+  public var premiumMonthlyPrice: Swift.Double
+  public var premiumYearlyPrice: Swift.Double
+  public var limitlessMonthlyPrice: Swift.Double
+  public var limitlessYearlyPrice: Swift.Double
+  public var applicabilityMonths: Swift.Int
+  public var popupShowTimes: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+public struct UserSubscriptionDTO : ObjectMapper.ImmutableMappable {
+  public var userSubscriptionId: Swift.Int?
+  public var availabilityStart: Swift.String?
+  public var availabilityEnd: Swift.String?
+  public var subscriptionEnd: Swift.String?
+  public var graceEnd: Swift.String?
+  public var period: Swift.Int?
+  public var amount: Swift.Double?
+  public var refund: Swift.Double?
+  public var subscriptionId: Swift.Int?
+  public var paymentLimitId: Swift.Int?
+  public var isBonus: Swift.Bool?
+  public var monthlyInvoices: Swift.Int?
+  public var usedPayments: Swift.Int?
+  public var bonus: Swift.Bool?
+  public var pointsFactor: Swift.Double?
+  public var active: Swift.Bool?
+  public var renewal: Swift.Bool?
+  public var subscriptionMonth: Swift.Int?
+  public var currentMonthStart: Swift.String?
+  public var currentMonthEnd: Swift.String?
+  public var premiumPayments: Swift.Int?
+  public var premiumSuppliers: Swift.Int?
+  public var countdownDate: Swift.Int64?
+  public var premiumStatusEnabled: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct DTOSubscriptionConstants {
+  public static let premiumStatusEnabled: Swift.String
+  public static let premiumPayments: Swift.String
+  public static let premiumSuppliers: Swift.String
+  public static let countdownDate: Swift.String
+  public static let subscriptionId: Swift.String
+  public static let subscriptionName: Swift.String
+  public static let monthlyPrice: Swift.String
+  public static let discount: Swift.String
+  public static let pointsFactor: Swift.String
+  public static let specialOffers: Swift.String
+  public static let supportTag: Swift.String
+  public static let moneyTransfer: Swift.String
+  public static let taxes: Swift.String
+  public static let newFunctionalities: Swift.String
+  public static let visible: Swift.String
+  public static let subscriptionFeatures: Swift.String
+  public static let yearlyPrice: Swift.String
+  public static let freeTrialDays: Swift.String
+  public static let weight: Swift.String
+  public static let graceDays: Swift.String
+  public static let customSupplier: Swift.String
+  public static let alerts: Swift.String
+  public static let freePlan: Swift.String
+  public static let subscriptionFeatureId: Swift.String
+  public static let featureKey: Swift.String
+  public static let featureName: Swift.String
+  public static let featureDescription: Swift.String
+  public static let comingSoon: Swift.String
+  public static let userSubscriptionId: Swift.String
+  public static let availabilityStart: Swift.String
+  public static let availabilityEnd: Swift.String
+  public static let subscriptionEnd: Swift.String
+  public static let graceEnd: Swift.String
+  public static let period: Swift.String
+  public static let amount: Swift.String
+  public static let refund: Swift.String
+  public static let paymentLimitId: Swift.String
+  public static let isBonus: Swift.String
+  public static let monthlyInvoices: Swift.String
+  public static let usedPayments: Swift.String
+  public static let bonus: Swift.String
+  public static let active: Swift.String
+  public static let renewal: Swift.String
+  public static let subscriptionMonth: Swift.String
+  public static let currentMonthStart: Swift.String
+  public static let currentMonthEnd: Swift.String
+}
+public struct DTOConstants {
+  public static let userSubscriptionId: Swift.String
+  public static let subscriptionId: Swift.String
+  public static let subscriptionName: Swift.String
+  public static let subscriptionLogo: Swift.String
+  public static let subscriptionDuration: Swift.String
+  public static let subscriptionEnd: Swift.String
+  public static let debtPaymentHistoryId: Swift.String
+  public static let institutionName: Swift.String
+  public static let taxIconUrl: Swift.String
+  public static let taxName: Swift.String
+  public static let travelId: Swift.String
+  public static let travelPersonId: Swift.String
+  public static let travelInsuranceStart: Swift.String
+  public static let travelInsuranceEnd: Swift.String
+  public static let travelOfferName: Swift.String
+  public static let travelInsuranceOffererLogo: Swift.String
+  public static let travelFirstName: Swift.String
+  public static let travelLastName: Swift.String
+  public static let travelCountryId: Swift.String
+  public static let travelCountryName: Swift.String
+  public static let travel: Swift.String
+  public static let travelScope: Swift.String
+  public static let subscription: Swift.String
+  public static let recharge: Swift.String
+  public static let rca: Swift.String
+  public static let invoice: Swift.String
+  public static let provider: Swift.String
+  public static let gaming: Swift.String
+  public static let moneyTransfer: Swift.String
+  public static let userProduct: Swift.String
+  public static let pad: Swift.String
+  public static let paymentEntityType: Swift.String
+  public static let autoPayment: Swift.String
+  public static let paymentTimestamp: Swift.String
+  public static let amount: Swift.String
+  public static let paidAmount: Swift.String
+  public static let points: Swift.String
+  public static let cardInfo: Swift.String
+  public static let type: Swift.String
+  public static let defaultCard: Swift.String
+  public static let last4: Swift.String
+  public static let alias: Swift.String
+  public static let cardType: Swift.String
+  public static let cardStatus: Swift.String
+  public static let invoiceList: Swift.String
+  public static let cardId: Swift.String
+  public static let digits: Swift.String
+  public static let invoices: Swift.String
+  public static let usernameRegex: Swift.String
+  public static let passwordLabel: Swift.String
+  public static let passwordLabelEN: Swift.String
+  public static let usernameLabel: Swift.String
+  public static let usernameLabelEN: Swift.String
+  public static let usernameKeyboardType: Swift.String
+  public static let usernamePlaceholderTextId: Swift.String
+  public static let passwordRegex: Swift.String
+  public static let orderId: Swift.String
+  public static let order: Swift.String
+  public static let products: Swift.String
+  public static let barcodeLength: Swift.String
+  public static let barCode: Swift.String
+  public static let onlyScanned: Swift.String
+  public static let qr: Swift.String
+  public static let nip: Swift.String
+  public static let scannable: Swift.String
+  public static let scanEnrolment: Swift.String
+  public static let scanForceEnrolment: Swift.String
+  public static let company: Swift.String
+  public static let visible: Swift.String
+  public static let crawlerId: Swift.String
+  public static let dueDate: Swift.String
+  public static let message: Swift.String
+  public static let `operator`: Swift.String
+  public static let accounts: Swift.String
+  public static let timestamp: Swift.String
+  public static let invoiceId: Swift.String
+  public static let ref: Swift.String
+  public static let errorCode: Swift.String
+  public static let error: Swift.String
+  public static let uri: Swift.String
+  public static let pdfUri: Swift.String
+  public static let issueDate: Swift.String
+  public static let paidInPago: Swift.String
+  public static let credential: Swift.String
+  public static let generated: Swift.String
+  public static let amountDue: Swift.String
+  public static let id: Swift.String
+  public static let locations: Swift.String
+  public static let uuid: Swift.String
+  public static let active: Swift.String
+  public static let hidden: Swift.String
+  public static let posOS: Swift.String
+  public static let body: Swift.String
+  public static let posBuild: Swift.String
+  public static let buildVersion: Swift.String
+  public static let recordId: Swift.String
+  public static let profile: Swift.String
+  public static let description: Swift.String
+  public static let payableEntityId: Swift.String
+  public static let params: Swift.String
+  public static let crawlerServiceId: Swift.String
+  public static let providerType: Swift.String
+  public static let providerCategory: Swift.String
+  public static let providerName: Swift.String
+  public static let dataProviderType: Swift.String
+  public static let resetCredentialUrl: Swift.String
+  public static let name: Swift.String
+  public static let logoImageName: Swift.String
+  public static let registerUrl: Swift.String
+  public static let service: Swift.String
+  public static let icon: Swift.String
+  public static let details: Swift.String
+  public static let payee: Swift.String
+  public static let accountUri: Swift.String
+  public static let serviceUri: Swift.String
+  public static let statusCode: Swift.String
+  public static let accountServiceType: Swift.String
+  public static let remoteId: Swift.String
+  public static let providerTypeId: Swift.String
+  public static let index: Swift.String
+  public static let date: Swift.String
+  public static let acceptedPayments: Swift.String
+  public static let userDetail: Swift.String
+  public static let username: Swift.String
+  public static let pending: Swift.String
+  public static let needsRefresh: Swift.String
+  public static let providerId: Swift.String
+  public static let on: Swift.String
+  public static let newBills: Swift.String
+  public static let dueBills: Swift.String
+  public static let category: Swift.String
+  public static let price: Swift.String
+  public static let headers: Swift.String
+  public static let availability: Swift.String
+  public static let registration_number: Swift.String
+  public static let statusTimestamp: Swift.String
+  public static let seen: Swift.String
+  public static let chassis_number: Swift.String
+  public static let valid_from: Swift.String
+  public static let valid_until: Swift.String
+  public static let country: Swift.String
+  public static let download_url: Swift.String
+  public static let hasPassword: Swift.String
+  public static let status: Swift.String
+  public static let selenium: Swift.String
+  public static let offerId: Swift.String
+  public static let eurPrice: Swift.String
+  public static let eurAmount: Swift.String
+  public static let ronPrice: Swift.String
+  public static let phone: Swift.String
+  public static let phoneNumberId: Swift.String
+  public static let nextDueDate: Swift.String
+  public static let appTimestamp: Swift.String
+  public static let internalRef: Swift.String
+  public static let guid: Swift.String
+  public static let registrationNumber: Swift.String
+  public static let show: Swift.String
+  public static let maxAmount: Swift.String
+  public static let overflowPreference: Swift.String
+  public static let notifyBeforePayment: Swift.String
+  public static let numberOfDaysBefore: Swift.String
+  public static let dayOfMonth: Swift.String
+  public static let validityPeriod: Swift.String
+  public static let notifyAfterPayment: Swift.String
+  public static let enabled: Swift.String
+  public static let locationId: Swift.String
+  public static let displayNameTextId: Swift.String
+  public static let headerTextId: Swift.String
+  public static let colorCode: Swift.String
+  public static let iconUrl: Swift.String
+  public static let iconName: Swift.String
+  public static let headerUrl: Swift.String
+  public static let headerImageName: Swift.String
+  public static let platformLogoImageName: Swift.String
+  public static let platformLogoUrl: Swift.String
+  public static let visibleInOnboardingList: Swift.String
+  public static let isVisible: Swift.String
+  public static let typeIndexes: Swift.String
+  public static let logoUrl: Swift.String
+  public static let imgUrl: Swift.String
+  public static let alertTextRO: Swift.String
+  public static let alertTextEN: Swift.String
+  public static let ro: Swift.String
+  public static let en: Swift.String
+  public static let clearCacheToken: Swift.String
+  public static let compatible: Swift.String
+  public static let sections: Swift.String
+  public static let alertText: Swift.String
+  public static let referralRewardAction: Swift.String
+  public static let invoiceRewardAction: Swift.String
+  public static let carRewardAction: Swift.String
+  public static let rcaRewardAction: Swift.String
+  public static let travelRewardAction: Swift.String
+  public static let prepayRewardAction: Swift.String
+  public static let donationRewardAction: Swift.String
+}
+public struct Download : PagoApiClient.Prioritizable, Swift.Hashable {
+  public var priority: Swift.Int
+  public var completionBlock: (Swift.Error?) -> ()
+  public var localPath: Swift.String
+  public var resource: PagoApiClient.Resource<Foundation.Data>
+  public var hashValue: Swift.Int {
+    get
+  }
+  public static func == (lhs: PagoApiClient.Download, rhs: PagoApiClient.Download) -> Swift.Bool
+  public init(priority: Swift.Int, completionBlock: @escaping (Swift.Error?) -> (), localPath: Swift.String, resource: PagoApiClient.Resource<Foundation.Data>)
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension Foundation.Data : Alamofire.ParameterEncoding {
+  public func encode(_ urlRequest: Alamofire.URLRequestConvertible, with parameters: Alamofire.Parameters?) throws -> Foundation.URLRequest
+}
+public struct CustomArrayEncoding : Alamofire.ParameterEncoding {
+  public let options: Foundation.JSONSerialization.WritingOptions
+  public init(options: Foundation.JSONSerialization.WritingOptions = [])
+  public func encode(_ urlRequest: Alamofire.URLRequestConvertible, with parameters: Alamofire.Parameters?) throws -> Foundation.URLRequest
+}
+public struct InsuranceCountriesDTO : ObjectMapper.ImmutableMappable {
+  public let countries: [PagoApiClient.InsuranceCountryDTO]
+  public let defaultCountry: PagoApiClient.InsuranceCountryDTO
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func getDynamicForms() -> PagoApiClient.Resource<[PagoApiClient.FormDTO]>
+  final public func sendForm(params: [[Swift.String : Swift.String]]) -> PagoApiClient.Resource<()>
+}
+public struct FormDTO : ObjectMapper.ImmutableMappable {
+  public var feedbackFormName: Swift.String?
+  public var feedbackFormLocation: Swift.String?
+  public var feedbackFormEndMessage: Swift.String?
+  public var feedbackComponents: [PagoApiClient.FormComponentDTO]?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct FormComponentDTO : ObjectMapper.ImmutableMappable {
+  public var feedbackName: Swift.String?
+  public var feedbackDefaultValues: Swift.String?
+  public var feedbackInputType: Swift.String?
+  public var feedbackDescription: Swift.String?
+  public var nextFeedbacks: [Swift.String]
+  public init(map: ObjectMapper.Map) throws
+}
+public enum Host {
+  case auth, api, romcard, romcardLive, custom(Swift.String)
+  public var value: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Host : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public protocol DTO {
+  var dictionary: [Swift.String : Any] { get }
+  init?(dictionary: [Swift.String : Any])
+  static func modelsFromDictionaryArray(_ array: [[Swift.String : Any]]) -> [Self]
+}
+extension UIKit.UIColor {
+  convenience public init(hexString: Swift.String)
+}
+extension PagoApiClient.Webservice {
+  final public func posEnrollment(authType: PagoApiClient.AuthenticationType) -> PagoApiClient.Resource<PagoApiClient.PosEnrollmentResponseDTO>
+  final public func setLanguage(_ language: Swift.String, deviceToken: Swift.String, authType: PagoApiClient.AuthenticationType) -> PagoApiClient.Resource<Swift.Void>
+  final public func enrollNotifications(_ apnsToken: Swift.String, locale: Swift.String, deviceToken: Swift.String, session: PagoApiClient.PagoSession? = nil) -> PagoApiClient.Resource<Swift.Void>
+}
+extension PagoApiClient.ApiClient {
+  public func validatePhoneNumber(phone: Swift.String, completionBlock: @escaping (Alamofire.Result<(PagoApiClient.PhoneValidationDTO)>) -> ())
+  public func validateSMS(code: Swift.String, request: Swift.String, phone: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func sendMoney(transferId: Swift.Int64?, toCardId: Swift.Int64? = nil, phoneNumber: Swift.String, amount: Swift.String, message: Swift.String?, gif: Swift.String?, completionBlock: @escaping (Alamofire.Result<PagoApiClient.TransferDTO>) -> ())
+  public func requestMoney(transferId: Swift.Int64?, phoneNumber: Swift.String, amount: Swift.String, message: Swift.String?, gif: Swift.String?, completionBlock: @escaping (Alamofire.Result<PagoApiClient.TransferDTO>) -> ())
+  public func validateMoneyTransfer(guid: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getMoneyTransferLimits(completionBlock: @escaping (Alamofire.Result<(PagoApiClient.TransferCardsLimits)>) -> ())
+  public func getMoneyTransferHistory(completionBlock: @escaping (Alamofire.Result<([PagoApiClient.TransferDTO])>) -> ())
+  public func cancelMoneyTransfer(transferId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func declineMoneyTransfer(transferId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func moneytransferStatus(transferId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.MoneyTransferStatus>) -> ())
+  public func moneytransferProducts(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.MoneyTransferProduct]>) -> ())
+  public func moneytransferSelectProduct(productId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProduct>) -> ())
+  public func moneytransferCurrentProduct(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProduct>) -> ())
+  public func activateMoneyTransferCampaign(productId: Swift.Int64, productCampaignId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProductWCampaignDTO>) -> ())
+  public func getMoneyTransferCampaign(source: Swift.String = "package_flow", completionBlock: @escaping (Alamofire.Result<PagoApiClient.MoneyTransferCampaignDTO>) -> ())
+  public func moneytransferAvailableProducts(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.UserProduct]>) -> ())
+  public func moneytransferFutureProduct(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProduct>) -> ())
+  public func padStatus(padId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PadProductDTO>) -> ())
+  public func moneytransferProductStatus(productId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProduct>) -> ())
+  public func moneytransferProductCancel(productId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func moneytransferProductRenew(productId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserProduct>) -> ())
+  public func moneytransferProductSetCard(productId: Swift.Int64, cardId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getMoneyTransferFeeInfo(transferId: Swift.Int64, cardId: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.TransferFeeInfoDTO>) -> ())
+}
+public struct RecurringPrepaidPaymentDTO : ObjectMapper.ImmutableMappable {
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct InsuranceCountryDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let name: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct TaxesAccountDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let idUser: Swift.Int?
+  public let name: Swift.String?
+  public let username: Swift.String?
+  public let address: Swift.String?
+  public let cui: Swift.String?
+  public let password: Swift.String?
+  public let accountType: Swift.String?
+  public let token: Swift.String?
+  public var locations: [PagoApiClient.TaxesLocationDTO]?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct TaxesLocationDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let type: Swift.String?
+  public let address: Swift.String?
+  public let city: Swift.String?
+  public let message: Swift.String?
+  public let locationCode: Swift.Int?
+  public let locationCui: Swift.Int?
+  public let locationIban: Swift.String?
+  public let locationNotice: Swift.String?
+  public let locationName: Swift.String?
+  public let phone: Swift.String?
+  public let schedule: Swift.String?
+  public let shortName: Swift.String?
+  public let status: Swift.String?
+  public let users: Swift.String?
+  public var taxes: [PagoApiClient.TaxesDTO]?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct TaxesDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int?
+  public let status: PagoApiClient.TaxesDTO.TaxesState?
+  public let amount: Swift.Double?
+  public let amountDue: Swift.Double?
+  public let iconURL: Swift.String?
+  public let label: Swift.String?
+  public let pdfURL: Swift.String?
+  public let priority: Swift.Int?
+  public let taxNumber: Swift.String?
+  public let taxIban: Swift.String?
+  public let taxName: Swift.String?
+  public let code: Swift.String?
+  public enum TaxesState : Swift.String {
+    case unpaid
+    case processing
+    case paid
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct TaxesPaymentDTO : ObjectMapper.ImmutableMappable {
+  public var differentPrices: Swift.Bool
+  public let baseUrl: Swift.String?
+  public let html: Swift.String?
+  public let apiCookies: [PagoApiClient.TaxesPaymentCookiesDTO]?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct TaxesPaymentCookiesDTO : ObjectMapper.ImmutableMappable {
+  public let name: Swift.String?
+  public let value: Swift.String?
+  public let domain: Swift.String?
+  public let path: Swift.String?
+  public let expiryDate: Foundation.Date?
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.ApiClient {
+  public func prepaidOffers(phoneNumber: Swift.String, maxOffers: Swift.Int = 50, completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PrepaidOfferDTO]>) -> ())
+  public func prepaidOffersv2(phoneNumber: Swift.String, maxOffers: Swift.Int = 50, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PrepaidOffersCategoryListDTO>) -> ())
+  public func hidePrepaidHistory(id: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func prepaidRechargeHistory(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PrepaidRechargeDTO]>) -> ())
+  public func rechargePrepaidNumber(requestDTO: PagoApiClient.PrepaidRechargeRequestDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func validatePrepaidRecharge(dto: PagoApiClient.PrepaidRechargeRequestDTO, completionBlock: @escaping (Alamofire.Result<Swift.String>) -> ())
+  public func preauthPrepaidRecharge(id: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PagoPreAuthResponseDTO>) -> ())
+  public func prepaidSale(prepaidRechargeId: Swift.String, cardId: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func singlePrepaidRechargeStatus(prepaidRechargeId: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PrepaidRechargeDTO>) -> ())
+  public func createPrepaidAutoPayment(_ dto: PagoApiClient.PrepayAutoPaymentSettingDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PrepayAutoPaymentSettingDTO>) -> ())
+  public func updatePrepaidAutoPayment(_ dto: PagoApiClient.PrepayAutoPaymentSettingDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PrepayAutoPaymentSettingDTO>) -> ())
+  public func deletePrepaidAutoPayment(phoneNumberId: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getPrepaidAutoPayments(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PrepayAutoPaymentSettingDTO]>) -> ())
+  public func prepaidStatus(id: Swift.Int64, completionBlock: @escaping (Alamofire.Result<PagoApiClient.PrepaidRechargeDTO>) -> ())
+}
+public protocol BaseReferral {
+  var referralBaseLink: Swift.String { get }
+  var domainURIPrefix: Swift.String { get }
+  var bundleID: Swift.String { get }
+  var minimumAppVersion: Swift.String { get }
+  var appStoreID: Swift.String { get }
+  var androidPackageName: Swift.String { get }
+}
+extension Foundation.NSDecimalNumber : Swift.Comparable {
+}
+public func == (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Swift.Bool
+public func < (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Swift.Bool
+prefix public func - (value: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func + (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func - (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func * (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func / (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func ^ (lhs: Foundation.NSDecimalNumber, rhs: Swift.Int) -> Foundation.NSDecimalNumber
+public struct PreauthPaymentDTO : ObjectMapper.ImmutableMappable {
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public enum CardUsage : Swift.String {
+  case invoice, insurance, other, freemium, donation, moneytransfer, product
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.ApiClient {
+  public func fetchAllPersons(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PersonDTO]>) -> ())
+  public func fetchAllLegalEntity(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.LegalEntityDTO]>) -> ())
+  public func getInsuranceConfig(completionBlock: @escaping (Alamofire.Result<PagoApiClient.ConfigDTO>) -> ())
+  public func validateCNP(cnp: Swift.String, completionBlock: @escaping (Alamofire.Result<Swift.Bool>) -> ())
+  public func savePerson(person: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.PersonDTO>) -> ())
+  public func getLegalEntityByCUI(cui: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.LegalEntityDTO>) -> ())
+  public func saveLegalEntity(dic: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.LegalEntityDTO>) -> ())
+  public func deletePerson(personId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func deleteLegalEntity(legalEntityId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getCarByRegistrationNumber(number: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CarDTO>) -> ())
+  public func getCarByVin(vin: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CarDTO>) -> ())
+  public func getCarBrands(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CarBrandDTO]>) -> ())
+  public func getCarModel(brand: Swift.String, completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CarBrandDTO]>) -> ())
+  public func saveCar(car: PagoApiClient.CarDTO, completionBlock: @escaping (Alamofire.Result<PagoApiClient.CarDTO>) -> ())
+  public func getCars(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CarDTO]>) -> ())
+  public func deleteCar(carId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getOffers(requestParams: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<PagoApiClient.InsuranceOffersResponseDTO>) -> ())
+  public func getLeasingEntities(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.LeasingEntitiesResponseDTO]>) -> ())
+  public func getRCAInfoFromNotification(id: Swift.String, completionBlock: @escaping (Alamofire.Result<(PagoApiClient.CarRCAReminderDTO)>) -> ())
+  public func setRCAExpireDate(_ date: Foundation.Date, for carId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func setCarReminder(registrationNumber: Swift.String, daysNumber: Swift.Int, carID: Swift.Int, sendTime: Swift.Double, completionBlock: @escaping (Alamofire.Result<Swift.String>) -> ())
+  public func saveRegistrationNumber(registrationNumber: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getBrandLogo(brand: Swift.String, completionBlock: @escaping (Alamofire.Result<UIKit.UIImage>) -> ())
+  public func saveOffer(offerId: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.SaveOfferResponseDTO>) -> ())
+  public func insuranceSale(points: Swift.Int, offerId: Swift.String, cardId: Swift.String, type: Swift.String = "insurance", completionBlock: @escaping (Alamofire.Result<[PagoApiClient.SaleResponse]>) -> ())
+  public func checkInsuranceSale(offerId: Swift.String, type: Swift.String? = nil, completionBlock: @escaping (Alamofire.Result<PagoApiClient.InsuranceSale>) -> ())
+  public func checkInsurancePdf(offerId: Swift.String, type: Swift.String? = nil, completionBlock: @escaping (Alamofire.Result<PagoApiClient.InsurancePDFGenerated>) -> ())
+  public func requestOriginalPolicy(offerIds: [Swift.String], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getPendingInsuranceOffers(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InsuranceSale]>) -> ())
+  public func getInsurancePDF(offerId: Swift.String) -> PagoApiClient.Resource<Foundation.Data>
+  public func getInsuranceTravelPDF(travelId: Swift.String) -> PagoApiClient.Resource<Foundation.Data>
+  public func getInsuranceCountries(completionBlock: @escaping (Alamofire.Result<PagoApiClient.InsuranceCountriesDTO>) -> ())
+  public func getInsuranceTravelPrograms(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InsuranceTravelProgramDTO]>) -> ())
+  public func getInsuranceTravelOffers(requestParams: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InsuranceOffersResponseDTO]>) -> ())
+  public func saveInsuranceTravelOffer(offerId: Swift.Int, completionBlock: @escaping (Alamofire.Result<PagoApiClient.SaveTravelOfferResponseDTO>) -> ())
+  public func getHouses(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.HouseDTO]>) -> ())
+  public func chainCalls(calls: [(@escaping (Alamofire.Result<()>) -> ()) -> ()], callback: @escaping (Alamofire.Result<()>) -> ())
+}
+public enum PagoError : Swift.Error, Swift.Equatable {
+  case parseError(message: Swift.String, rawText: Swift.String?), apiError(message: Swift.String, statusCode: Swift.Int, rawText: Swift.String?), syncError(message: Swift.String), authError(message: Swift.String), bankError(code: Swift.String, message: Swift.String), limitReached(message: Swift.String), noConnectionError, configurationError(message: Swift.String), wrongCredentials, apiLimitReached
+  public static func == (lhs: PagoApiClient.PagoError, rhs: PagoApiClient.PagoError) -> Swift.Bool
+}
+extension PagoApiClient.PagoError : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var message: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum PaymentItemType : Swift.String {
+  case invoice, provider, vignette, prepay, insurance, freemium, insuranceTravel
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum UrlFormat : Swift.String {
+  case live, test
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct ProviderInfoDTO : ObjectMapper.ImmutableMappable {
+  public var maintenance: Swift.Bool
+  public let message: Swift.String?
+  public let imgUrl: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct ScannedBillDTO : ObjectMapper.ImmutableMappable {
+  public let amountDue: Foundation.NSDecimalNumber
+  public let amount: Foundation.NSDecimalNumber
+  public let dueDate: Foundation.Date
+  public let barcode: Swift.String?
+  public let seen: Swift.Bool
+  public let status: Swift.String
+  public let id: Swift.Int
+  public let statusDate: Foundation.Date
+  public let message: Swift.String?
+  public let errorCode: Swift.String?
+  public var statusEnum: PagoApiClient.PaymentStatus {
+    get
+  }
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.ApiClient {
+  public func fetchTransactionsDetails(type: Swift.String = "all", completionBlock: @escaping (Alamofire.Result<[PagoApiClient.PaymentDetailsDTO]>) -> ())
+  public func deleteInvoice(id: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+public struct RomcardPreAuthRequestDTO : PagoApiClient.DTO {
+  public var amount: Swift.String
+  public var currency: Swift.String
+  public var order: Swift.String
+  public var desc: Swift.String
+  public var merchName: Swift.String
+  public var merchUrl: Swift.String
+  public var merchant: Swift.String
+  public var terminal: Swift.String
+  public var email: Swift.String
+  public var trtype: Swift.Int
+  public var country: Swift.String?
+  public var merchGMT: Swift.Int?
+  public var timestamp: Swift.String
+  public var nonce: Swift.String
+  public var backref: Swift.String
+  public var recurFreq: Swift.Int?
+  public var recurExp: Swift.String?
+  public var pSign: Swift.String
+  public var mInfo: Swift.String?
+  public static func modelsFromDictionaryArray(_ array: [[Swift.String : Any]]) -> [PagoApiClient.RomcardPreAuthRequestDTO]
+  public var urlEncodedString: Swift.String {
+    get
+  }
+  public func queryComponents(fromKey key: Swift.String, value: Any) -> [(Swift.String, Swift.String)]
+  public func escape(_ string: Swift.String) -> Swift.String
+  public struct Keys {
+  }
+  public init(dto: PagoApiClient.PagoPreAuthResponseDTO)
+  public init(amount: Swift.String, currency: Swift.String, order: Swift.String, desc: Swift.String, merchName: Swift.String, merchUrl: Swift.String, terminal: Swift.String, email: Swift.String, trtype: Swift.Int, timestamp: Swift.String, nonce: Swift.String, backref: Swift.String, pSign: Swift.String)
+  public init?(dictionary: [Swift.String : Any])
+  public var dictionary: [Swift.String : Any] {
+    get
+  }
+}
+extension PagoApiClient.Webservice {
+  final public func registerForNotifications(_ posToken: Swift.String, notificationToken: Swift.String, localeCode: Swift.String) -> PagoApiClient.Resource<()>
+  final public func notificationsState(_ posToken: Swift.String) -> PagoApiClient.Resource<PagoApiClient.AllNotificationsStateDTO>
+  final public func updateNotificationState(deviceId: Swift.String, dueBills: Swift.Bool?, newBills: Swift.Bool?, locationId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func confirmNotification(notificationId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func carNotificationDetails() -> PagoApiClient.Resource<[PagoApiClient.CarNotificationDTO]>
+  final public func saveCarNotificationDetails(registrationNumber: Swift.String, details: [[Swift.String : Any]]) -> PagoApiClient.Resource<()>
+  final public func deleteCarNotification(registrationNumber: Swift.String) -> PagoApiClient.Resource<()>
+}
+public struct NotificationStateDTO : ObjectMapper.ImmutableMappable {
+  public let providerId: Swift.Int
+  public let on: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct AllNotificationsStateDTO : ObjectMapper.ImmutableMappable {
+  public let newBills: [PagoApiClient.NotificationStateDTO]
+  public let dueBills: [PagoApiClient.NotificationStateDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarNotificationSettingsDTO : ObjectMapper.ImmutableMappable {
+  public let before30: Swift.Bool?
+  public let before7: Swift.Bool?
+  public let before1: Swift.Bool?
+  public let beforeCustom: Swift.Int?
+  public let notifyBySMS: Swift.Bool?
+  public let notifyByEmail: Swift.Bool?
+  public let notifyByNotification: Swift.Bool?
+  public let smsTo: Swift.String?
+  public let emailTo: Swift.String?
+  public init()
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarNextNotificationDTO : ObjectMapper.ImmutableMappable {
+  public let scheduledNotificationId: Swift.Int64?
+  public let notificationType: Swift.String?
+  public let notificationDate: Swift.Int64?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarNotificationDetailDTO : ObjectMapper.ImmutableMappable {
+  public let detailType: Swift.String
+  public let detailCustomName: Swift.String?
+  public let valueTimestamp: Swift.Int64
+  public let nextNotification: PagoApiClient.CarNextNotificationDTO?
+  public let notificationSettings: PagoApiClient.CarNotificationSettingsDTO
+  public let editable: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct CarNotificationDTO : ObjectMapper.ImmutableMappable {
+  public let carId: Swift.Int64
+  public let registrationNumber: Swift.String
+  public let incomplete: Swift.Bool?
+  public let details: [PagoApiClient.CarNotificationDetailDTO]?
+  public let alertHide: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension Swift.String {
+  public var safeToLog: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Webservice {
+  final public func fetchONGs() -> PagoApiClient.Resource<[PagoApiClient.OngDTO]>
+  final public func getONGdetails(ongId: Swift.Int) -> PagoApiClient.Resource<PagoApiClient.OngDTO>
+  final public func createDonation(amount: Swift.Double, ongId: Swift.Int, isAnnon: Swift.Bool = false) -> PagoApiClient.Resource<PagoApiClient.OngPaymentItem>
+  final public func paymentStatusDonation(offerId: Swift.Int) -> PagoApiClient.Resource<PagoApiClient.SubscriptionStatusDTO>
+  final public func activateRecurringDonation(ongId: Swift.Int, amount: Swift.Double, cardId: Swift.Int, nextDueDate: Swift.String, isAnnon: Swift.Bool = false) -> PagoApiClient.Resource<PagoApiClient.OngRecurrentPaymentItem>
+  final public func getCurrentRecurringStatusForONG(ongId: Swift.Int) -> PagoApiClient.Resource<PagoApiClient.OngRecurrentPaymentItem>
+  final public func deactivateRecurringDonation(ongId: Swift.Int) -> PagoApiClient.Resource<()>
+  final public func getONGpaymentItem(uuid: Swift.String) -> PagoApiClient.Resource<PagoApiClient.OngDeepLinkPaymentItemDTO>
+  final public func createWebDonation(params: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.WebDonationDTO>
+  final public func getRecurringONG() -> PagoApiClient.Resource<[PagoApiClient.OngRecurrentSettings]>
+}
+public struct WebDonationDTO : ObjectMapper.ImmutableMappable {
+  public var redirectUrl: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PhoneValidationDTO : ObjectMapper.ImmutableMappable {
+  public var requestId: Swift.String
+  public var phone: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PagoBillPreauthRequestDTO : ObjectMapper.ImmutableMappable {
+  public let description: Swift.String
+  public let products: [PagoApiClient.BillPaymentDTO]
+  public init(description: Swift.String, products: [PagoApiClient.BillPaymentDTO])
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func getReferralCode(deviceId: Swift.String) -> PagoApiClient.Resource<PagoApiClient.ReferralCodeDTO>
+  final public func getRefereesStatusList(deviceId: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.RefereeStatusDTO]>
+  final public func updateRefereeByCode(deviceId: Swift.String, code: Swift.String) -> PagoApiClient.Resource<()>
+  final public func remindReferrer(deviceId: Swift.String, userId: Swift.String) -> PagoApiClient.Resource<()>
+}
+public struct ReferralCodeDTO : ObjectMapper.ImmutableMappable {
+  public var code: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct RefereeStatusDTO : ObjectMapper.ImmutableMappable {
+  public var posUserId: Swift.Int64
+  public var invoiceCount: Swift.Int64
+  public var principal: Swift.String!
+  public var firstName: Swift.String?
+  public var lastName: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public enum PaymentStatus : Swift.String {
+  case none, pending, finalized, partially_paid, rejected
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class IntTransform : ObjectMapper.TransformType {
+  public typealias Object = Swift.Int
+  public typealias JSON = Swift.String
+  public init()
+  public func transformFromJSON(_ value: Any?) -> Swift.Int?
+  public func transformToJSON(_ value: Swift.Int?) -> Swift.String?
+  @objc deinit
+}
+public class NSDecimalNumberTransform : ObjectMapper.TransformType {
+  public typealias Object = Foundation.NSDecimalNumber
+  public typealias JSON = Swift.String
+  public init()
+  public func transformFromJSON(_ value: Any?) -> Foundation.NSDecimalNumber?
+  public func transformToJSON(_ value: Foundation.NSDecimalNumber?) -> Swift.String?
+  @objc deinit
+}
+public class MilisecondsDateTransform : ObjectMapper.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.Int64
+  public init()
+  public func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  public func transformToJSON(_ value: Foundation.Date?) -> Swift.Int64?
+  @objc deinit
+}
+extension ObjectMapper.DateFormatterTransform {
+  @nonobjc public static let defaultWS: ObjectMapper.DateFormatterTransform
+  @nonobjc public static let defaultCreatedAt: ObjectMapper.DateFormatterTransform
+  @nonobjc public static let dueDate: ObjectMapper.DateFormatterTransform
+}
+public struct UserExtraInfo : ObjectMapper.ImmutableMappable {
+  public var keyValue: Swift.String
+  public var valueString: Swift.String?
+  public var valueBoolean: Swift.Bool?
+  public var valueDate: Swift.Int64?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct UserSettingsDTO : ObjectMapper.ImmutableMappable {
+  public var fingerprint: Swift.Bool?
+  public var insuranceSeen: Swift.Bool?
+  public var travelSeen: Swift.Bool?
+  public var pointsSeen: Swift.Bool?
+  public var providerSeen: Swift.Bool?
+  public var disconnectSeen: Swift.Bool?
+  public var notifications: Swift.Bool?
+  public var language: Swift.String?
+  public var referralSeen: Swift.Bool?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct DTOUserSettingsConstants {
+  public static let fingerprint: Swift.String
+  public static let insuranceSeen: Swift.String
+  public static let travelSeen: Swift.String
+  public static let pointsSeen: Swift.String
+  public static let providerSeen: Swift.String
+  public static let disconnectSeen: Swift.String
+  public static let notifications: Swift.String
+  public static let language: Swift.String
+  public static let referralSeen: Swift.String
+}
+extension PagoApiClient.ApiClient {
+  public func updateNotificationState(dueBills: Swift.Bool?, newBills: Swift.Bool?, locationId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func registerForNotifications(notificationsToken: Swift.String, localeCode: Swift.String, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func confirmNotification(notificationId: Swift.Int, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func carNotificationDetails(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.CarNotificationDTO]>) -> ())
+  public func saveCarNotificationDetails(registrationNumber: Swift.String, details: [[Swift.String : Any]], completionBlock: @escaping ((Alamofire.Result<()>) -> ()))
+  public func deleteCarNotification(registrationNumber: Swift.String, completionBlock: @escaping ((Alamofire.Result<()>) -> ()))
+}
+extension PagoApiClient.ApiClient {
+  public func saveEvent(keyValue: Swift.String, valueString: Swift.String? = nil, valueBoolean: Swift.Bool? = nil, valueDate: Swift.String? = nil, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor(unsafe) public var isSimulator: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var isJailBroken: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func isDebuggerAttached() -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var fullModelName: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Webservice {
+  final public func saveEvent(keyValue: Swift.String, valueString: Swift.String? = nil, valueBoolean: Swift.Bool? = nil, valueDate: Swift.String? = nil) -> PagoApiClient.Resource<()>
+}
+@_hasMissingDesignatedInitializers public class ApiClient {
+  public static let shared: PagoApiClient.ApiClient
+  public var session: PagoApiClient.PagoSession! {
+    get
+    set
+  }
+  final public let webservice: PagoApiClient.Webservice
+  public func resetManager()
+  public func cancelRequests()
+  public func handleSession(_ result: Alamofire.Result<PagoApiClient.PagoSession>, completion: (Alamofire.Result<()>) -> ())
+  public func runIfSessionIsValid<T>(_ block: @escaping (() -> ()), completionBlock: @escaping (_ response: T?, _ error: Swift.Error?) -> ())
+  public func runIfSessionIsValid<T>(_ block: @escaping (() -> ()), completionBlock: @escaping (Alamofire.Result<T>) -> ())
+  public func getValidToken(completion: @escaping (PagoApiClient.PagoJWT?) -> ())
+  @objc deinit
+}
+public enum AccountServiceType : Swift.String {
+  case all, perService
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+open class SoftFailListTransform<T> : ObjectMapper.TransformType where T : ObjectMapper.ImmutableMappable {
+  public typealias Object = [T]
+  public typealias JSON = [[Swift.String : Any]]
+  public init()
+  open func transformFromJSON(_ value: Any?) -> [T]?
+  open func transformToJSON(_ value: [T]?) -> [[Swift.String : Any]]?
+  @objc deinit
+}
+public struct LocationDataDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let service: Swift.String
+  public let icon: Swift.String?
+  public let active: Swift.Bool
+  public let newBills: Swift.Bool
+  public let dueBills: Swift.Bool
+  public let hidden: Swift.Bool
+  public let locationLabel: Swift.String?
+  public let bills: [PagoApiClient.WBInvoiceDTO]
+  public init(id: Swift.Int, service: Swift.String, icon: Swift.String?, active: Swift.Bool, newBills: Swift.Bool, dueBills: Swift.Bool, hidden: Swift.Bool, locationLabel: Swift.String?, bills: [PagoApiClient.WBInvoiceDTO])
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func getAddressByZip(postalCode: Swift.String) -> PagoApiClient.Resource<PagoApiClient.PadPostalCodeAddressesDTO>
+  final public func getAddresses() -> PagoApiClient.Resource<[PagoApiClient.PadAddressDTO]>
+  final public func getBuildingOptions() -> PagoApiClient.Resource<PagoApiClient.PadBuildingOptionsDTO>
+  final public func saveBuilding(body: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PadBuildingDTO>
+  final public func saveAddress(params: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PadAddressDTO>
+  final public func updatePAD(padBuildingDTO: PagoApiClient.PadBuildingDTO) -> PagoApiClient.Resource<PagoApiClient.PadBuildingDTO>
+  final public func getHouseDetails(houseId: Swift.Int64) -> PagoApiClient.Resource<PagoApiClient.PadPropertyDetailsDTO>
+  final public func getHouses() -> PagoApiClient.Resource<[PagoApiClient.HouseDTO]>
+  final public func getPADOffers(houseId: Swift.Int64) -> PagoApiClient.Resource<(PagoApiClient.HouseOffersDTO)>
+  final public func savePADOffer(offerId: Swift.Int64) -> PagoApiClient.Resource<(PagoApiClient.HouseSaveOfferDTO)>
+  final public func getPadPolicyInfo(padPolicyInfo: PagoApiClient.PadPolicyInfoReqDTO) -> PagoApiClient.Resource<PagoApiClient.PadPolicyInfoResDTO>
+}
+public struct PadBuildingDTO : ObjectMapper.ImmutableMappable {
+  public var houseId: Swift.Int64?
+  public var addressId: Swift.Int64?
+  public var personId: Swift.Int64?
+  public var constructionYear: Swift.Int64?
+  public var constructionTypeId: Swift.Int64?
+  public var houseSurface: Swift.Double?
+  public var houseStructureId: Swift.Int64?
+  public var housingTypeId: Swift.Int64?
+  public var heightRegimeId: Swift.Int64?
+  public var roomsNumber: Swift.Int64?
+  public var houseDestinationId: Swift.Int64?
+  public var padDetails: PagoApiClient.PadDetailsDTO?
+  public init?()
+  public init(houseId: Swift.Int64? = nil, addressId: Swift.Int64? = nil, personId: Swift.Int64? = nil, constructionYear: Swift.Int64? = nil, constructionTypeId: Swift.Int64? = nil, houseSurface: Swift.Double? = nil, houseStructureId: Swift.Int64? = nil, housingTypeId: Swift.Int64? = nil, heightRegimeId: Swift.Int64? = nil, roomsNumber: Swift.Int64? = nil, houseDestinationId: Swift.Int64? = nil, padDetailsDTO: PagoApiClient.PadDetailsDTO? = nil)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PadPropertyDetailsDTO : ObjectMapper.ImmutableMappable {
+  public var createdAt: Swift.Int64?
+  public var lastModified: Swift.Int64?
+  public var houseId: Swift.Int64?
+  public var addressId: Swift.Int64?
+  public var constructionYear: Swift.Int64?
+  public var constructionTypeId: Swift.Int64?
+  public var houseSurface: Swift.Double?
+  public var houseStructureId: Swift.Int64?
+  public var housingTypeId: Swift.Int64?
+  public var heightRegimeId: Swift.Int64?
+  public var roomsNumber: Swift.Int64?
+  public var houseDestinationId: Swift.Int64?
+  public var cessionId: Swift.Int64?
+  public var cessionOptionsId: Swift.Int64?
+  public var personId: Swift.Int64?
+  public var legalEntityId: Swift.Int64?
+  public var completed: Swift.Bool?
+  public var ownerAddressId: Swift.Int64?
+  public var padDetails: PagoApiClient.PadDetailsDTO?
+  public init?()
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PadBuildingOptionDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let name: Swift.String
+  public let description: Swift.String?
+  public let housingType: Swift.Int64?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadCityDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let name: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadCountyDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let name: Swift.String
+  public let cities: [PagoApiClient.PadCityDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct CessionOptionDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let title: Swift.String
+  public let mentions: Swift.String?
+  public let cession: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct CessionDODTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let cessionName: Swift.String
+  public let cessionCui: Swift.String
+  public let county: Swift.String
+  public let city: Swift.String
+  public let streetTypeId: Swift.Int64
+  public let streetName: Swift.String
+  public let cessionShortName: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadSeriesDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int64
+  public let seriesNumber: Swift.String
+  public let insurerName: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadBuildingOptionsDTO : ObjectMapper.ImmutableMappable {
+  public var streetTypeList: [PagoApiClient.PadBuildingOptionDTO]
+  public var constructionDestinationList: [PagoApiClient.PadBuildingOptionDTO]
+  public var constructionHeightRegimeList: [PagoApiClient.PadBuildingOptionDTO]
+  public var constructionStructureList: [PagoApiClient.PadBuildingOptionDTO]
+  public var constructionTypeList: [PagoApiClient.PadBuildingOptionDTO]
+  public var locationHousingTypeList: [PagoApiClient.PadBuildingOptionDTO]
+  public var countyList: [PagoApiClient.PadCountyDTO]
+  public var cessionOptionsList: [PagoApiClient.CessionOptionDTO]
+  public var cessionDOList: [PagoApiClient.CessionDODTO]
+  public var floorNumberList: [PagoApiClient.PadBuildingOptionDTO]
+  public var padSeriesList: [PagoApiClient.PadSeriesDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadAddressDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64
+  public var addressName: Swift.String?
+  public var street: Swift.String?
+  public var streetNumber: Swift.String?
+  public var building: Swift.String?
+  public var buildingNumber: Swift.String?
+  public var floor: Swift.String?
+  public var apartment: Swift.String?
+  public var city: Swift.String?
+  public var county: Swift.String?
+  public var postalCode: Swift.String?
+  public var iconId: Swift.String?
+  public var defaultAddress: Swift.Bool?
+  public var contactPersonName: Swift.String?
+  public var contactPersonPhone: Swift.String?
+  public var streetType: Swift.Int64?
+  public var floorNumber: Swift.Int64?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadPostalCodeAddressesDTO : ObjectMapper.ImmutableMappable {
+  public var error: Swift.String?
+  public var info: Swift.String?
+  public var addressList: [PagoApiClient.PadPostalCodeAddressDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadPostalCodeAddressDTO : ObjectMapper.ImmutableMappable {
+  public var county: Swift.String?
+  public var city: Swift.String?
+  public var subcity: Swift.String?
+  public var streetType: Swift.String?
+  public var streetName: Swift.String?
+  public var streetNo: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadDetailsDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64?
+  public var expirationDate: Swift.Int64?
+  public var startDate: Swift.Int64?
+  public var policyNumber: Swift.String?
+  public var expirationDateEditable: Swift.Bool?
+  public init(id: Swift.Int64? = nil, expirationDate: Swift.Int64? = nil, startDate: Swift.Int64? = nil, policyNumber: Swift.String? = nil, expirationDateEditable: Swift.Bool? = nil)
+  public init(map: ObjectMapper.Map) throws
+}
+public struct HouseSaveOfferDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64
+  public init(map: ObjectMapper.Map) throws
+}
+public struct HouseDTO : ObjectMapper.ImmutableMappable {
+  public var houseId: Swift.Int
+  public var addressString: Swift.String?
+  public let houseName: Swift.String?
+  public let icon: Swift.String?
+  public let expirationDate: Swift.Int64?
+  public let startDate: Swift.Int64?
+  public let completed: Swift.Bool
+  public init(map: ObjectMapper.Map) throws
+}
+public struct HouseOffersDTO : ObjectMapper.ImmutableMappable {
+  public var error: Swift.String?
+  public var info: Swift.String?
+  public let padOfferDTOList: [PagoApiClient.HouseOfferDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct HouseOfferDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64
+  public var name: Swift.String
+  public var productName: Swift.String?
+  public var padPremiumEur: Swift.Double?
+  public var padPremiumLei: Swift.Double
+  public var padOfferCode: Swift.String?
+  public var padOfferId: Swift.String?
+  public var padWordingLink: Swift.String?
+  public var padPidLink: Swift.String?
+  public var statusResponse: Swift.String?
+  public var errorInfo: Swift.String?
+  public var timeResponse: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PadPolicyInfoReqDTO : ObjectMapper.ImmutableMappable {
+  public var policyNo: Swift.String
+  public var clientId: Swift.String
+  public var county: Swift.String
+  public var city: Swift.String
+  public var refDate: Swift.Int64
+  public init(policyNo: Swift.String, clientId: Swift.String, county: Swift.String, city: Swift.String, refDate: Swift.Int64)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct PadPolicyInfoResDTO : ObjectMapper.ImmutableMappable {
+  public var error: Swift.String?
+  public var info: Swift.String?
+  public var policyNo: Swift.String?
+  public var insurer: Swift.String?
+  public var buildingType: Swift.String?
+  public var from: Swift.String?
+  public var to: Swift.String?
+  public var issueAt: Swift.String?
+  public var zipcode: Swift.String?
+  public var county: Swift.String?
+  public var city: Swift.String?
+  public var subCity: Swift.String?
+  public var streetType: Swift.String?
+  public var streetName: Swift.String?
+  public var streetNo: Swift.String?
+  public var flat: Swift.String?
+  public var stair: Swift.String?
+  public var floor: Swift.String?
+  public var apt: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct SaleResponse : ObjectMapper.ImmutableMappable {
+  public let threeDSAcsurl: Swift.String?
+  public var threeDSTrxId: Swift.String?
+  public var deviceFingerprintHTML: Swift.String?
+  public var unmappedErrorCode: Swift.String?
+  public var threeDSHtml: Swift.String?
+  public var mdOrder: Swift.String?
+  public var returnUrl: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct MoneyTransferSaleResponse : ObjectMapper.ImmutableMappable {
+  public let backUrl: Swift.String
+  public let redirectUrl: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct ProfileDTO : ObjectMapper.ImmutableMappable {
+  public let firstName: Swift.String?
+  public let lastName: Swift.String?
+  public let email: Swift.String
+  public let phoneNumber: Swift.String?
+  public let createdAt: Swift.Int64?
+  public init(firstName: Swift.String, lastName: Swift.String, email: Swift.String, createdAt: Swift.Int64, phoneNumber: Swift.String)
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct EnelOfferDTO : ObjectMapper.ImmutableMappable {
+  public let benefit_account_details_info_description: Swift.String?
+  public let benefit_account_details_info_title: Swift.String?
+  public let benefit_account_details_title: Swift.String?
+  public let benefit_additional: Swift.String?
+  public let benefit_additional_info_description: Swift.String?
+  public let benefit_additional_info_title: Swift.String?
+  public let benefit_additional_title: Swift.String?
+  public let benefit_online: Swift.String?
+  public let benefit_online_details_info_description: Swift.String?
+  public let benefit_online_details_info_title: Swift.String?
+  public let benefit_online_details_title: Swift.String?
+  public let benefit_pago: Swift.String?
+  public let benefit_pago_info_description: Swift.String?
+  public let benefit_pago_info_title: Swift.String?
+  public let benefit_pago_title: Swift.String?
+  public let benefit_price_details_info_description: Swift.String?
+  public let benefit_price_details_info_title: Swift.String?
+  public let benefit_price_details_title: Swift.String?
+  public let daily_cost: Swift.String?
+  public let daily_info: Swift.String?
+  public let daily_info_description: Swift.String?
+  public let flygo_terms_link: Swift.String?
+  public let info_cost: Swift.String?
+  public let info_description: Swift.String?
+  public let info_title: Swift.String?
+  public let kwh_cost: Swift.String?
+  public let kwh_info: Swift.String?
+  public let kwh_info_description: Swift.String?
+  public let points_terms_link: Swift.String?
+  public let title: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct AppConfigDTO : ObjectMapper.ImmutableMappable {
+  public struct AppSectionDTO : ObjectMapper.ImmutableMappable {
+    public let section: Swift.String
+    public let enabled: Swift.Bool
+    public let roText: Swift.String?
+    public let enText: Swift.String?
+    public let platform: Swift.String?
+    public init(map: ObjectMapper.Map) throws
+    public func mapping(map: ObjectMapper.Map)
+  }
+  public let clearCacheToken: Swift.String
+  public let compatible: Swift.Bool
+  public let sections: [PagoApiClient.AppConfigDTO.AppSectionDTO]
+  public init(clearCacheToken: Swift.String, compatible: Swift.Bool, sections: [PagoApiClient.AppConfigDTO.AppSectionDTO])
+  public init(map: ObjectMapper.Map) throws
+  public func mapping(map: ObjectMapper.Map)
+}
+extension ObjectMapper.ImmutableMappable {
+  public init?(data: Foundation.Data, context: ObjectMapper.MapContext? = nil) throws
+}
+public struct InsuranceTravelProgramDTO : ObjectMapper.ImmutableMappable {
+  public let key: Swift.String
+  public let name: Swift.String
+  public let travelScopes: [PagoApiClient.InsuranceTravelScopeDTO]
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+@_hasMissingDesignatedInitializers public class ApiSwitcher {
+  public enum Mode {
+    case stage, live, preLive, custom(Swift.String, PagoApiClient.UrlFormat)
+    public var baseHost: Swift.String {
+      get
+    }
+    public var api: Swift.String {
+      get
+    }
+    public var name: Swift.String {
+      get
+    }
+  }
+  public static var mode: PagoApiClient.ApiSwitcher.Mode {
+    get
+    set
+  }
+  @objc deinit
+}
+public struct InsuranceTravelFeatureDTO : ObjectMapper.ImmutableMappable {
+  public let id: Swift.Int
+  public let name: Swift.String
+  public let description: Swift.String?
+  public let icon: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.ApiClient {
+  public func getDynamicForms(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.FormDTO]>) -> ())
+  public func sendForm(params: [[Swift.String : Swift.String]], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+public protocol BaseNetwork {
+  var baseURL: Swift.String { get }
+}
+extension PagoApiClient.ApiClient {
+  public func getInternationalizationValidateAccount(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InternationalizationLabelDTO]>) -> ())
+  public func getInternationalizationTextGhiseul(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InternationalizationLabelDTO]>) -> ())
+  public func getInternationalizationTextVisaPoland(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InternationalizationLabelDTO]>) -> ())
+  public func getInternationalizationTextThreeProviders(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.InternationalizationLabelDTO]>) -> ())
+}
+public struct MoneyTransferCampaignProductDTO : ObjectMapper.ImmutableMappable {
+  public var productCampaignId: Swift.Int64
+  public var campaignType: Swift.String
+  public var title: Swift.String
+  public var details: Swift.String
+  public var confirmationTitle: Swift.String
+  public var confirmationDetails: Swift.String
+  public var confirmationSkip: Swift.String
+  public var confirmationOk: Swift.String
+  public var introTitle: Swift.String
+  public var introDetails: Swift.String
+  public var introSkip: Swift.String
+  public var introOk: Swift.String
+  public var activatedTitle: Swift.String
+  public var activatedDetails: Swift.String
+  public var campaignTypeLogo: Swift.String
+  public var checkoutInfoTitle: Swift.String
+  public var checkoutInfoDetails: Swift.String
+  public var checkoutInfoOk: Swift.String
+  public var availableProducts: [PagoApiClient.MoneyTransferCampaignAvailableProductDTO]
+  public init(map: ObjectMapper.Map) throws
+}
+@_hasMissingDesignatedInitializers public class DeviceTokenManager {
+  public static let sharedManager: PagoApiClient.DeviceTokenManager
+  public var deviceToken: Swift.String? {
+    get
+    set(value)
+  }
+  public func clearDeviceToken()
+  public func clear()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class SharedConstants : ObjectiveC.NSObject {
+  public static let kTestDataKey: Swift.String
+  public static let NotifcationsTokenKey: Swift.String
+  public static let ReloadInvoicesKey: Swift.String
+  public static let LocationDataUpdatedKey: Swift.String
+  public static let HistoryFilterKey: Swift.String
+  public static let TermsAndConditionsUrl: Swift.String
+  public static let AccountsSynced: Swift.String
+  public static let authPath: Swift.String
+  public static let LogoutNotificationKey: Swift.String
+  @objc public static let remainingAttempts: Swift.String
+  public static let scannedBillsMagicString: Swift.String
+  public static let scanSaveReleaseDate: Swift.String
+  public struct Texts {
+    public static let configure: Swift.String
+    public static let scan: Swift.String
+  }
+  public static let AccountSyncTakingTooLongKey: Swift.String
+  public static let maxFilterAmount: Swift.Int
+  public static let minFilterAmount: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol Prioritizable {
+  var priority: Swift.Int { get }
+}
+open class SyncronizedPriorityQueue<Job> where Job : PagoApiClient.Prioritizable {
+  open func enqueue(job: Job)
+  open func remove(matching: (Job) -> Swift.Bool)
+  open func deque() -> Job?
+  public init(_ jobs: [Job])
+  public init()
+  open func contents() -> Swift.String
+  @objc deinit
+}
+public class DownloadQueue {
+  public var ongoing: Swift.Set<PagoApiClient.Download>
+  final public let priorityQueue: PagoApiClient.SyncronizedPriorityQueue<PagoApiClient.Download>
+  final public let webservice: PagoApiClient.Webservice
+  public static let shared: PagoApiClient.DownloadQueue
+  public init(_ webservice: PagoApiClient.Webservice)
+  public func enqueue(download: PagoApiClient.Download)
+  public func cancel(download: PagoApiClient.Download)
+  public func startNext()
+  final public let fileManager: Foundation.FileManager
+  public func handleCompleted(download: PagoApiClient.Download, data: Foundation.Data)
+  public func handleFailed(download: PagoApiClient.Download, error: Swift.Error?)
+  @objc deinit
+}
+extension Foundation.FileManager {
+  public func save(data: Foundation.Data, path: Swift.String)
+  public func directoryExists(path: Swift.String) -> Swift.Bool
+  public func fileExists(at url: Foundation.URL) -> Swift.Bool
+}
+postfix operator >?
+postfix public func >? (obj: Any) -> Swift.String?
+postfix public func >? (obj: Any?) -> Swift.String?
+postfix operator >>?
+postfix public func >>? (obj: Any) -> Swift.Int?
+postfix public func >>? (obj: Any?) -> Swift.Int?
+postfix operator >>>?
+postfix public func >>>? (obj: Any) -> Swift.Double?
+postfix public func >>>? (obj: Any?) -> Swift.Double?
+public func unwrap<T, U, V, W>(_ t: (T?, U?, V?, W?)) -> (T, U, V, W)?
+public func unwrap<T, U, V>(_ t: (T?, U?, V?)) -> (T, U, V)?
+public func unwrap<T, U>(_ t: (T?, U?)) -> (T, U)?
+public class PagoSession {
+  public var refreshToken: PagoApiClient.PagoJWT
+  public var accessToken: PagoApiClient.PagoJWT
+  public var anonymous: Swift.Bool {
+    get
+  }
+  public init(accessToken: PagoApiClient.PagoJWT, refreshToken: PagoApiClient.PagoJWT)
+  @objc deinit
+}
+extension PagoApiClient.PagoSession : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum SubscriptionPeriod : Swift.Int {
+  case none, monthly, yearly
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension PagoApiClient.ApiClient {
+  public func checkForFreeTrial(completionBlock: @escaping (Alamofire.Result<[Swift.String : Any]>) -> ())
+  public func getAllSubscriptions(localeID: Swift.String, completionBlock: @escaping (Alamofire.Result<[PagoApiClient.SubscriptionDTO]>) -> ())
+  public func subscribe(subscriptionID: Swift.Int, subscriptionPeriod: PagoApiClient.SubscriptionPeriod, campaignId: Swift.Int? = nil, forceFreeTrial: Swift.Bool = false, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func unsubscribe(completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func upgrade(subscriptionID: Swift.Int, subscriptionPeriod: PagoApiClient.SubscriptionPeriod, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func downgrade(subscriptionID: Swift.Int, subscriptionPeriod: PagoApiClient.SubscriptionPeriod, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func activeSubscription(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserSubscriptionDTO>) -> ())
+  public func unpaidSubscription(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserSubscriptionDTO>) -> ())
+  public func historySubscriptions(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.UserSubscriptionDTO]>) -> ())
+  public func checkSubscriptionPaymentStatus(statusId: Swift.String, completionBlock: @escaping (Alamofire.Result<PagoApiClient.SubscriptionStatusDTO>) -> ())
+  public func renewSubscription(subscriptionID: Swift.Int, subscriptionPeriod: PagoApiClient.SubscriptionPeriod, userSubscriptionId: Swift.Int? = nil, campaignId: Swift.Int? = nil, completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getUserRenew(completionBlock: @escaping (Alamofire.Result<PagoApiClient.UserSubscriptionDTO>) -> ())
+  public func getUsage(completionBlock: @escaping (Alamofire.Result<PagoApiClient.SubscriptionUsageDTO>) -> ())
+  public func changeFreeTrial(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func upgradeWithBonus(params: [Swift.String : Any], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+  public func getCampaign(completionBlock: @escaping (Alamofire.Result<[PagoApiClient.FreemiumCampaignDTO]>) -> ())
+}
+public typealias JSONDictionary = [Swift.String : Any]
+public typealias JSONArray = [Swift.AnyObject]
+public enum AuthenticationType {
+  case none, auto, basic, oauthSession(PagoApiClient.PagoSession)
+}
+extension PagoApiClient.Webservice {
+  public struct Keys {
+  }
+  final public var session: PagoApiClient.PagoSession! {
+    get
+    set
+  }
+  final public var sharedSession: PagoApiClient.PagoSession? {
+    get
+    set
+  }
+}
+@objc @_inheritsConvenienceInitializers public class ErrorCodes : ObjectiveC.NSObject {
+  @objc public static let InvalidPin: Swift.Int
+  @objc public static let ExceededNumberOfRetries: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension PagoApiClient.Webservice {
+  final public var sessionAuthType: PagoApiClient.AuthenticationType {
+    get
+  }
+}
+final public class Webservice {
+  final public func resetManager()
+  public init()
+  final public var logRequests: Swift.Bool
+  final public func shouldFilterRequestBody(url: Swift.String) -> Swift.Bool
+  final public func filetrRequestBody(url: Swift.String, requestBody: Swift.String) -> Swift.String
+  final public func shouldFilterResponse(url: Swift.String) -> Swift.Bool
+  final public func filterResponses(url: Swift.String) -> Swift.String
+  final public func refreshSesion<T>(session: PagoApiClient.PagoSession, resource: PagoApiClient.Resource<T>, completion: @escaping (Alamofire.Result<T>) -> ())
+  final public func load<T>(_ resource: PagoApiClient.Resource<T>, completion: @escaping (Alamofire.Result<T>) -> ())
+  final public func load<T>(_ resource: PagoApiClient.Resource<T>, completion: @escaping (Alamofire.Result<T>, Swift.Int) -> ())
+  @objc deinit
+}
+public class PadProductDTO : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64
+  public var status: Swift.String?
+  public var errorCode: Swift.String?
+  public var timestamp: Swift.Int64?
+  public var amount: Swift.Double?
+  required public init(map: ObjectMapper.Map) throws
+  @objc deinit
+}
+public class UserProduct : ObjectMapper.ImmutableMappable {
+  public var approval: Swift.String?
+  public var availabilityEnd: Swift.String?
+  public var availabilityStart: Swift.String?
+  public var cardId: Swift.Int64?
+  public var expiredDate: Swift.String?
+  public var product: PagoApiClient.MoneyTransferProduct
+  public var remainingBenefits: Swift.Int64
+  public var renewable: Swift.Bool
+  public var renewedUserProductId: Swift.Int64?
+  public var status: Swift.String?
+  public var errorCode: Swift.String?
+  public var statusTimestamp: Swift.Int64?
+  public var userProductId: Swift.Int64
+  required public init(map: ObjectMapper.Map) throws
+  @objc deinit
+}
+public struct MoneyTransferProduct : ObjectMapper.ImmutableMappable {
+  public var productId: Swift.Int64
+  public var name: Swift.String
+  public var logoUrl: Swift.String
+  public var price: Swift.Double
+  public var nrOfBenefits: Swift.Int
+  public var productType: Swift.String
+  public var benefits: Swift.String
+  public var weight: Swift.Int
+  public init(map: ObjectMapper.Map) throws
+}
+public struct MoneyTransferStatus : ObjectMapper.ImmutableMappable {
+  public var id: Swift.Int64
+  public var status: Swift.String?
+  public var errorCode: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct TransferDTO : ObjectMapper.ImmutableMappable {
+  public var transferId: Swift.Int64
+  public var amount: Swift.Double
+  public var fee: Swift.Double?
+  public var description: Swift.String?
+  public var gifUrl: Swift.String?
+  public var guid: Swift.String?
+  public var to: PagoApiClient.TransferParticipantDTO
+  public var from: PagoApiClient.TransferParticipantDTO
+  public var sender: Swift.Bool
+  public var request: Swift.Bool
+  public var cancelledDate: Swift.Int64?
+  public var declinedDate: Swift.Int64?
+  public var validUntil: Swift.Int64
+  public var statusTimestamp: Swift.Int64?
+  public var status: Swift.String
+  public var errorCode: Swift.String?
+  public var bankResponse: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct TransferParticipantDTO : ObjectMapper.ImmutableMappable {
+  public var cardId: Swift.Int64?
+  public var posUserId: Swift.Int64?
+  public var phoneNumber: Swift.String
+  public init(map: ObjectMapper.Map) throws
+}
+public struct TransferCardsLimits : ObjectMapper.ImmutableMappable {
+  public var limit: Swift.Double
+  public var cardLimits: [PagoApiClient.TransferCardLimit]
+  public init(map: ObjectMapper.Map) throws
+}
+public struct TransferCardLimit : ObjectMapper.ImmutableMappable {
+  public var cardId: Swift.Int64
+  public var fromFinalizedAmount: Swift.Double
+  public var toFinalizedAmount: Swift.Double
+  public var fromPendingAmount: Swift.Double
+  public var toPendingAmount: Swift.Double
+  public init(map: ObjectMapper.Map) throws
+}
+extension PagoApiClient.Webservice {
+  final public func preAuth(dto: PagoApiClient.PagoBillPreauthRequestDTO) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func preAuth(points: Swift.Int, items: [PagoApiClient.PaymentItemDTO]) throws -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func preAuth(invoices: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func preAuthCredorax(invoices: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthCredoraxDTO>
+  final public func preAuthWithoutPayment(usage: PagoApiClient.CardUsage, paymentProcessor: Swift.String?) -> PagoApiClient.Resource<PagoApiClient.PagoPreAuthResponseDTO>
+  final public func paymentConfirmation(deviceId: Swift.String, type: Swift.String, id: Swift.Int64) -> PagoApiClient.Resource<()>
+  final public func romcardPreAuth(string: Swift.String, host: PagoApiClient.Host = .romcard) -> PagoApiClient.Resource<Swift.String>
+  final public func romcardBackrefCall(token: Swift.String, urlString: Swift.String) -> PagoApiClient.Resource<PagoApiClient.CardResponseDTO>
+  final public func backrefCallNoResponse(urlString: Swift.String) -> PagoApiClient.Resource<()>
+  final public func cardList(_ type: Swift.String) -> PagoApiClient.Resource<[PagoApiClient.CardResponseDTO]>
+  final public func freemiumCard() -> PagoApiClient.Resource<[Swift.String : Any]>
+  final public func setFreemiumCard(cardId: Swift.Int64) -> PagoApiClient.Resource<()>
+  final public func continue3ds(id: Swift.String) -> PagoApiClient.Resource<PagoApiClient.CardResponseDTO>
+  final public func pollBymdOrder(mdOrder: Swift.String) -> PagoApiClient.Resource<PagoApiClient.SaleResponse>
+  final public func recurringPayment(dto: PagoApiClient.RecurringPaymentDTO) -> PagoApiClient.Resource<[PagoApiClient.SaleResponse]>
+  final public func makePayment(item: [Swift.String : Any]) -> PagoApiClient.Resource<[PagoApiClient.SaleResponse]>
+  final public func makePaymentMoneyTransfer(body: [Swift.String : Any]) -> PagoApiClient.Resource<PagoApiClient.MoneyTransferSaleResponse>
+  final public func recurringBillPayment(dto: PagoApiClient.RecurringBillsPaymentDTO) -> PagoApiClient.Resource<[PagoApiClient.SaleResponse]>
+  final public func recurringVignettePayment(deviceId: Swift.String, dto: PagoApiClient.RecurringVignettePaymentDTO) -> PagoApiClient.Resource<()>
+  final public func recurringPrepaidPayment(deviceId: Swift.String, dto: PagoApiClient.RecurringPrepaidPaymentDTO) -> PagoApiClient.Resource<()>
+  final public func setCardState(deviceId: Swift.String, cardId: Swift.String, state: PagoApiClient.CardState) -> PagoApiClient.Resource<()>
+  final public func removeCard(cardId: Swift.String) -> PagoApiClient.Resource<()>
+  final public func changeCard(oldCardId: Swift.String, newCardId: Swift.String) -> PagoApiClient.Resource<()>
+  final public func markAsPrimary(cardId: Swift.String, cardType: Swift.String) -> PagoApiClient.Resource<()>
+  final public func markAsSeen(deviceId: Swift.String, bills: [Swift.Int64] = [], prepaidRecharges: [Swift.Int64] = [], vignettes: [Swift.Int64] = []) -> PagoApiClient.Resource<()>
+  final public func resetPendingItems(params: [[Swift.String : Any]]) -> PagoApiClient.Resource<()>
+}
+public enum CardState : Swift.String {
+  case set, unset
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.ApiClient {
+  public func setPromoCode(params: [Swift.String : Swift.String], completionBlock: @escaping (Alamofire.Result<()>) -> ())
+}
+extension PagoApiClient.Webservice {
+  final public func setPromoCode(deviceToken: Swift.String, params: [Swift.String : Swift.String]) -> PagoApiClient.Resource<()>
+}
+public struct SingleRecurringPaymentDTO {
+  public let id: Swift.String
+  public let type: PagoApiClient.PaymentItemType
+  public let cardId: Swift.String
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+public struct RecurringBillsPaymentDTO : ObjectMapper.ImmutableMappable {
+  public init(description: Swift.String, cardId: Swift.String, bills: [PagoApiClient.BillPaymentDTO])
+  public init(map: ObjectMapper.Map) throws
+  public mutating func mapping(map: ObjectMapper.Map)
+}
+extension PagoApiClient.Webservice {
+  final public func checkVersion(version: Swift.String, authType: PagoApiClient.AuthenticationType? = nil) -> PagoApiClient.Resource<Swift.Bool>
+  final public func getAppConfig(version: Swift.String, authType: PagoApiClient.AuthenticationType? = nil, deviceToken: Swift.String) -> PagoApiClient.Resource<PagoApiClient.AppConfigDTO>
+  final public func accessDisabledSection(version: Swift.String, section: Swift.String) -> PagoApiClient.Resource<()>
+}
+public struct RedirectDTO : ObjectMapper.ImmutableMappable {
+  public let redirect: Swift.Bool?
+  public let error: Swift.Bool?
+  public let message: Swift.String?
+  public init(map: ObjectMapper.Map) throws
+}
+public struct PagoJWT {
+}
+extension PagoApiClient.Target : Swift.Equatable {}
+extension PagoApiClient.Target : Swift.Hashable {}
+extension PagoApiClient.GrantType : Swift.Equatable {}
+extension PagoApiClient.GrantType : Swift.Hashable {}
+extension PagoApiClient.GrantType : Swift.RawRepresentable {}
+extension PagoApiClient.OngStoryItemDTO.StoryType : Swift.Equatable {}
+extension PagoApiClient.OngStoryItemDTO.StoryType : Swift.Hashable {}
+extension PagoApiClient.OngStoryItemDTO.StoryType : Swift.RawRepresentable {}
+extension PagoApiClient.OngHistoryItemDTO.DonateHistoryState : Swift.Equatable {}
+extension PagoApiClient.OngHistoryItemDTO.DonateHistoryState : Swift.Hashable {}
+extension PagoApiClient.OngHistoryItemDTO.DonateHistoryState : Swift.RawRepresentable {}
+extension PagoApiClient.CountryPickerMode : Swift.Equatable {}
+extension PagoApiClient.CountryPickerMode : Swift.Hashable {}
+extension PagoApiClient.LanguageCode : Swift.Equatable {}
+extension PagoApiClient.LanguageCode : Swift.Hashable {}
+extension PagoApiClient.LanguageCode : Swift.RawRepresentable {}
+extension PagoApiClient.TaxesDTO.TaxesState : Swift.Equatable {}
+extension PagoApiClient.TaxesDTO.TaxesState : Swift.Hashable {}
+extension PagoApiClient.TaxesDTO.TaxesState : Swift.RawRepresentable {}
+extension PagoApiClient.CardUsage : Swift.Equatable {}
+extension PagoApiClient.CardUsage : Swift.Hashable {}
+extension PagoApiClient.CardUsage : Swift.RawRepresentable {}
+extension PagoApiClient.PaymentItemType : Swift.Equatable {}
+extension PagoApiClient.PaymentItemType : Swift.Hashable {}
+extension PagoApiClient.PaymentItemType : Swift.RawRepresentable {}
+extension PagoApiClient.UrlFormat : Swift.Equatable {}
+extension PagoApiClient.UrlFormat : Swift.Hashable {}
+extension PagoApiClient.UrlFormat : Swift.RawRepresentable {}
+extension PagoApiClient.PaymentStatus : Swift.Equatable {}
+extension PagoApiClient.PaymentStatus : Swift.Hashable {}
+extension PagoApiClient.PaymentStatus : Swift.RawRepresentable {}
+extension PagoApiClient.AccountServiceType : Swift.Equatable {}
+extension PagoApiClient.AccountServiceType : Swift.Hashable {}
+extension PagoApiClient.AccountServiceType : Swift.RawRepresentable {}
+extension PagoApiClient.SubscriptionPeriod : Swift.Equatable {}
+extension PagoApiClient.SubscriptionPeriod : Swift.Hashable {}
+extension PagoApiClient.SubscriptionPeriod : Swift.RawRepresentable {}
+extension PagoApiClient.CardState : Swift.Equatable {}
+extension PagoApiClient.CardState : Swift.Hashable {}
+extension PagoApiClient.CardState : Swift.RawRepresentable {}

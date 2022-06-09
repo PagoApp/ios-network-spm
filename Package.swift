@@ -4,11 +4,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "PagoNetworkSPM",
+    name: "PagoNetworkSDK",
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "PagoNetworkSPM",
+            name: "PagoNetworkSDK",
             targets: ["PagoNetworkSPM"]),
     ],
     dependencies: [
@@ -18,9 +18,14 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
+        .binaryTarget(
+            name: "PagoApiClient",
+            path: "PagoApiClient.xcframework"),
         .target(
             name: "PagoNetworkSPM",
-            dependencies: []),
+            dependencies: [
+                .target(name: "PagoApiClient")
+            ]),
         .testTarget(
             name: "PagoNetworkSPMTests",
             dependencies: ["PagoNetworkSPM"]),

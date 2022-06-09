@@ -1,0 +1,62 @@
+pipeline {
+    agent { label 'mac-mini-slave' }
+    
+    parameters {
+        // the default choice for commit-triggered builds is the first item in the choices list
+        choice(name: 'buildVariant', choices: ['Dev'], description: 'The variants to build')
+    }
+
+    environment {
+        LC_ALL = 'en_US.UTF-8'
+        APP_NAME = 'PagoApiClient'
+        BUILD_NAME = 'PagoApiClient'
+        APP_TARGET = 'PagoApiClient'
+        APP_PROJECT = 'PagoApiClient.xcodeproj'
+        APP_WORKSPACE = 'PagoApiClient.xcworkspace'
+        APP_TEST_SCHEME = 'PagoApliClient'
+        PUBLISH_TO_CHANNEL = 'slack'
+    }
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Update Env with Build Variant') {
+            steps {
+                script {
+                    env.BUILD_VARIANT = params.buildVariant
+                    // Conditionally define a build variant 'impact'
+                }
+            }
+        }
+
+        stage('Unit Test cases') {
+            steps {
+                script {
+                    try {
+                        sh "fastlane run run_tests"
+                    } catch(exc) {
+                        currentBuild.result = "UNSTABLE"
+                        error('There are failed tests.')
+                    }
+                }
+            }
+
+        }
+        
+        stage('Increment version') {
+        
+            steps {
+                
+            
+            }
+        
+        }
+
+
+    }
+
+}
