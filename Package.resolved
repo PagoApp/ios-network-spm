@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "ios-core-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/PagoApp/ios-core-spm",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1b65a330ec80d3aff3f71f6860e35b725a97f72c"
+      }
+    }
+  ],
+  "version" : 2
+}
