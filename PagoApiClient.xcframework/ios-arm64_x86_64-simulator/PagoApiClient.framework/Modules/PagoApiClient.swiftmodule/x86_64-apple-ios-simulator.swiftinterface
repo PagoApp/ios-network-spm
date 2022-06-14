@@ -1,0 +1,1974 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 effective-4.2 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios15.5-simulator -enable-objc-interop -enable-library-evolution -swift-version 4.2 -enforce-exclusivity=checked -O -module-name PagoApiClient
+import CoreFoundation
+import CoreTelephony
+import Dispatch
+import Foundation
+import MobileCoreServices
+@_exported import PagoApiClient
+import Security
+import Swift
+import SystemConfiguration
+import UIKit
+import _Concurrency
+public enum Target {
+  case ro
+  case int
+  public static func == (a: PagoApiClient.Target, b: PagoApiClient.Target) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class PagoConfig : ObjectiveC.NSObject {
+  public var target: PagoApiClient.Target
+  public static var shared: PagoApiClient.PagoConfig
+  public var network: PagoApiClient.BaseNetwork {
+    get
+  }
+  public var device: PagoApiClient.BaseDevice {
+    get
+  }
+  public var legal: PagoApiClient.BaseLegal {
+    get
+  }
+  public var referral: PagoApiClient.BaseReferral {
+    get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol TransformType {
+  associatedtype Object
+  associatedtype JSON
+  func transformFromJSON(_ value: Any?) -> Self.Object?
+  func transformToJSON(_ value: Self.Object?) -> Self.JSON?
+}
+public protocol BaseDevice {
+  var deviceTokenKey: Swift.String { get }
+}
+extension Swift.Collection {
+  public subscript(safe index: Self.Index) -> Self.Element? {
+    get
+  }
+}
+open class ServerTrustPolicyManager {
+  final public let policies: [Swift.String : PagoApiClient.ServerTrustPolicy]
+  public init(policies: [Swift.String : PagoApiClient.ServerTrustPolicy])
+  open func serverTrustPolicy(forHost host: Swift.String) -> PagoApiClient.ServerTrustPolicy?
+  @objc deinit
+}
+public enum ServerTrustPolicy {
+  case performDefaultEvaluation(validateHost: Swift.Bool)
+  case performRevokedEvaluation(validateHost: Swift.Bool, revocationFlags: CoreFoundation.CFOptionFlags)
+  case pinCertificates(certificates: [Security.SecCertificate], validateCertificateChain: Swift.Bool, validateHost: Swift.Bool)
+  case pinPublicKeys(publicKeys: [Security.SecKey], validateCertificateChain: Swift.Bool, validateHost: Swift.Bool)
+  case disableEvaluation
+  case customEvaluation((_ serverTrust: Security.SecTrust, _ host: Swift.String) -> Swift.Bool)
+  public static func certificates(in bundle: Foundation.Bundle = Bundle.main) -> [Security.SecCertificate]
+  public static func publicKeys(in bundle: Foundation.Bundle = Bundle.main) -> [Security.SecKey]
+  public func evaluate(_ serverTrust: Security.SecTrust, forHost host: Swift.String) -> Swift.Bool
+}
+infix operator <- : DefaultPrecedence
+infix operator >>> : DefaultPrecedence
+public func <- <T>(left: inout T, right: PagoApiClient.Map)
+public func >>> <T>(left: T, right: PagoApiClient.Map)
+public func <- <T>(left: inout T?, right: PagoApiClient.Map)
+public func >>> <T>(left: T?, right: PagoApiClient.Map)
+public func <- <T>(left: inout T, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: T, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout T?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: T?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, [T]>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, [T]>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Dictionary<Swift.String, [T]>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Dictionary<Swift.String, [T]>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Array<T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Array<T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Array<T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Array<T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Array<Swift.Array<T>>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Array<Swift.Array<T>>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Array<Swift.Array<T>>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func >>> <T>(left: Swift.Array<Swift.Array<T>>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable
+public func <- <T>(left: inout Swift.Set<T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable, T : Swift.Hashable
+public func >>> <T>(left: Swift.Set<T>, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable, T : Swift.Hashable
+public func <- <T>(left: inout Swift.Set<T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable, T : Swift.Hashable
+public func >>> <T>(left: Swift.Set<T>?, right: PagoApiClient.Map) where T : PagoApiClient.BaseMappable, T : Swift.Hashable
+extension Swift.String {
+  public var cleanString: Swift.String {
+    get
+  }
+  public func matches(for regex: Swift.String) -> [Swift.String]
+  public func groupMatches(for regex: Swift.String) -> [[Swift.String]]
+}
+public protocol RequestAdapter {
+  func adapt(_ urlRequest: Foundation.URLRequest) throws -> Foundation.URLRequest
+}
+public typealias RequestRetryCompletion = (_ shouldRetry: Swift.Bool, _ timeDelay: Foundation.TimeInterval) -> Swift.Void
+public protocol RequestRetrier {
+  func should(_ manager: PagoApiClient.SessionManager, retry request: PagoApiClient.Request, with error: Swift.Error, completion: @escaping PagoApiClient.RequestRetryCompletion)
+}
+public typealias HTTPHeaders = [Swift.String : Swift.String]
+@_hasMissingDesignatedInitializers open class Request {
+  public typealias ProgressHandler = (Foundation.Progress) -> Swift.Void
+  open var delegate: PagoApiClient.TaskDelegate {
+    get
+  }
+  open var task: Foundation.URLSessionTask? {
+    get
+  }
+  final public let session: Foundation.URLSession
+  open var request: Foundation.URLRequest? {
+    get
+  }
+  open var response: Foundation.HTTPURLResponse? {
+    get
+  }
+  open var retryCount: Swift.UInt {
+    get
+  }
+  @discardableResult
+  open func authenticate(user: Swift.String, password: Swift.String, persistence: Foundation.URLCredential.Persistence = .forSession) -> Self
+  @discardableResult
+  open func authenticate(usingCredential credential: Foundation.URLCredential) -> Self
+  public static func authorizationHeader(user: Swift.String, password: Swift.String) -> (key: Swift.String, value: Swift.String)?
+  open func resume()
+  open func suspend()
+  open func cancel()
+  @objc deinit
+}
+extension PagoApiClient.Request : Swift.CustomStringConvertible {
+  open var description: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Request : Swift.CustomDebugStringConvertible {
+  open var debugDescription: Swift.String {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class DataRequest : PagoApiClient.Request {
+  override open var request: Foundation.URLRequest? {
+    get
+  }
+  open var progress: Foundation.Progress {
+    get
+  }
+  @discardableResult
+  open func stream(closure: ((Foundation.Data) -> Swift.Void)? = nil) -> Self
+  @discardableResult
+  open func downloadProgress(queue: Dispatch.DispatchQueue = DispatchQueue.main, closure: @escaping PagoApiClient.DataRequest.ProgressHandler) -> Self
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class DownloadRequest : PagoApiClient.Request {
+  public struct DownloadOptions : Swift.OptionSet {
+    public let rawValue: Swift.UInt
+    public static let createIntermediateDirectories: PagoApiClient.DownloadRequest.DownloadOptions
+    public static let removePreviousFile: PagoApiClient.DownloadRequest.DownloadOptions
+    public init(rawValue: Swift.UInt)
+    public typealias ArrayLiteralElement = PagoApiClient.DownloadRequest.DownloadOptions
+    public typealias Element = PagoApiClient.DownloadRequest.DownloadOptions
+    public typealias RawValue = Swift.UInt
+  }
+  public typealias DownloadFileDestination = (_ temporaryURL: Foundation.URL, _ response: Foundation.HTTPURLResponse) -> (destinationURL: Foundation.URL, options: PagoApiClient.DownloadRequest.DownloadOptions)
+  override open var request: Foundation.URLRequest? {
+    get
+  }
+  open var resumeData: Foundation.Data? {
+    get
+  }
+  open var progress: Foundation.Progress {
+    get
+  }
+  override open func cancel()
+  @discardableResult
+  open func downloadProgress(queue: Dispatch.DispatchQueue = DispatchQueue.main, closure: @escaping PagoApiClient.DownloadRequest.ProgressHandler) -> Self
+  open class func suggestedDownloadDestination(for directory: Foundation.FileManager.SearchPathDirectory = .documentDirectory, in domain: Foundation.FileManager.SearchPathDomainMask = .userDomainMask) -> PagoApiClient.DownloadRequest.DownloadFileDestination
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class UploadRequest : PagoApiClient.DataRequest {
+  override open var request: Foundation.URLRequest? {
+    get
+  }
+  open var uploadProgress: Foundation.Progress {
+    get
+  }
+  @discardableResult
+  open func uploadProgress(queue: Dispatch.DispatchQueue = DispatchQueue.main, closure: @escaping PagoApiClient.UploadRequest.ProgressHandler) -> Self
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+open class StreamRequest : PagoApiClient.Request {
+  @objc deinit
+}
+public func <- <T>(left: inout T, right: PagoApiClient.Map) where T : Swift.SignedInteger
+public func <- <T>(left: inout T?, right: PagoApiClient.Map) where T : Swift.SignedInteger
+public func <- <T>(left: inout T, right: PagoApiClient.Map) where T : Swift.UnsignedInteger
+public func <- <T>(left: inout T?, right: PagoApiClient.Map) where T : Swift.UnsignedInteger
+extension PagoApiClient.Webservice {
+  public func parseDTOArray<T>(_ data: Foundation.Data) -> PagoApiClient.Result<[T]> where T : PagoApiClient.ImmutableMappable
+  public func parseDTOArrayWithoutFailingAllItems<T>(_ data: Foundation.Data) -> PagoApiClient.Result<[T]> where T : PagoApiClient.ImmutableMappable
+  public func parseToDTO<DTO>(data: Foundation.Data) -> PagoApiClient.Result<DTO> where DTO : PagoApiClient.ImmutableMappable
+  public func parseDictionaryResult(data: Foundation.Data) -> PagoApiClient.Result<[Swift.String : Any]>
+  public func parseVoidResult(data: Foundation.Data) -> PagoApiClient.Result<()>
+  public func parseWhateverResult(data: Foundation.Data) -> PagoApiClient.Result<()>
+  public func parseBool(data: Foundation.Data) -> PagoApiClient.Result<Swift.Bool>
+  public func parseImage(data: Foundation.Data) -> PagoApiClient.Result<UIKit.UIImage>
+  public func parseString(data: Foundation.Data) -> PagoApiClient.Result<Swift.String>
+  public func parseInts(data: Foundation.Data) -> PagoApiClient.Result<[Swift.Int64]>
+}
+public enum HTTPMethod : Swift.String {
+  case options
+  case get
+  case head
+  case post
+  case put
+  case patch
+  case delete
+  case trace
+  case connect
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias Parameters = [Swift.String : Any]
+public protocol ParameterEncoding {
+  func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+}
+public struct URLEncoding : PagoApiClient.ParameterEncoding {
+  public enum Destination {
+    case methodDependent, queryString, httpBody
+    public static func == (a: PagoApiClient.URLEncoding.Destination, b: PagoApiClient.URLEncoding.Destination) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum ArrayEncoding {
+    case brackets, noBrackets
+    public static func == (a: PagoApiClient.URLEncoding.ArrayEncoding, b: PagoApiClient.URLEncoding.ArrayEncoding) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public enum BoolEncoding {
+    case numeric, literal
+    public static func == (a: PagoApiClient.URLEncoding.BoolEncoding, b: PagoApiClient.URLEncoding.BoolEncoding) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static var `default`: PagoApiClient.URLEncoding {
+    get
+  }
+  public static var methodDependent: PagoApiClient.URLEncoding {
+    get
+  }
+  public static var queryString: PagoApiClient.URLEncoding {
+    get
+  }
+  public static var httpBody: PagoApiClient.URLEncoding {
+    get
+  }
+  public let destination: PagoApiClient.URLEncoding.Destination
+  public let arrayEncoding: PagoApiClient.URLEncoding.ArrayEncoding
+  public let boolEncoding: PagoApiClient.URLEncoding.BoolEncoding
+  public init(destination: PagoApiClient.URLEncoding.Destination = .methodDependent, arrayEncoding: PagoApiClient.URLEncoding.ArrayEncoding = .brackets, boolEncoding: PagoApiClient.URLEncoding.BoolEncoding = .numeric)
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+  public func queryComponents(fromKey key: Swift.String, value: Any) -> [(Swift.String, Swift.String)]
+  public func escape(_ string: Swift.String) -> Swift.String
+}
+public struct JSONEncoding : PagoApiClient.ParameterEncoding {
+  public static var `default`: PagoApiClient.JSONEncoding {
+    get
+  }
+  public static var prettyPrinted: PagoApiClient.JSONEncoding {
+    get
+  }
+  public let options: Foundation.JSONSerialization.WritingOptions
+  public init(options: Foundation.JSONSerialization.WritingOptions = [])
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, withJSONObject jsonObject: Any? = nil) throws -> Foundation.URLRequest
+}
+public struct PropertyListEncoding : PagoApiClient.ParameterEncoding {
+  public static var `default`: PagoApiClient.PropertyListEncoding {
+    get
+  }
+  public static var xml: PagoApiClient.PropertyListEncoding {
+    get
+  }
+  public static var binary: PagoApiClient.PropertyListEncoding {
+    get
+  }
+  public let format: Foundation.PropertyListSerialization.PropertyListFormat
+  public let options: Foundation.PropertyListSerialization.WriteOptions
+  public init(format: Foundation.PropertyListSerialization.PropertyListFormat = .xml, options: Foundation.PropertyListSerialization.WriteOptions = 0)
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+}
+public protocol BaseLegal {
+  var tcUrl: PagoApiClient.LegalData { get }
+  var privacyUrl: PagoApiClient.LegalData { get }
+  var pointsUrl: PagoApiClient.LegalData { get }
+  var supportMail: Swift.String { get }
+  var visaPlTerms: PagoApiClient.LegalData { get }
+  var campaignUrl: PagoApiClient.LegalData { get }
+  var mtLegal: PagoApiClient.LegalData { get }
+  var mtCampaignLegal: PagoApiClient.LegalData { get }
+}
+public struct LegalData {
+  public var main: Swift.String
+  public var en: Swift.String
+}
+public struct DesyncAccountDTO : PagoApiClient.ImmutableMappable {
+  public let username: Swift.String
+  public let uri: Swift.String
+  public let id: Swift.Int64
+  public init(map: PagoApiClient.Map) throws
+  public init(username: Swift.String, uri: Swift.String, id: Swift.Int64)
+}
+extension Foundation.DateFormatter {
+  @nonobjc public static let romcardFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteResponseFormat: Foundation.DateFormatter
+  @nonobjc public static let vignetteResponseFormat2: Foundation.DateFormatter
+  @nonobjc public static let dayMonthAndYear: Foundation.DateFormatter
+  @nonobjc public static let dayMonthHourAndSecond: Foundation.DateFormatter
+  @nonobjc public static let dayAndMonth: Foundation.DateFormatter
+  @nonobjc public static let dashedDayMonthAndYear: Foundation.DateFormatter
+  @nonobjc public static let dashedDayMonthAndYearInclTimezone: Foundation.DateFormatter
+  @nonobjc public static let dashedYearMonthAndDay: Foundation.DateFormatter
+  @nonobjc public static let yearMonthAndDay: Foundation.DateFormatter
+  @nonobjc public static let dashedYearMonthAndDayInclTimezone: Foundation.DateFormatter
+  @nonobjc public static let datePickerControlFormat: Foundation.DateFormatter
+  @nonobjc public static let createdAtFormatter: Foundation.DateFormatter
+}
+extension Foundation.NSNumber {
+  public var twoUnitAndDecimalsPlaces: Swift.String {
+    get
+  }
+  @nonobjc public static let twoUnitAndDecimalsPlacesFormatter: Foundation.NumberFormatter
+  public var twoDecimals: Swift.String {
+    get
+  }
+  @nonobjc public static let twoDecimalsFormatter: Foundation.NumberFormatter
+}
+public struct EncodedData : PagoApiClient.ParameterEncoding {
+  public init(contentType: Swift.String?, data: Foundation.Data)
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+}
+public struct DefaultDataResponse {
+  public let request: Foundation.URLRequest?
+  public let response: Foundation.HTTPURLResponse?
+  public let data: Foundation.Data?
+  public let error: Swift.Error?
+  public let timeline: PagoApiClient.Timeline
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?, timeline: PagoApiClient.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
+}
+public struct DataResponse<Value> {
+  public let request: Foundation.URLRequest?
+  public let response: Foundation.HTTPURLResponse?
+  public let data: Foundation.Data?
+  public let result: PagoApiClient.Result<Value>
+  public let timeline: PagoApiClient.Timeline
+  public var value: Value? {
+    get
+  }
+  public var error: Swift.Error? {
+    get
+  }
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, result: PagoApiClient.Result<Value>, timeline: PagoApiClient.Timeline = Timeline())
+}
+extension PagoApiClient.DataResponse : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.DataResponse {
+  public func map<T>(_ transform: (Value) -> T) -> PagoApiClient.DataResponse<T>
+  public func flatMap<T>(_ transform: (Value) throws -> T) -> PagoApiClient.DataResponse<T>
+  public func mapError<E>(_ transform: (Swift.Error) -> E) -> PagoApiClient.DataResponse<Value> where E : Swift.Error
+  public func flatMapError<E>(_ transform: (Swift.Error) throws -> E) -> PagoApiClient.DataResponse<Value> where E : Swift.Error
+}
+public struct DefaultDownloadResponse {
+  public let request: Foundation.URLRequest?
+  public let response: Foundation.HTTPURLResponse?
+  public let temporaryURL: Foundation.URL?
+  public let destinationURL: Foundation.URL?
+  public let resumeData: Foundation.Data?
+  public let error: Swift.Error?
+  public let timeline: PagoApiClient.Timeline
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, temporaryURL: Foundation.URL?, destinationURL: Foundation.URL?, resumeData: Foundation.Data?, error: Swift.Error?, timeline: PagoApiClient.Timeline = Timeline(), metrics: Swift.AnyObject? = nil)
+}
+public struct DownloadResponse<Value> {
+  public let request: Foundation.URLRequest?
+  public let response: Foundation.HTTPURLResponse?
+  public let temporaryURL: Foundation.URL?
+  public let destinationURL: Foundation.URL?
+  public let resumeData: Foundation.Data?
+  public let result: PagoApiClient.Result<Value>
+  public let timeline: PagoApiClient.Timeline
+  public var value: Value? {
+    get
+  }
+  public var error: Swift.Error? {
+    get
+  }
+  public init(request: Foundation.URLRequest?, response: Foundation.HTTPURLResponse?, temporaryURL: Foundation.URL?, destinationURL: Foundation.URL?, resumeData: Foundation.Data?, result: PagoApiClient.Result<Value>, timeline: PagoApiClient.Timeline = Timeline())
+}
+extension PagoApiClient.DownloadResponse : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.DownloadResponse {
+  public func map<T>(_ transform: (Value) -> T) -> PagoApiClient.DownloadResponse<T>
+  public func flatMap<T>(_ transform: (Value) throws -> T) -> PagoApiClient.DownloadResponse<T>
+  public func mapError<E>(_ transform: (Swift.Error) -> E) -> PagoApiClient.DownloadResponse<Value> where E : Swift.Error
+  public func flatMapError<E>(_ transform: (Swift.Error) throws -> E) -> PagoApiClient.DownloadResponse<Value> where E : Swift.Error
+}
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
+extension PagoApiClient.DefaultDataResponse {
+  public var metrics: Foundation.URLSessionTaskMetrics? {
+    get
+  }
+}
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
+extension PagoApiClient.DataResponse {
+  public var metrics: Foundation.URLSessionTaskMetrics? {
+    get
+  }
+}
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
+extension PagoApiClient.DefaultDownloadResponse {
+  public var metrics: Foundation.URLSessionTaskMetrics? {
+    get
+  }
+}
+@available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
+extension PagoApiClient.DownloadResponse {
+  public var metrics: Foundation.URLSessionTaskMetrics? {
+    get
+  }
+}
+public enum CountryPickerMode {
+  case language
+  case country
+  public static func == (a: PagoApiClient.CountryPickerMode, b: PagoApiClient.CountryPickerMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LanguageCode : Swift.String {
+  case en, ro, pl, hr, en_pl, it, en_it
+  case hu_ro
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.LanguageCode {
+  public func currency() -> Swift.String
+}
+extension PagoApiClient.LanguageCode {
+  public var image: UIKit.UIImage? {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  public var imageName: Swift.String {
+    get
+  }
+  public var code: Swift.String {
+    get
+  }
+  public var iso: Swift.String {
+    get
+  }
+}
+extension Foundation.DateFormatter {
+  convenience public init(withFormat format: Swift.String, locale: Swift.String)
+}
+open class ISO8601DateTransform : PagoApiClient.DateFormatterTransform {
+  public init()
+  @objc deinit
+}
+open class SessionManager {
+  public enum MultipartFormDataEncodingResult {
+    case success(request: PagoApiClient.UploadRequest, streamingFromDisk: Swift.Bool, streamFileURL: Foundation.URL?)
+    case failure(Swift.Error)
+  }
+  public static let `default`: PagoApiClient.SessionManager
+  public static let defaultHTTPHeaders: PagoApiClient.HTTPHeaders
+  public static let multipartFormDataEncodingMemoryThreshold: Swift.UInt64
+  final public let session: Foundation.URLSession
+  final public let delegate: PagoApiClient.SessionDelegate
+  open var startRequestsImmediately: Swift.Bool
+  open var adapter: PagoApiClient.RequestAdapter?
+  open var retrier: PagoApiClient.RequestRetrier? {
+    get
+    set
+  }
+  open var backgroundCompletionHandler: (() -> Swift.Void)?
+  public init(configuration: Foundation.URLSessionConfiguration = URLSessionConfiguration.default, delegate: PagoApiClient.SessionDelegate = SessionDelegate(), serverTrustPolicyManager: PagoApiClient.ServerTrustPolicyManager? = nil)
+  public init?(session: Foundation.URLSession, delegate: PagoApiClient.SessionDelegate, serverTrustPolicyManager: PagoApiClient.ServerTrustPolicyManager? = nil)
+  @objc deinit
+  @discardableResult
+  open func request(_ url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .get, parameters: PagoApiClient.Parameters? = nil, encoding: PagoApiClient.ParameterEncoding = URLEncoding.default, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.DataRequest
+  @discardableResult
+  open func request(_ urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.DataRequest
+  @discardableResult
+  open func download(_ url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .get, parameters: PagoApiClient.Parameters? = nil, encoding: PagoApiClient.ParameterEncoding = URLEncoding.default, headers: PagoApiClient.HTTPHeaders? = nil, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+  @discardableResult
+  open func download(_ urlRequest: PagoApiClient.URLRequestConvertible, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+  @discardableResult
+  open func download(resumingWith resumeData: Foundation.Data, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+  @discardableResult
+  open func upload(_ fileURL: Foundation.URL, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+  @discardableResult
+  open func upload(_ fileURL: Foundation.URL, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+  @discardableResult
+  open func upload(_ data: Foundation.Data, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+  @discardableResult
+  open func upload(_ data: Foundation.Data, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+  @discardableResult
+  open func upload(_ stream: Foundation.InputStream, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+  @discardableResult
+  open func upload(_ stream: Foundation.InputStream, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+  open func upload(multipartFormData: @escaping (PagoApiClient.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil, encodingCompletion: ((PagoApiClient.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+  open func upload(multipartFormData: @escaping (PagoApiClient.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: PagoApiClient.URLRequestConvertible, encodingCompletion: ((PagoApiClient.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  @discardableResult
+  open func stream(withHostName hostName: Swift.String, port: Swift.Int) -> PagoApiClient.StreamRequest
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  @discardableResult
+  open func stream(with netService: Foundation.NetService) -> PagoApiClient.StreamRequest
+}
+public struct Resource<A> {
+  public let path: Swift.String
+  public let parse: (Foundation.Data) -> PagoApiClient.Result<A>
+  public let method: PagoApiClient.HTTPMethod
+  public let host: PagoApiClient.Host
+  public let authType: PagoApiClient.AuthenticationType
+  public let params: PagoApiClient.JSONDictionary?
+  public let encoding: PagoApiClient.ParameterEncoding
+  public init(path: Swift.String, parse: @escaping (Foundation.Data) -> PagoApiClient.Result<A>, method: PagoApiClient.HTTPMethod = .get, host: PagoApiClient.Host = .api, authType: PagoApiClient.AuthenticationType = .basic, params: PagoApiClient.JSONDictionary? = nil, encoding: PagoApiClient.ParameterEncoding = URLEncoding())
+}
+open class NSDecimalNumberTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.NSDecimalNumber
+  public typealias JSON = Swift.String
+  public init()
+  open func transformFromJSON(_ value: Any?) -> Foundation.NSDecimalNumber?
+  open func transformToJSON(_ value: Foundation.NSDecimalNumber?) -> Swift.String?
+  @objc deinit
+}
+open class DateTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.Double
+  public init()
+  open func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  open func transformToJSON(_ value: Foundation.Date?) -> Swift.Double?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class CountryManager : ObjectiveC.NSObject {
+  public static var shared: PagoApiClient.CountryManager
+  public var languageCode: PagoApiClient.LanguageCode? {
+    get
+    set
+  }
+  public var providerCode: Swift.String? {
+    get
+  }
+  public var didSelectPrefferedCountry: Swift.Bool {
+    get
+    set
+  }
+  public var courierCountryCode: PagoApiClient.LanguageCode? {
+    get
+    set
+  }
+  public func saveUserSelection(country: PagoApiClient.LanguageCode, language: PagoApiClient.LanguageCode)
+  public var isPoland: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+public struct RegisterResponse {
+  public struct Constants {
+  }
+  public let id: Swift.Int
+  public let username: Swift.String
+  public let firstName: Swift.String
+  public let lastName: Swift.String
+  public let email: Swift.String
+  public typealias Role = (id: Swift.Int, code: Swift.String, name: Swift.String, state: Swift.String)
+  public let roles: [PagoApiClient.RegisterResponse.Role]
+  public let posList: [Swift.String]
+  public init?(dict: [Swift.String : Any])
+}
+extension Swift.Sequence {
+  public func failingFlatMap<T>(transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T]?
+}
+@_hasMissingDesignatedInitializers open class NetworkReachabilityManager {
+  public enum NetworkReachabilityStatus {
+    case unknown
+    case notReachable
+    case reachable(PagoApiClient.NetworkReachabilityManager.ConnectionType)
+  }
+  public enum ConnectionType {
+    case ethernetOrWiFi
+    case wwan
+    public static func == (a: PagoApiClient.NetworkReachabilityManager.ConnectionType, b: PagoApiClient.NetworkReachabilityManager.ConnectionType) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias Listener = (PagoApiClient.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Void
+  open var isReachable: Swift.Bool {
+    get
+  }
+  open var isReachableOnWWAN: Swift.Bool {
+    get
+  }
+  open var isReachableOnEthernetOrWiFi: Swift.Bool {
+    get
+  }
+  open var networkReachabilityStatus: PagoApiClient.NetworkReachabilityManager.NetworkReachabilityStatus {
+    get
+  }
+  open var listenerQueue: Dispatch.DispatchQueue
+  open var listener: PagoApiClient.NetworkReachabilityManager.Listener?
+  open var flags: SystemConfiguration.SCNetworkReachabilityFlags? {
+    get
+  }
+  open var previousFlags: SystemConfiguration.SCNetworkReachabilityFlags
+  convenience public init?(host: Swift.String)
+  convenience public init?()
+  @objc deinit
+  @discardableResult
+  open func startListening() -> Swift.Bool
+  open func stopListening()
+}
+extension PagoApiClient.NetworkReachabilityManager.NetworkReachabilityStatus : Swift.Equatable {
+}
+public func == (lhs: PagoApiClient.NetworkReachabilityManager.NetworkReachabilityStatus, rhs: PagoApiClient.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Bool
+public struct MapError : Swift.Error {
+  public var key: Swift.String?
+  public var currentValue: Any?
+  public var reason: Swift.String?
+  public var file: Swift.StaticString?
+  public var function: Swift.StaticString?
+  public var line: Swift.UInt?
+  public init(key: Swift.String?, currentValue: Any?, reason: Swift.String?, file: Swift.StaticString? = nil, function: Swift.StaticString? = nil, line: Swift.UInt? = nil)
+}
+extension PagoApiClient.MapError : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+public struct DTOConstants {
+  public static let userSubscriptionId: Swift.String
+  public static let subscriptionId: Swift.String
+  public static let subscriptionName: Swift.String
+  public static let subscriptionLogo: Swift.String
+  public static let subscriptionDuration: Swift.String
+  public static let subscriptionEnd: Swift.String
+  public static let debtPaymentHistoryId: Swift.String
+  public static let institutionName: Swift.String
+  public static let taxIconUrl: Swift.String
+  public static let taxName: Swift.String
+  public static let travelId: Swift.String
+  public static let travelPersonId: Swift.String
+  public static let travelInsuranceStart: Swift.String
+  public static let travelInsuranceEnd: Swift.String
+  public static let travelOfferName: Swift.String
+  public static let travelInsuranceOffererLogo: Swift.String
+  public static let travelFirstName: Swift.String
+  public static let travelLastName: Swift.String
+  public static let travelCountryId: Swift.String
+  public static let travelCountryName: Swift.String
+  public static let travel: Swift.String
+  public static let travelScope: Swift.String
+  public static let subscription: Swift.String
+  public static let recharge: Swift.String
+  public static let rca: Swift.String
+  public static let invoice: Swift.String
+  public static let provider: Swift.String
+  public static let gaming: Swift.String
+  public static let moneyTransfer: Swift.String
+  public static let userProduct: Swift.String
+  public static let pad: Swift.String
+  public static let paymentEntityType: Swift.String
+  public static let autoPayment: Swift.String
+  public static let paymentTimestamp: Swift.String
+  public static let amount: Swift.String
+  public static let paidAmount: Swift.String
+  public static let points: Swift.String
+  public static let cardInfo: Swift.String
+  public static let type: Swift.String
+  public static let defaultCard: Swift.String
+  public static let last4: Swift.String
+  public static let alias: Swift.String
+  public static let cardType: Swift.String
+  public static let cardStatus: Swift.String
+  public static let invoiceList: Swift.String
+  public static let cardId: Swift.String
+  public static let digits: Swift.String
+  public static let invoices: Swift.String
+  public static let usernameRegex: Swift.String
+  public static let passwordLabel: Swift.String
+  public static let passwordLabelEN: Swift.String
+  public static let usernameLabel: Swift.String
+  public static let usernameLabelEN: Swift.String
+  public static let usernameKeyboardType: Swift.String
+  public static let usernamePlaceholderTextId: Swift.String
+  public static let passwordRegex: Swift.String
+  public static let orderId: Swift.String
+  public static let order: Swift.String
+  public static let products: Swift.String
+  public static let barcodeLength: Swift.String
+  public static let barCode: Swift.String
+  public static let onlyScanned: Swift.String
+  public static let qr: Swift.String
+  public static let nip: Swift.String
+  public static let scannable: Swift.String
+  public static let scanEnrolment: Swift.String
+  public static let scanForceEnrolment: Swift.String
+  public static let company: Swift.String
+  public static let visible: Swift.String
+  public static let crawlerId: Swift.String
+  public static let dueDate: Swift.String
+  public static let message: Swift.String
+  public static let `operator`: Swift.String
+  public static let accounts: Swift.String
+  public static let timestamp: Swift.String
+  public static let invoiceId: Swift.String
+  public static let ref: Swift.String
+  public static let errorCode: Swift.String
+  public static let error: Swift.String
+  public static let uri: Swift.String
+  public static let pdfUri: Swift.String
+  public static let issueDate: Swift.String
+  public static let paidInPago: Swift.String
+  public static let credential: Swift.String
+  public static let generated: Swift.String
+  public static let amountDue: Swift.String
+  public static let id: Swift.String
+  public static let locations: Swift.String
+  public static let uuid: Swift.String
+  public static let active: Swift.String
+  public static let hidden: Swift.String
+  public static let posOS: Swift.String
+  public static let body: Swift.String
+  public static let posBuild: Swift.String
+  public static let buildVersion: Swift.String
+  public static let recordId: Swift.String
+  public static let profile: Swift.String
+  public static let description: Swift.String
+  public static let payableEntityId: Swift.String
+  public static let params: Swift.String
+  public static let crawlerServiceId: Swift.String
+  public static let providerType: Swift.String
+  public static let providerCategory: Swift.String
+  public static let providerName: Swift.String
+  public static let dataProviderType: Swift.String
+  public static let resetCredentialUrl: Swift.String
+  public static let name: Swift.String
+  public static let logoImageName: Swift.String
+  public static let registerUrl: Swift.String
+  public static let service: Swift.String
+  public static let icon: Swift.String
+  public static let details: Swift.String
+  public static let payee: Swift.String
+  public static let accountUri: Swift.String
+  public static let serviceUri: Swift.String
+  public static let statusCode: Swift.String
+  public static let accountServiceType: Swift.String
+  public static let remoteId: Swift.String
+  public static let providerTypeId: Swift.String
+  public static let index: Swift.String
+  public static let date: Swift.String
+  public static let acceptedPayments: Swift.String
+  public static let userDetail: Swift.String
+  public static let username: Swift.String
+  public static let pending: Swift.String
+  public static let needsRefresh: Swift.String
+  public static let providerId: Swift.String
+  public static let on: Swift.String
+  public static let newBills: Swift.String
+  public static let dueBills: Swift.String
+  public static let category: Swift.String
+  public static let price: Swift.String
+  public static let headers: Swift.String
+  public static let availability: Swift.String
+  public static let registration_number: Swift.String
+  public static let statusTimestamp: Swift.String
+  public static let seen: Swift.String
+  public static let chassis_number: Swift.String
+  public static let valid_from: Swift.String
+  public static let valid_until: Swift.String
+  public static let country: Swift.String
+  public static let download_url: Swift.String
+  public static let hasPassword: Swift.String
+  public static let status: Swift.String
+  public static let selenium: Swift.String
+  public static let offerId: Swift.String
+  public static let eurPrice: Swift.String
+  public static let eurAmount: Swift.String
+  public static let ronPrice: Swift.String
+  public static let phone: Swift.String
+  public static let phoneNumberId: Swift.String
+  public static let nextDueDate: Swift.String
+  public static let appTimestamp: Swift.String
+  public static let internalRef: Swift.String
+  public static let guid: Swift.String
+  public static let registrationNumber: Swift.String
+  public static let show: Swift.String
+  public static let maxAmount: Swift.String
+  public static let overflowPreference: Swift.String
+  public static let notifyBeforePayment: Swift.String
+  public static let numberOfDaysBefore: Swift.String
+  public static let dayOfMonth: Swift.String
+  public static let validityPeriod: Swift.String
+  public static let notifyAfterPayment: Swift.String
+  public static let enabled: Swift.String
+  public static let locationId: Swift.String
+  public static let displayNameTextId: Swift.String
+  public static let headerTextId: Swift.String
+  public static let colorCode: Swift.String
+  public static let iconUrl: Swift.String
+  public static let iconName: Swift.String
+  public static let headerUrl: Swift.String
+  public static let headerImageName: Swift.String
+  public static let platformLogoImageName: Swift.String
+  public static let platformLogoUrl: Swift.String
+  public static let visibleInOnboardingList: Swift.String
+  public static let isVisible: Swift.String
+  public static let typeIndexes: Swift.String
+  public static let logoUrl: Swift.String
+  public static let imgUrl: Swift.String
+  public static let alertTextRO: Swift.String
+  public static let alertTextEN: Swift.String
+  public static let ro: Swift.String
+  public static let en: Swift.String
+  public static let clearCacheToken: Swift.String
+  public static let compatible: Swift.String
+  public static let sections: Swift.String
+  public static let alertText: Swift.String
+  public static let referralRewardAction: Swift.String
+  public static let invoiceRewardAction: Swift.String
+  public static let carRewardAction: Swift.String
+  public static let rcaRewardAction: Swift.String
+  public static let travelRewardAction: Swift.String
+  public static let prepayRewardAction: Swift.String
+  public static let donationRewardAction: Swift.String
+}
+open class DateFormatterTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.String
+  final public let dateFormatter: Foundation.DateFormatter
+  public init(dateFormatter: Foundation.DateFormatter)
+  open func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  open func transformToJSON(_ value: Foundation.Date?) -> Swift.String?
+  @objc deinit
+}
+public struct Download : PagoApiClient.Prioritizable, Swift.Hashable {
+  public var priority: Swift.Int
+  public var completionBlock: (Swift.Error?) -> ()
+  public var localPath: Swift.String
+  public var resource: PagoApiClient.Resource<Foundation.Data>
+  public var hashValue: Swift.Int {
+    get
+  }
+  public static func == (lhs: PagoApiClient.Download, rhs: PagoApiClient.Download) -> Swift.Bool
+  public init(priority: Swift.Int, completionBlock: @escaping (Swift.Error?) -> (), localPath: Swift.String, resource: PagoApiClient.Resource<Foundation.Data>)
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension Foundation.Data : PagoApiClient.ParameterEncoding {
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+}
+public struct DictionaryTransform<Key, Value> : PagoApiClient.TransformType where Key : Swift.Hashable, Key : Swift.RawRepresentable, Value : PagoApiClient.Mappable, Key.RawValue == Swift.String {
+  public init()
+  public func transformFromJSON(_ value: Any?) -> [Key : Value]?
+  public func transformToJSON(_ value: [Key : Value]?) -> Any?
+  public typealias JSON = Any
+  public typealias Object = Swift.Dictionary<Key, Value>
+}
+public struct CustomArrayEncoding : PagoApiClient.ParameterEncoding {
+  public let options: Foundation.JSONSerialization.WritingOptions
+  public init(options: Foundation.JSONSerialization.WritingOptions = [])
+  public func encode(_ urlRequest: PagoApiClient.URLRequestConvertible, with parameters: PagoApiClient.Parameters?) throws -> Foundation.URLRequest
+}
+public enum AFError : Swift.Error {
+  public enum ParameterEncodingFailureReason {
+    case missingURL
+    case jsonEncodingFailed(error: Swift.Error)
+    case propertyListEncodingFailed(error: Swift.Error)
+  }
+  public enum MultipartEncodingFailureReason {
+    case bodyPartURLInvalid(url: Foundation.URL)
+    case bodyPartFilenameInvalid(in: Foundation.URL)
+    case bodyPartFileNotReachable(at: Foundation.URL)
+    case bodyPartFileNotReachableWithError(atURL: Foundation.URL, error: Swift.Error)
+    case bodyPartFileIsDirectory(at: Foundation.URL)
+    case bodyPartFileSizeNotAvailable(at: Foundation.URL)
+    case bodyPartFileSizeQueryFailedWithError(forURL: Foundation.URL, error: Swift.Error)
+    case bodyPartInputStreamCreationFailed(for: Foundation.URL)
+    case outputStreamCreationFailed(for: Foundation.URL)
+    case outputStreamFileAlreadyExists(at: Foundation.URL)
+    case outputStreamURLInvalid(url: Foundation.URL)
+    case outputStreamWriteFailed(error: Swift.Error)
+    case inputStreamReadFailed(error: Swift.Error)
+  }
+  public enum ResponseValidationFailureReason {
+    case dataFileNil
+    case dataFileReadFailed(at: Foundation.URL)
+    case missingContentType(acceptableContentTypes: [Swift.String])
+    case unacceptableContentType(acceptableContentTypes: [Swift.String], responseContentType: Swift.String)
+    case unacceptableStatusCode(code: Swift.Int)
+  }
+  public enum ResponseSerializationFailureReason {
+    case inputDataNil
+    case inputDataNilOrZeroLength
+    case inputFileNil
+    case inputFileReadFailed(at: Foundation.URL)
+    case stringSerializationFailed(encoding: Swift.String.Encoding)
+    case jsonSerializationFailed(error: Swift.Error)
+    case propertyListSerializationFailed(error: Swift.Error)
+  }
+  case invalidURL(url: PagoApiClient.URLConvertible)
+  case parameterEncodingFailed(reason: PagoApiClient.AFError.ParameterEncodingFailureReason)
+  case multipartEncodingFailed(reason: PagoApiClient.AFError.MultipartEncodingFailureReason)
+  case responseValidationFailed(reason: PagoApiClient.AFError.ResponseValidationFailureReason)
+  case responseSerializationFailed(reason: PagoApiClient.AFError.ResponseSerializationFailureReason)
+}
+extension PagoApiClient.AFError {
+  public var isInvalidURLError: Swift.Bool {
+    get
+  }
+  public var isParameterEncodingError: Swift.Bool {
+    get
+  }
+  public var isMultipartEncodingError: Swift.Bool {
+    get
+  }
+  public var isResponseValidationError: Swift.Bool {
+    get
+  }
+  public var isResponseSerializationError: Swift.Bool {
+    get
+  }
+}
+extension PagoApiClient.AFError {
+  public var urlConvertible: PagoApiClient.URLConvertible? {
+    get
+  }
+  public var url: Foundation.URL? {
+    get
+  }
+  public var underlyingError: Swift.Error? {
+    get
+  }
+  public var acceptableContentTypes: [Swift.String]? {
+    get
+  }
+  public var responseContentType: Swift.String? {
+    get
+  }
+  public var responseCode: Swift.Int? {
+    get
+  }
+  public var failedStringEncoding: Swift.String.Encoding? {
+    get
+  }
+}
+extension PagoApiClient.AFError : Foundation.LocalizedError {
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public enum Host {
+  case auth, api, romcard, romcardLive, custom(Swift.String)
+  public var value: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Host : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers open class TaskDelegate : ObjectiveC.NSObject {
+  final public let queue: Foundation.OperationQueue
+  public var data: Foundation.Data? {
+    get
+  }
+  public var error: Swift.Error?
+  @objc deinit
+}
+public protocol DTO {
+  var dictionary: [Swift.String : Any] { get }
+  init?(dictionary: [Swift.String : Any])
+  static func modelsFromDictionaryArray(_ array: [[Swift.String : Any]]) -> [Self]
+}
+open class DataTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.Data
+  public typealias JSON = Swift.String
+  public init()
+  open func transformFromJSON(_ value: Any?) -> Foundation.Data?
+  open func transformToJSON(_ value: Foundation.Data?) -> Swift.String?
+  @objc deinit
+}
+open class CodableTransform<T> : PagoApiClient.TransformType where T : Swift.Decodable, T : Swift.Encodable {
+  public typealias Object = T
+  public typealias JSON = Any
+  public init()
+  open func transformFromJSON(_ value: Any?) -> PagoApiClient.CodableTransform<T>.Object?
+  open func transformToJSON(_ value: T?) -> PagoApiClient.CodableTransform<T>.JSON?
+  @objc deinit
+}
+extension UIKit.UIColor {
+  convenience public init(hexString: Swift.String)
+}
+public protocol BaseReferral {
+  var referralBaseLink: Swift.String { get }
+  var domainURIPrefix: Swift.String { get }
+  var bundleID: Swift.String { get }
+  var minimumAppVersion: Swift.String { get }
+  var appStoreID: Swift.String { get }
+  var androidPackageName: Swift.String { get }
+}
+extension Foundation.NSDecimalNumber : Swift.Comparable {
+}
+public func == (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Swift.Bool
+public func < (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Swift.Bool
+prefix public func - (value: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func + (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func - (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func * (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func / (lhs: Foundation.NSDecimalNumber, rhs: Foundation.NSDecimalNumber) -> Foundation.NSDecimalNumber
+public func ^ (lhs: Foundation.NSDecimalNumber, rhs: Swift.Int) -> Foundation.NSDecimalNumber
+public enum CardUsage : Swift.String {
+  case invoice, insurance, other, freemium, donation, moneytransfer, product
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum PagoError : Swift.Error, Swift.Equatable {
+  case parseError(message: Swift.String, rawText: Swift.String?), apiError(message: Swift.String, statusCode: Swift.Int, rawText: Swift.String?), syncError(message: Swift.String), authError(message: Swift.String), bankError(code: Swift.String, message: Swift.String), limitReached(message: Swift.String), noConnectionError, configurationError(message: Swift.String), wrongCredentials, apiLimitReached
+  public static func == (lhs: PagoApiClient.PagoError, rhs: PagoApiClient.PagoError) -> Swift.Bool
+}
+extension PagoApiClient.PagoError : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var message: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public enum Result<Value> {
+  case success(Value)
+  case failure(Swift.Error)
+  public var isSuccess: Swift.Bool {
+    get
+  }
+  public var isFailure: Swift.Bool {
+    get
+  }
+  public var value: Value? {
+    get
+  }
+  public var error: Swift.Error? {
+    get
+  }
+}
+extension PagoApiClient.Result : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Result : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Result {
+  public init(value: () throws -> Value)
+  public func unwrap() throws -> Value
+  public func map<T>(_ transform: (Value) -> T) -> PagoApiClient.Result<T>
+  public func flatMap<T>(_ transform: (Value) throws -> T) -> PagoApiClient.Result<T>
+  public func mapError<T>(_ transform: (Swift.Error) -> T) -> PagoApiClient.Result<Value> where T : Swift.Error
+  public func flatMapError<T>(_ transform: (Swift.Error) throws -> T) -> PagoApiClient.Result<Value> where T : Swift.Error
+  @discardableResult
+  public func withValue(_ closure: (Value) -> Swift.Void) -> PagoApiClient.Result<Value>
+  @discardableResult
+  public func withError(_ closure: (Swift.Error) -> Swift.Void) -> PagoApiClient.Result<Value>
+  @discardableResult
+  public func ifSuccess(_ closure: () -> Swift.Void) -> PagoApiClient.Result<Value>
+  @discardableResult
+  public func ifFailure(_ closure: () -> Swift.Void) -> PagoApiClient.Result<Value>
+}
+open class EnumTransform<T> : PagoApiClient.TransformType where T : Swift.RawRepresentable {
+  public typealias Object = T
+  public typealias JSON = T.RawValue
+  public init()
+  open func transformFromJSON(_ value: Any?) -> T?
+  open func transformToJSON(_ value: T?) -> T.RawValue?
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class SessionDelegate : ObjectiveC.NSObject {
+  open var sessionDidBecomeInvalidWithError: ((Foundation.URLSession, Swift.Error?) -> Swift.Void)?
+  open var sessionDidReceiveChallenge: ((Foundation.URLSession, Foundation.URLAuthenticationChallenge) -> (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?))?
+  open var sessionDidReceiveChallengeWithCompletion: ((Foundation.URLSession, Foundation.URLAuthenticationChallenge, @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void) -> Swift.Void)?
+  open var sessionDidFinishEventsForBackgroundURLSession: ((Foundation.URLSession) -> Swift.Void)?
+  open var taskWillPerformHTTPRedirection: ((Foundation.URLSession, Foundation.URLSessionTask, Foundation.HTTPURLResponse, Foundation.URLRequest) -> Foundation.URLRequest?)?
+  open var taskWillPerformHTTPRedirectionWithCompletion: ((Foundation.URLSession, Foundation.URLSessionTask, Foundation.HTTPURLResponse, Foundation.URLRequest, @escaping (Foundation.URLRequest?) -> Swift.Void) -> Swift.Void)?
+  open var taskDidReceiveChallenge: ((Foundation.URLSession, Foundation.URLSessionTask, Foundation.URLAuthenticationChallenge) -> (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?))?
+  open var taskDidReceiveChallengeWithCompletion: ((Foundation.URLSession, Foundation.URLSessionTask, Foundation.URLAuthenticationChallenge, @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void) -> Swift.Void)?
+  open var taskNeedNewBodyStream: ((Foundation.URLSession, Foundation.URLSessionTask) -> Foundation.InputStream?)?
+  open var taskNeedNewBodyStreamWithCompletion: ((Foundation.URLSession, Foundation.URLSessionTask, @escaping (Foundation.InputStream?) -> Swift.Void) -> Swift.Void)?
+  open var taskDidSendBodyData: ((Foundation.URLSession, Foundation.URLSessionTask, Swift.Int64, Swift.Int64, Swift.Int64) -> Swift.Void)?
+  open var taskDidComplete: ((Foundation.URLSession, Foundation.URLSessionTask, Swift.Error?) -> Swift.Void)?
+  open var dataTaskDidReceiveResponse: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLResponse) -> Foundation.URLSession.ResponseDisposition)?
+  open var dataTaskDidReceiveResponseWithCompletion: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLResponse, @escaping (Foundation.URLSession.ResponseDisposition) -> Swift.Void) -> Swift.Void)?
+  open var dataTaskDidBecomeDownloadTask: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.URLSessionDownloadTask) -> Swift.Void)?
+  open var dataTaskDidReceiveData: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.Data) -> Swift.Void)?
+  open var dataTaskWillCacheResponse: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.CachedURLResponse) -> Foundation.CachedURLResponse?)?
+  open var dataTaskWillCacheResponseWithCompletion: ((Foundation.URLSession, Foundation.URLSessionDataTask, Foundation.CachedURLResponse, @escaping (Foundation.CachedURLResponse?) -> Swift.Void) -> Swift.Void)?
+  open var downloadTaskDidFinishDownloadingToURL: ((Foundation.URLSession, Foundation.URLSessionDownloadTask, Foundation.URL) -> Swift.Void)?
+  open var downloadTaskDidWriteData: ((Foundation.URLSession, Foundation.URLSessionDownloadTask, Swift.Int64, Swift.Int64, Swift.Int64) -> Swift.Void)?
+  open var downloadTaskDidResumeAtOffset: ((Foundation.URLSession, Foundation.URLSessionDownloadTask, Swift.Int64, Swift.Int64) -> Swift.Void)?
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  open var streamTaskReadClosed: ((Foundation.URLSession, Foundation.URLSessionStreamTask) -> Swift.Void)? {
+    get
+    set
+  }
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  open var streamTaskWriteClosed: ((Foundation.URLSession, Foundation.URLSessionStreamTask) -> Swift.Void)? {
+    get
+    set
+  }
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  open var streamTaskBetterRouteDiscovered: ((Foundation.URLSession, Foundation.URLSessionStreamTask) -> Swift.Void)? {
+    get
+    set
+  }
+  @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+  open var streamTaskDidBecomeInputAndOutputStreams: ((Foundation.URLSession, Foundation.URLSessionStreamTask, Foundation.InputStream, Foundation.OutputStream) -> Swift.Void)? {
+    get
+    set
+  }
+  open subscript(task: Foundation.URLSessionTask) -> PagoApiClient.Request? {
+    get
+    set
+  }
+  @objc override dynamic public init()
+  @objc override dynamic open func responds(to selector: ObjectiveC.Selector) -> Swift.Bool
+  @objc deinit
+}
+extension PagoApiClient.SessionDelegate : Foundation.URLSessionDelegate {
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, didBecomeInvalidWithError error: Swift.Error?)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
+  @objc dynamic open func urlSessionDidFinishEvents(forBackgroundURLSession session: Foundation.URLSession)
+}
+extension PagoApiClient.SessionDelegate : Foundation.URLSessionTaskDelegate {
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, willPerformHTTPRedirection response: Foundation.HTTPURLResponse, newRequest request: Foundation.URLRequest, completionHandler: @escaping (Foundation.URLRequest?) -> Swift.Void)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didReceive challenge: Foundation.URLAuthenticationChallenge, completionHandler: @escaping (Foundation.URLSession.AuthChallengeDisposition, Foundation.URLCredential?) -> Swift.Void)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, needNewBodyStream completionHandler: @escaping (Foundation.InputStream?) -> Swift.Void)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didSendBodyData bytesSent: Swift.Int64, totalBytesSent: Swift.Int64, totalBytesExpectedToSend: Swift.Int64)
+  @available(iOS 10.0, macOS 10.12, tvOS 10.0, *)
+  @objc(URLSession:task:didFinishCollectingMetrics:) dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didFinishCollecting metrics: Foundation.URLSessionTaskMetrics)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, task: Foundation.URLSessionTask, didCompleteWithError error: Swift.Error?)
+}
+extension PagoApiClient.SessionDelegate : Foundation.URLSessionDataDelegate {
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, dataTask: Foundation.URLSessionDataTask, didReceive response: Foundation.URLResponse, completionHandler: @escaping (Foundation.URLSession.ResponseDisposition) -> Swift.Void)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, dataTask: Foundation.URLSessionDataTask, didBecome downloadTask: Foundation.URLSessionDownloadTask)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, dataTask: Foundation.URLSessionDataTask, didReceive data: Foundation.Data)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, dataTask: Foundation.URLSessionDataTask, willCacheResponse proposedResponse: Foundation.CachedURLResponse, completionHandler: @escaping (Foundation.CachedURLResponse?) -> Swift.Void)
+}
+extension PagoApiClient.SessionDelegate : Foundation.URLSessionDownloadDelegate {
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, downloadTask: Foundation.URLSessionDownloadTask, didFinishDownloadingTo location: Foundation.URL)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, downloadTask: Foundation.URLSessionDownloadTask, didWriteData bytesWritten: Swift.Int64, totalBytesWritten: Swift.Int64, totalBytesExpectedToWrite: Swift.Int64)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, downloadTask: Foundation.URLSessionDownloadTask, didResumeAtOffset fileOffset: Swift.Int64, expectedTotalBytes: Swift.Int64)
+}
+@available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+extension PagoApiClient.SessionDelegate : Foundation.URLSessionStreamDelegate {
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, readClosedFor streamTask: Foundation.URLSessionStreamTask)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, writeClosedFor streamTask: Foundation.URLSessionStreamTask)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, betterRouteDiscoveredFor streamTask: Foundation.URLSessionStreamTask)
+  @objc dynamic open func urlSession(_ session: Foundation.URLSession, streamTask: Foundation.URLSessionStreamTask, didBecome inputStream: Foundation.InputStream, outputStream: Foundation.OutputStream)
+}
+public enum PaymentItemType : Swift.String {
+  case invoice, provider, vignette, prepay, insurance, freemium, insuranceTravel
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum MappingType {
+  case fromJSON
+  case toJSON
+  public static func == (a: PagoApiClient.MappingType, b: PagoApiClient.MappingType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class Mapper<N> where N : PagoApiClient.BaseMappable {
+  final public var context: PagoApiClient.MapContext?
+  final public var shouldIncludeNilValues: Swift.Bool
+  public init(context: PagoApiClient.MapContext? = nil, shouldIncludeNilValues: Swift.Bool = false)
+  final public func map(JSONObject: Any?, toObject object: N) -> N
+  final public func map(JSONString: Swift.String, toObject object: N) -> N
+  final public func map(JSON: [Swift.String : Any], toObject object: N) -> N
+  final public func map(JSONString: Swift.String) -> N?
+  final public func map(JSONObject: Any?) -> N?
+  final public func map(JSON: [Swift.String : Any]) -> N?
+  final public func mapArray(JSONString: Swift.String) -> [N]?
+  final public func mapArray(JSONObject: Any?) -> [N]?
+  final public func mapArray(JSONArray: [[Swift.String : Any]]) -> [N]
+  final public func mapDictionary(JSONString: Swift.String) -> [Swift.String : N]?
+  final public func mapDictionary(JSONObject: Any?) -> [Swift.String : N]?
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]]) -> [Swift.String : N]?
+  final public func mapDictionary(JSONObject: Any?, toDictionary dictionary: [Swift.String : N]) -> [Swift.String : N]
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]], toDictionary dictionary: [Swift.String : N]) -> [Swift.String : N]
+  final public func mapDictionaryOfArrays(JSONObject: Any?) -> [Swift.String : [N]]?
+  final public func mapDictionaryOfArrays(JSON: [Swift.String : [[Swift.String : Any]]]) -> [Swift.String : [N]]?
+  final public func mapArrayOfArrays(JSONObject: Any?) -> [[N]]?
+  public static func parseJSONStringIntoDictionary(JSONString: Swift.String) -> [Swift.String : Any]?
+  public static func parseJSONString(JSONString: Swift.String) -> Any?
+  @objc deinit
+}
+extension PagoApiClient.Mapper {
+  final public func map(JSONfile: Swift.String) -> N?
+  final public func mapArray(JSONfile: Swift.String) -> [N]?
+}
+extension PagoApiClient.Mapper {
+  final public func toJSON(_ object: N) -> [Swift.String : Any]
+  final public func toJSONArray(_ array: [N]) -> [[Swift.String : Any]]
+  final public func toJSONDictionary(_ dictionary: [Swift.String : N]) -> [Swift.String : [Swift.String : Any]]
+  final public func toJSONDictionaryOfArrays(_ dictionary: [Swift.String : [N]]) -> [Swift.String : [[Swift.String : Any]]]
+  final public func toJSONString(_ object: N, prettyPrint: Swift.Bool = false) -> Swift.String?
+  final public func toJSONString(_ array: [N], prettyPrint: Swift.Bool = false) -> Swift.String?
+  public static func toJSONString(_ JSONObject: Any, prettyPrint: Swift.Bool) -> Swift.String?
+  public static func toJSONData(_ JSONObject: Any, options: Foundation.JSONSerialization.WritingOptions) -> Foundation.Data?
+}
+extension PagoApiClient.Mapper where N : Swift.Hashable {
+  final public func mapSet(JSONString: Swift.String) -> Swift.Set<N>?
+  final public func mapSet(JSONObject: Any?) -> Swift.Set<N>?
+  final public func mapSet(JSONArray: [[Swift.String : Any]]) -> Swift.Set<N>
+  final public func toJSONSet(_ set: Swift.Set<N>) -> [[Swift.String : Any]]
+  final public func toJSONString(_ set: Swift.Set<N>, prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+public protocol ImmutableMappable : PagoApiClient.BaseMappable {
+  init(map: PagoApiClient.Map) throws
+}
+extension PagoApiClient.ImmutableMappable {
+  public func mapping(map: PagoApiClient.Map)
+  public init(JSONString: Swift.String, context: PagoApiClient.MapContext? = nil) throws
+  public init(JSON: [Swift.String : Any], context: PagoApiClient.MapContext? = nil) throws
+  public init(JSONObject: Any, context: PagoApiClient.MapContext? = nil) throws
+}
+extension PagoApiClient.Map {
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> Transform.Object where Transform : PagoApiClient.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T] where T : Swift.RawRepresentable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> T where T : PagoApiClient.BaseMappable
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [T] where T : PagoApiClient.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Transform.Object] where Transform : PagoApiClient.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Swift.String : T] where T : PagoApiClient.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [Swift.String : Transform.Object] where Transform : PagoApiClient.TransformType
+  final public func value<T>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [[T]] where T : PagoApiClient.BaseMappable
+  final public func value<Transform>(_ key: Swift.String, nested: Swift.Bool? = nil, delimiter: Swift.String = ".", using transform: Transform, file: Swift.StaticString = #file, function: Swift.StaticString = #function, line: Swift.UInt = #line) throws -> [[Transform.Object]] where Transform : PagoApiClient.TransformType
+}
+extension PagoApiClient.Mapper where N : PagoApiClient.ImmutableMappable {
+  final public func map(JSON: [Swift.String : Any]) throws -> N
+  final public func map(JSONString: Swift.String) throws -> N
+  final public func map(JSONObject: Any) throws -> N
+  final public func mapArray(JSONArray: [[Swift.String : Any]]) throws -> [N]
+  final public func mapArray(JSONString: Swift.String) throws -> [N]
+  final public func mapArray(JSONObject: Any) throws -> [N]
+  final public func mapDictionary(JSONString: Swift.String) throws -> [Swift.String : N]
+  final public func mapDictionary(JSONObject: Any?) throws -> [Swift.String : N]
+  final public func mapDictionary(JSON: [Swift.String : [Swift.String : Any]]) throws -> [Swift.String : N]
+  final public func mapDictionaryOfArrays(JSONObject: Any?) throws -> [Swift.String : [N]]
+  final public func mapDictionaryOfArrays(JSON: [Swift.String : [[Swift.String : Any]]]) throws -> [Swift.String : [N]]
+  final public func mapArrayOfArrays(JSONObject: Any?) throws -> [[N]]
+}
+open class HexColorTransform : PagoApiClient.TransformType {
+  public typealias Object = UIKit.UIColor
+  public typealias JSON = Swift.String
+  public init(prefixToJSON: Swift.Bool = false, alphaToJSON: Swift.Bool = false)
+  open func transformFromJSON(_ value: Any?) -> PagoApiClient.HexColorTransform.Object?
+  open func transformToJSON(_ value: PagoApiClient.HexColorTransform.Object?) -> PagoApiClient.HexColorTransform.JSON?
+  @objc deinit
+}
+public enum UrlFormat : Swift.String {
+  case live, test
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension Swift.String {
+  public var safeToLog: Swift.String {
+    get
+  }
+}
+open class CustomDateFormatTransform : PagoApiClient.DateFormatterTransform {
+  public init(formatString: Swift.String)
+  @objc deinit
+}
+extension PagoApiClient.Request {
+  public enum ValidationResult {
+    case success
+    case failure(Swift.Error)
+  }
+}
+extension PagoApiClient.DataRequest {
+  public typealias Validation = (Foundation.URLRequest?, Foundation.HTTPURLResponse, Foundation.Data?) -> PagoApiClient.Request.ValidationResult
+  @discardableResult
+  public func validate(_ validation: @escaping PagoApiClient.DataRequest.Validation) -> Self
+  @discardableResult
+  public func validate<S>(statusCode acceptableStatusCodes: S) -> Self where S : Swift.Sequence, S.Element == Swift.Int
+  @discardableResult
+  public func validate<S>(contentType acceptableContentTypes: S) -> Self where S : Swift.Sequence, S.Element == Swift.String
+  @discardableResult
+  public func validate() -> Self
+}
+extension PagoApiClient.DownloadRequest {
+  public typealias Validation = (_ request: Foundation.URLRequest?, _ response: Foundation.HTTPURLResponse, _ temporaryURL: Foundation.URL?, _ destinationURL: Foundation.URL?) -> PagoApiClient.Request.ValidationResult
+  @discardableResult
+  public func validate(_ validation: @escaping PagoApiClient.DownloadRequest.Validation) -> Self
+  @discardableResult
+  public func validate<S>(statusCode acceptableStatusCodes: S) -> Self where S : Swift.Sequence, S.Element == Swift.Int
+  @discardableResult
+  public func validate<S>(contentType acceptableContentTypes: S) -> Self where S : Swift.Sequence, S.Element == Swift.String
+  @discardableResult
+  public func validate() -> Self
+}
+public enum PaymentStatus : Swift.String {
+  case none, pending, finalized, partially_paid, rejected
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class IntTransform : PagoApiClient.TransformType {
+  public typealias Object = Swift.Int
+  public typealias JSON = Swift.String
+  public init()
+  public func transformFromJSON(_ value: Any?) -> Swift.Int?
+  public func transformToJSON(_ value: Swift.Int?) -> Swift.String?
+  @objc deinit
+}
+public class MilisecondsDateTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.Date
+  public typealias JSON = Swift.Int64
+  public init()
+  public func transformFromJSON(_ value: Any?) -> Foundation.Date?
+  public func transformToJSON(_ value: Foundation.Date?) -> Swift.Int64?
+  @objc deinit
+}
+extension PagoApiClient.DateFormatterTransform {
+  @nonobjc public static let defaultWS: PagoApiClient.DateFormatterTransform
+  @nonobjc public static let defaultCreatedAt: PagoApiClient.DateFormatterTransform
+  @nonobjc public static let dueDate: PagoApiClient.DateFormatterTransform
+}
+public func <- <Transform>(left: inout Transform.Object, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: Transform.Object, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout Transform.Object?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: Transform.Object?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout [Transform.Object], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [Transform.Object], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout [Transform.Object]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [Transform.Object]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout [Swift.String : Transform.Object], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [Swift.String : Transform.Object], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout [Swift.String : Transform.Object]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [Swift.String : Transform.Object]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout Transform.Object, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Transform.Object, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Transform.Object?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Transform.Object?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, [Transform.Object]>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, [Transform.Object]>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Dictionary<Swift.String, [Transform.Object]>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Dictionary<Swift.String, [Transform.Object]>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Array<Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Array<Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout Swift.Array<Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func >>> <Transform>(left: Swift.Array<Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable
+public func <- <Transform>(left: inout [[Transform.Object]], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [[Transform.Object]], right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout [[Transform.Object]]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func >>> <Transform>(left: [[Transform.Object]]?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType
+public func <- <Transform>(left: inout Swift.Set<Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable, Transform.Object : Swift.Hashable
+public func >>> <Transform>(left: Swift.Set<Transform.Object>, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable, Transform.Object : Swift.Hashable
+public func <- <Transform>(left: inout Swift.Set<Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable, Transform.Object : Swift.Hashable
+public func >>> <Transform>(left: Swift.Set<Transform.Object>?, right: (PagoApiClient.Map, Transform)) where Transform : PagoApiClient.TransformType, Transform.Object : PagoApiClient.BaseMappable, Transform.Object : Swift.Hashable
+extension UIKit.UIDevice {
+  @_Concurrency.MainActor(unsafe) public var isSimulator: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var isJailBroken: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func isDebuggerAttached() -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var fullModelName: Swift.String {
+    get
+  }
+}
+public protocol URLConvertible {
+  func asURL() throws -> Foundation.URL
+}
+extension Swift.String : PagoApiClient.URLConvertible {
+  public func asURL() throws -> Foundation.URL
+}
+extension Foundation.URL : PagoApiClient.URLConvertible {
+  public func asURL() throws -> Foundation.URL
+}
+extension Foundation.URLComponents : PagoApiClient.URLConvertible {
+  public func asURL() throws -> Foundation.URL
+}
+public protocol URLRequestConvertible {
+  func asURLRequest() throws -> Foundation.URLRequest
+}
+extension PagoApiClient.URLRequestConvertible {
+  public var urlRequest: Foundation.URLRequest? {
+    get
+  }
+}
+extension Foundation.URLRequest : PagoApiClient.URLRequestConvertible {
+  public func asURLRequest() throws -> Foundation.URLRequest
+}
+extension Foundation.URLRequest {
+  public init(url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod, headers: PagoApiClient.HTTPHeaders? = nil) throws
+}
+@discardableResult
+public func request(_ url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .get, parameters: PagoApiClient.Parameters? = nil, encoding: PagoApiClient.ParameterEncoding = URLEncoding.default, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.DataRequest
+@discardableResult
+public func request(_ urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.DataRequest
+@discardableResult
+public func download(_ url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .get, parameters: PagoApiClient.Parameters? = nil, encoding: PagoApiClient.ParameterEncoding = URLEncoding.default, headers: PagoApiClient.HTTPHeaders? = nil, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+@discardableResult
+public func download(_ urlRequest: PagoApiClient.URLRequestConvertible, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+@discardableResult
+public func download(resumingWith resumeData: Foundation.Data, to destination: PagoApiClient.DownloadRequest.DownloadFileDestination? = nil) -> PagoApiClient.DownloadRequest
+@discardableResult
+public func upload(_ fileURL: Foundation.URL, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+@discardableResult
+public func upload(_ fileURL: Foundation.URL, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+@discardableResult
+public func upload(_ data: Foundation.Data, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+@discardableResult
+public func upload(_ data: Foundation.Data, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+@discardableResult
+public func upload(_ stream: Foundation.InputStream, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil) -> PagoApiClient.UploadRequest
+@discardableResult
+public func upload(_ stream: Foundation.InputStream, with urlRequest: PagoApiClient.URLRequestConvertible) -> PagoApiClient.UploadRequest
+public func upload(multipartFormData: @escaping (PagoApiClient.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, to url: PagoApiClient.URLConvertible, method: PagoApiClient.HTTPMethod = .post, headers: PagoApiClient.HTTPHeaders? = nil, encodingCompletion: ((PagoApiClient.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+public func upload(multipartFormData: @escaping (PagoApiClient.MultipartFormData) -> Swift.Void, usingThreshold encodingMemoryThreshold: Swift.UInt64 = SessionManager.multipartFormDataEncodingMemoryThreshold, with urlRequest: PagoApiClient.URLRequestConvertible, encodingCompletion: ((PagoApiClient.SessionManager.MultipartFormDataEncodingResult) -> Swift.Void)?)
+@available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+@discardableResult
+public func stream(withHostName hostName: Swift.String, port: Swift.Int) -> PagoApiClient.StreamRequest
+@available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
+@discardableResult
+public func stream(with netService: Foundation.NetService) -> PagoApiClient.StreamRequest
+@_hasMissingDesignatedInitializers public class ApiClient {
+  public static let shared: PagoApiClient.ApiClient
+  public var session: PagoApiClient.PagoSession! {
+    get
+    set
+  }
+  final public let webservice: PagoApiClient.Webservice
+  public func resetManager()
+  public func cancelRequests()
+  public func handleSession(_ result: PagoApiClient.Result<PagoApiClient.PagoSession>, completion: (PagoApiClient.Result<()>) -> ())
+  public func runIfSessionIsValid<T>(_ block: @escaping (() -> ()), completionBlock: @escaping (_ response: T?, _ error: Swift.Error?) -> ())
+  public func runIfSessionIsValid<T>(_ block: @escaping (() -> ()), completionBlock: @escaping (PagoApiClient.Result<T>) -> ())
+  public func getValidToken(completion: @escaping (PagoApiClient.PagoJWT?) -> ())
+  @objc deinit
+}
+public struct SaleResponse : PagoApiClient.ImmutableMappable {
+  public let threeDSAcsurl: Swift.String?
+  public var threeDSTrxId: Swift.String?
+  public var deviceFingerprintHTML: Swift.String?
+  public var unmappedErrorCode: Swift.String?
+  public var threeDSHtml: Swift.String?
+  public var mdOrder: Swift.String?
+  public var returnUrl: Swift.String?
+  public init(map: PagoApiClient.Map) throws
+}
+public struct MoneyTransferSaleResponse : PagoApiClient.ImmutableMappable {
+  public let backUrl: Swift.String
+  public let redirectUrl: Swift.String
+  public init(map: PagoApiClient.Map) throws
+}
+open class URLTransform : PagoApiClient.TransformType {
+  public typealias Object = Foundation.URL
+  public typealias JSON = Swift.String
+  public init(shouldEncodeURLString: Swift.Bool = false, allowedCharacterSet: Foundation.CharacterSet = .urlQueryAllowed)
+  open func transformFromJSON(_ value: Any?) -> Foundation.URL?
+  open func transformToJSON(_ value: Foundation.URL?) -> Swift.String?
+  @objc deinit
+}
+open class TransformOf<ObjectType, JSONType> : PagoApiClient.TransformType {
+  public typealias Object = ObjectType
+  public typealias JSON = JSONType
+  public init(fromJSON: @escaping (JSONType?) -> ObjectType?, toJSON: @escaping (ObjectType?) -> JSONType?)
+  open func transformFromJSON(_ value: Any?) -> ObjectType?
+  open func transformToJSON(_ value: ObjectType?) -> JSONType?
+  @objc deinit
+}
+public struct Timeline {
+  public let requestStartTime: CoreFoundation.CFAbsoluteTime
+  public let initialResponseTime: CoreFoundation.CFAbsoluteTime
+  public let requestCompletedTime: CoreFoundation.CFAbsoluteTime
+  public let serializationCompletedTime: CoreFoundation.CFAbsoluteTime
+  public let latency: Foundation.TimeInterval
+  public let requestDuration: Foundation.TimeInterval
+  public let serializationDuration: Foundation.TimeInterval
+  public let totalDuration: Foundation.TimeInterval
+  public init(requestStartTime: CoreFoundation.CFAbsoluteTime = 0.0, initialResponseTime: CoreFoundation.CFAbsoluteTime = 0.0, requestCompletedTime: CoreFoundation.CFAbsoluteTime = 0.0, serializationCompletedTime: CoreFoundation.CFAbsoluteTime = 0.0)
+}
+extension PagoApiClient.Timeline : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension PagoApiClient.Timeline : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class ApiSwitcher {
+  public enum Mode {
+    case stage, live, preLive, custom(Swift.String, PagoApiClient.UrlFormat)
+    public var baseHost: Swift.String {
+      get
+    }
+    public var api: Swift.String {
+      get
+    }
+    public var name: Swift.String {
+      get
+    }
+  }
+  public static var mode: PagoApiClient.ApiSwitcher.Mode {
+    get
+    set
+  }
+  @objc deinit
+}
+public protocol BaseMappable {
+  mutating func mapping(map: PagoApiClient.Map)
+}
+public protocol Mappable : PagoApiClient.BaseMappable {
+  init?(map: PagoApiClient.Map)
+}
+public protocol StaticMappable : PagoApiClient.BaseMappable {
+  static func objectForMapping(map: PagoApiClient.Map) -> PagoApiClient.BaseMappable?
+}
+extension PagoApiClient.BaseMappable {
+  public init?(JSONString: Swift.String, context: PagoApiClient.MapContext? = nil)
+  public init?(JSON: [Swift.String : Any], context: PagoApiClient.MapContext? = nil)
+  public func toJSON() -> [Swift.String : Any]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+extension Swift.Array where Element : PagoApiClient.BaseMappable {
+  public init?(JSONString: Swift.String, context: PagoApiClient.MapContext? = nil)
+  public init(JSONArray: [[Swift.String : Any]], context: PagoApiClient.MapContext? = nil)
+  public func toJSON() -> [[Swift.String : Any]]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+extension Swift.Set where Element : PagoApiClient.BaseMappable {
+  public init?(JSONString: Swift.String, context: PagoApiClient.MapContext? = nil)
+  public init?(JSONArray: [[Swift.String : Any]], context: PagoApiClient.MapContext? = nil)
+  public func toJSON() -> [[Swift.String : Any]]
+  public func toJSONString(prettyPrint: Swift.Bool = false) -> Swift.String?
+}
+open class MultipartFormData {
+  open var contentType: Swift.String {
+    get
+    set
+  }
+  public var contentLength: Swift.UInt64 {
+    get
+  }
+  final public let boundary: Swift.String
+  public init()
+  public func append(_ data: Foundation.Data, withName name: Swift.String)
+  public func append(_ data: Foundation.Data, withName name: Swift.String, mimeType: Swift.String)
+  public func append(_ data: Foundation.Data, withName name: Swift.String, fileName: Swift.String, mimeType: Swift.String)
+  public func append(_ fileURL: Foundation.URL, withName name: Swift.String)
+  public func append(_ fileURL: Foundation.URL, withName name: Swift.String, fileName: Swift.String, mimeType: Swift.String)
+  public func append(_ stream: Foundation.InputStream, withLength length: Swift.UInt64, name: Swift.String, fileName: Swift.String, mimeType: Swift.String)
+  public func append(_ stream: Foundation.InputStream, withLength length: Swift.UInt64, headers: PagoApiClient.HTTPHeaders)
+  public func encode() throws -> Foundation.Data
+  public func writeEncodedData(to fileURL: Foundation.URL) throws
+  @objc deinit
+}
+public func <- <T>(left: inout T, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: T, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout T?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: T?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [T], right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [T], right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [T]?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [T]?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [Swift.String : T], right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [Swift.String : T], right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func <- <T>(left: inout [Swift.String : T]?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public func >>> <T>(left: [Swift.String : T]?, right: PagoApiClient.Map) where T : Swift.RawRepresentable
+public protocol BaseNetwork {
+  var baseURL: Swift.String { get }
+}
+extension Foundation.NSNotification.Name {
+  public struct Task {
+    public static let DidResume: Foundation.Notification.Name
+    public static let DidSuspend: Foundation.Notification.Name
+    public static let DidCancel: Foundation.Notification.Name
+    public static let DidComplete: Foundation.Notification.Name
+  }
+}
+extension Foundation.Notification {
+  public struct Key {
+    public static let Task: Swift.String
+    public static let ResponseData: Swift.String
+  }
+}
+@_hasMissingDesignatedInitializers public class DeviceTokenManager {
+  public static let sharedManager: PagoApiClient.DeviceTokenManager
+  public var deviceToken: Swift.String? {
+    get
+    set(value)
+  }
+  public func clearDeviceToken()
+  public func clear()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class SharedConstants : ObjectiveC.NSObject {
+  public static let kTestDataKey: Swift.String
+  public static let NotifcationsTokenKey: Swift.String
+  public static let ReloadInvoicesKey: Swift.String
+  public static let LocationDataUpdatedKey: Swift.String
+  public static let HistoryFilterKey: Swift.String
+  public static let TermsAndConditionsUrl: Swift.String
+  public static let AccountsSynced: Swift.String
+  public static let authPath: Swift.String
+  public static let LogoutNotificationKey: Swift.String
+  @objc public static let remainingAttempts: Swift.String
+  public static let scannedBillsMagicString: Swift.String
+  public static let scanSaveReleaseDate: Swift.String
+  public struct Texts {
+    public static let configure: Swift.String
+    public static let scan: Swift.String
+  }
+  public static let AccountSyncTakingTooLongKey: Swift.String
+  public static let maxFilterAmount: Swift.Int
+  public static let minFilterAmount: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol Prioritizable {
+  var priority: Swift.Int { get }
+}
+open class SyncronizedPriorityQueue<Job> where Job : PagoApiClient.Prioritizable {
+  open func enqueue(job: Job)
+  open func remove(matching: (Job) -> Swift.Bool)
+  open func deque() -> Job?
+  public init(_ jobs: [Job])
+  public init()
+  open func contents() -> Swift.String
+  @objc deinit
+}
+public class DownloadQueue {
+  public var ongoing: Swift.Set<PagoApiClient.Download>
+  final public let priorityQueue: PagoApiClient.SyncronizedPriorityQueue<PagoApiClient.Download>
+  final public let webservice: PagoApiClient.Webservice
+  public static let shared: PagoApiClient.DownloadQueue
+  public init(_ webservice: PagoApiClient.Webservice)
+  public func enqueue(download: PagoApiClient.Download)
+  public func cancel(download: PagoApiClient.Download)
+  public func startNext()
+  final public let fileManager: Foundation.FileManager
+  public func handleCompleted(download: PagoApiClient.Download, data: Foundation.Data)
+  public func handleFailed(download: PagoApiClient.Download, error: Swift.Error?)
+  @objc deinit
+}
+extension Foundation.FileManager {
+  public func save(data: Foundation.Data, path: Swift.String)
+  public func directoryExists(path: Swift.String) -> Swift.Bool
+  public func fileExists(at url: Foundation.URL) -> Swift.Bool
+}
+postfix operator >?
+postfix public func >? (obj: Any) -> Swift.String?
+postfix public func >? (obj: Any?) -> Swift.String?
+postfix operator >>?
+postfix public func >>? (obj: Any) -> Swift.Int?
+postfix public func >>? (obj: Any?) -> Swift.Int?
+postfix operator >>>?
+postfix public func >>>? (obj: Any) -> Swift.Double?
+postfix public func >>>? (obj: Any?) -> Swift.Double?
+public func unwrap<T, U, V, W>(_ t: (T?, U?, V?, W?)) -> (T, U, V, W)?
+public func unwrap<T, U, V>(_ t: (T?, U?, V?)) -> (T, U, V)?
+public func unwrap<T, U>(_ t: (T?, U?)) -> (T, U)?
+public class PagoSession {
+  public var refreshToken: PagoApiClient.PagoJWT
+  public var accessToken: PagoApiClient.PagoJWT
+  public var anonymous: Swift.Bool {
+    get
+  }
+  public init(accessToken: PagoApiClient.PagoJWT, refreshToken: PagoApiClient.PagoJWT)
+  @objc deinit
+}
+extension PagoApiClient.PagoSession : Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public typealias JSONDictionary = [Swift.String : Any]
+public typealias JSONArray = [Swift.AnyObject]
+public enum AuthenticationType {
+  case none, auto, basic, oauthSession(PagoApiClient.PagoSession)
+}
+extension PagoApiClient.Webservice {
+  public struct Keys {
+  }
+  public var session: PagoApiClient.PagoSession! {
+    get
+    set
+  }
+  public var sharedSession: PagoApiClient.PagoSession? {
+    get
+    set
+  }
+}
+@objc @_inheritsConvenienceInitializers public class ErrorCodes : ObjectiveC.NSObject {
+  @objc public static let InvalidPin: Swift.Int
+  @objc public static let ExceededNumberOfRetries: Swift.Int
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension PagoApiClient.Webservice {
+  public var sessionAuthType: PagoApiClient.AuthenticationType {
+    get
+  }
+}
+open class Webservice {
+  public func resetManager()
+  public init()
+  public var logRequests: Swift.Bool
+  public func shouldFilterRequestBody(url: Swift.String) -> Swift.Bool
+  public func filetrRequestBody(url: Swift.String, requestBody: Swift.String) -> Swift.String
+  public func shouldFilterResponse(url: Swift.String) -> Swift.Bool
+  public func filterResponses(url: Swift.String) -> Swift.String
+  public func load<T>(_ resource: PagoApiClient.Resource<T>, completion: @escaping (PagoApiClient.Result<T>) -> ())
+  public func load<T>(_ resource: PagoApiClient.Resource<T>, completion: @escaping (PagoApiClient.Result<T>, Swift.Int) -> ())
+  @objc deinit
+}
+public protocol MapContext {
+}
+final public class Map {
+  final public let mappingType: PagoApiClient.MappingType
+  final public var JSON: [Swift.String : Any] {
+    get
+  }
+  final public var isKeyPresent: Swift.Bool {
+    get
+  }
+  final public var currentValue: Any? {
+    get
+  }
+  final public var currentKey: Swift.String? {
+    get
+  }
+  final public var nestedKeyDelimiter: Swift.String {
+    get
+  }
+  final public var context: PagoApiClient.MapContext?
+  final public var shouldIncludeNilValues: Swift.Bool
+  final public let toObject: Swift.Bool
+  public init(mappingType: PagoApiClient.MappingType, JSON: [Swift.String : Any], toObject: Swift.Bool = false, context: PagoApiClient.MapContext? = nil, shouldIncludeNilValues: Swift.Bool = false)
+  final public subscript(key: Swift.String) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, delimiter delimiter: Swift.String) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool, delimiter delimiter: Swift.String) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, delimiter delimiter: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool, ignoreNil ignoreNil: Swift.Bool) -> PagoApiClient.Map {
+    get
+  }
+  final public subscript(key: Swift.String, nested nested: Swift.Bool?, delimiter delimiter: Swift.String, ignoreNil ignoreNil: Swift.Bool) -> PagoApiClient.Map {
+    get
+  }
+  final public func value<T>() -> T?
+  @objc deinit
+}
+public protocol DataResponseSerializerProtocol {
+  associatedtype SerializedObject
+  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PagoApiClient.Result<Self.SerializedObject> { get }
+}
+public struct DataResponseSerializer<Value> : PagoApiClient.DataResponseSerializerProtocol {
+  public typealias SerializedObject = Value
+  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PagoApiClient.Result<Value>
+  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.Data?, Swift.Error?) -> PagoApiClient.Result<Value>)
+}
+public protocol DownloadResponseSerializerProtocol {
+  associatedtype SerializedObject
+  var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PagoApiClient.Result<Self.SerializedObject> { get }
+}
+public struct DownloadResponseSerializer<Value> : PagoApiClient.DownloadResponseSerializerProtocol {
+  public typealias SerializedObject = Value
+  public var serializeResponse: (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PagoApiClient.Result<Value>
+  public init(serializeResponse: @escaping (Foundation.URLRequest?, Foundation.HTTPURLResponse?, Foundation.URL?, Swift.Error?) -> PagoApiClient.Result<Value>)
+}
+extension PagoApiClient.DataRequest {
+  @discardableResult
+  public func response(queue: Dispatch.DispatchQueue? = nil, completionHandler: @escaping (PagoApiClient.DefaultDataResponse) -> Swift.Void) -> Self
+  @discardableResult
+  public func response<T>(queue: Dispatch.DispatchQueue? = nil, responseSerializer: T, completionHandler: @escaping (PagoApiClient.DataResponse<T.SerializedObject>) -> Swift.Void) -> Self where T : PagoApiClient.DataResponseSerializerProtocol
+}
+extension PagoApiClient.DownloadRequest {
+  @discardableResult
+  public func response(queue: Dispatch.DispatchQueue? = nil, completionHandler: @escaping (PagoApiClient.DefaultDownloadResponse) -> Swift.Void) -> Self
+  @discardableResult
+  public func response<T>(queue: Dispatch.DispatchQueue? = nil, responseSerializer: T, completionHandler: @escaping (PagoApiClient.DownloadResponse<T.SerializedObject>) -> Swift.Void) -> Self where T : PagoApiClient.DownloadResponseSerializerProtocol
+}
+extension PagoApiClient.Request {
+  public static func serializeResponseData(response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PagoApiClient.Result<Foundation.Data>
+}
+extension PagoApiClient.DataRequest {
+  public static func dataResponseSerializer() -> PagoApiClient.DataResponseSerializer<Foundation.Data>
+  @discardableResult
+  public func responseData(queue: Dispatch.DispatchQueue? = nil, completionHandler: @escaping (PagoApiClient.DataResponse<Foundation.Data>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.DownloadRequest {
+  public static func dataResponseSerializer() -> PagoApiClient.DownloadResponseSerializer<Foundation.Data>
+  @discardableResult
+  public func responseData(queue: Dispatch.DispatchQueue? = nil, completionHandler: @escaping (PagoApiClient.DownloadResponse<Foundation.Data>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.Request {
+  public static func serializeResponseString(encoding: Swift.String.Encoding?, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PagoApiClient.Result<Swift.String>
+}
+extension PagoApiClient.DataRequest {
+  public static func stringResponseSerializer(encoding: Swift.String.Encoding? = nil) -> PagoApiClient.DataResponseSerializer<Swift.String>
+  @discardableResult
+  public func responseString(queue: Dispatch.DispatchQueue? = nil, encoding: Swift.String.Encoding? = nil, completionHandler: @escaping (PagoApiClient.DataResponse<Swift.String>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.DownloadRequest {
+  public static func stringResponseSerializer(encoding: Swift.String.Encoding? = nil) -> PagoApiClient.DownloadResponseSerializer<Swift.String>
+  @discardableResult
+  public func responseString(queue: Dispatch.DispatchQueue? = nil, encoding: Swift.String.Encoding? = nil, completionHandler: @escaping (PagoApiClient.DownloadResponse<Swift.String>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.Request {
+  public static func serializeResponseJSON(options: Foundation.JSONSerialization.ReadingOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PagoApiClient.Result<Any>
+}
+extension PagoApiClient.DataRequest {
+  public static func jsonResponseSerializer(options: Foundation.JSONSerialization.ReadingOptions = .allowFragments) -> PagoApiClient.DataResponseSerializer<Any>
+  @discardableResult
+  public func responseJSON(queue: Dispatch.DispatchQueue? = nil, options: Foundation.JSONSerialization.ReadingOptions = .allowFragments, completionHandler: @escaping (PagoApiClient.DataResponse<Any>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.DownloadRequest {
+  public static func jsonResponseSerializer(options: Foundation.JSONSerialization.ReadingOptions = .allowFragments) -> PagoApiClient.DownloadResponseSerializer<Any>
+  @discardableResult
+  public func responseJSON(queue: Dispatch.DispatchQueue? = nil, options: Foundation.JSONSerialization.ReadingOptions = .allowFragments, completionHandler: @escaping (PagoApiClient.DownloadResponse<Any>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.Request {
+  public static func serializeResponsePropertyList(options: Foundation.PropertyListSerialization.ReadOptions, response: Foundation.HTTPURLResponse?, data: Foundation.Data?, error: Swift.Error?) -> PagoApiClient.Result<Any>
+}
+extension PagoApiClient.DataRequest {
+  public static func propertyListResponseSerializer(options: Foundation.PropertyListSerialization.ReadOptions = []) -> PagoApiClient.DataResponseSerializer<Any>
+  @discardableResult
+  public func responsePropertyList(queue: Dispatch.DispatchQueue? = nil, options: Foundation.PropertyListSerialization.ReadOptions = [], completionHandler: @escaping (PagoApiClient.DataResponse<Any>) -> Swift.Void) -> Self
+}
+extension PagoApiClient.DownloadRequest {
+  public static func propertyListResponseSerializer(options: Foundation.PropertyListSerialization.ReadOptions = []) -> PagoApiClient.DownloadResponseSerializer<Any>
+  @discardableResult
+  public func responsePropertyList(queue: Dispatch.DispatchQueue? = nil, options: Foundation.PropertyListSerialization.ReadOptions = [], completionHandler: @escaping (PagoApiClient.DownloadResponse<Any>) -> Swift.Void) -> Self
+}
+public struct PagoJWT {
+}
+extension PagoApiClient.Target : Swift.Equatable {}
+extension PagoApiClient.Target : Swift.Hashable {}
+extension PagoApiClient.HTTPMethod : Swift.Equatable {}
+extension PagoApiClient.HTTPMethod : Swift.Hashable {}
+extension PagoApiClient.HTTPMethod : Swift.RawRepresentable {}
+extension PagoApiClient.URLEncoding.Destination : Swift.Equatable {}
+extension PagoApiClient.URLEncoding.Destination : Swift.Hashable {}
+extension PagoApiClient.URLEncoding.ArrayEncoding : Swift.Equatable {}
+extension PagoApiClient.URLEncoding.ArrayEncoding : Swift.Hashable {}
+extension PagoApiClient.URLEncoding.BoolEncoding : Swift.Equatable {}
+extension PagoApiClient.URLEncoding.BoolEncoding : Swift.Hashable {}
+extension PagoApiClient.CountryPickerMode : Swift.Equatable {}
+extension PagoApiClient.CountryPickerMode : Swift.Hashable {}
+extension PagoApiClient.LanguageCode : Swift.Equatable {}
+extension PagoApiClient.LanguageCode : Swift.Hashable {}
+extension PagoApiClient.LanguageCode : Swift.RawRepresentable {}
+extension PagoApiClient.NetworkReachabilityManager.ConnectionType : Swift.Equatable {}
+extension PagoApiClient.NetworkReachabilityManager.ConnectionType : Swift.Hashable {}
+extension PagoApiClient.CardUsage : Swift.Equatable {}
+extension PagoApiClient.CardUsage : Swift.Hashable {}
+extension PagoApiClient.CardUsage : Swift.RawRepresentable {}
+extension PagoApiClient.PaymentItemType : Swift.Equatable {}
+extension PagoApiClient.PaymentItemType : Swift.Hashable {}
+extension PagoApiClient.PaymentItemType : Swift.RawRepresentable {}
+extension PagoApiClient.MappingType : Swift.Equatable {}
+extension PagoApiClient.MappingType : Swift.Hashable {}
+extension PagoApiClient.UrlFormat : Swift.Equatable {}
+extension PagoApiClient.UrlFormat : Swift.Hashable {}
+extension PagoApiClient.UrlFormat : Swift.RawRepresentable {}
+extension PagoApiClient.PaymentStatus : Swift.Equatable {}
+extension PagoApiClient.PaymentStatus : Swift.Hashable {}
+extension PagoApiClient.PaymentStatus : Swift.RawRepresentable {}
