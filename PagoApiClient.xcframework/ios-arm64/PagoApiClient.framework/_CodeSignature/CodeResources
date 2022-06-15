@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		gOBU3QeEtzeJmkeum/n/y/37pLQ=
+		CchW4CsertvVjLecAGe3ePvZdWs=
 		</data>
 		<key>Jenkinsfile</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Modules/PagoApiClient.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		ElFoXpQao/K/9EtRvXI3eXPUCV0=
+		SbwMDl7u6vOgmZv/BFmMeSQobA8=
 		</data>
 		<key>Modules/PagoApiClient.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		avL1kPV8Fuq/NxiUlE2sdpw6N7Q=
+		EC96k2qrbJrjlf76/+0lfNnnGxg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -143,14 +143,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0St6PHCcEK4wwxjsZEiLZbW/y5itUp7ml/sOqMXTb7E=
+			GJi1s8BbLGo4QG1lQtnQkFqc58a51g03x9M58hG3zdM=
 			</data>
 		</dict>
 		<key>Modules/PagoApiClient.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jBb2/Pvb63EJ/NIGwpFhx35AoV9t761jLoUaBXTYs1U=
+			5JHczK8CJHDKF1otNJ/6jCuF+tCaEtV5W21ZPzu4Gi0=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

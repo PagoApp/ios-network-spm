@@ -1502,13 +1502,18 @@ public func stream(withHostName hostName: Swift.String, port: Swift.Int) -> Pago
 @available(iOS 9.0, macOS 10.11, tvOS 9.0, *)
 @discardableResult
 public func stream(with netService: Foundation.NetService) -> PagoApiClient.StreamRequest
-@_hasMissingDesignatedInitializers open class ApiClient {
+public protocol ApiClientDelegate : AnyObject {
+  func tokenExpired(completion: (Swift.String) -> ())
+}
+@_hasMissingDesignatedInitializers public class ApiClient {
+  weak public var delegate: PagoApiClient.ApiClientDelegate?
   public static let shared: PagoApiClient.ApiClient
   public var session: PagoApiClient.PagoSession! {
     get
     set
   }
-  final public let webservice: PagoApiClient.Webservice
+  public var webservice: PagoApiClient.Webservice
+  public func setupSDK(accessToken: Swift.String)
   public func resetManager()
   public func cancelRequests()
   public func handleSession(_ result: PagoApiClient.Result<PagoApiClient.PagoSession>, completion: (PagoApiClient.Result<()>) -> ())
@@ -1786,9 +1791,8 @@ extension PagoApiClient.Webservice {
     get
   }
 }
-open class Webservice {
+@_hasMissingDesignatedInitializers open class Webservice {
   public func resetManager()
-  public init()
   public var logRequests: Swift.Bool
   public func shouldFilterRequestBody(url: Swift.String) -> Swift.Bool
   public func filetrRequestBody(url: Swift.String, requestBody: Swift.String) -> Swift.String
