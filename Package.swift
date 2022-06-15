@@ -21,7 +21,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .binaryTarget(
             name: "PagoApiClient",
-            path: "PagoApiClient.xcframework"),
+            url: "https://github.com/PagoApp/ios-network-spm/releases/download/0.0.1/PagoApiClient.xcframework.zip",
+            checksum: "752c0a6d0327673ce19ea76f1a9c86e97a2e885e32c91f0a9000fb4d45b39e91"
+        ),
         .target(
             name: "PagoNetworkSPM",
             dependencies: [
