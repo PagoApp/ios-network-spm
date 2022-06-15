@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<testsuites name='PagoApiClientTests.xctest' tests='2' failures='0'>
-  <testsuite name='PagoApiClientTests.PagoApiClientTests' tests='2' failures='0'>
-    <testcase classname='PagoApiClientTests.PagoApiClientTests' name='testExample' time='0.001'/>
-    <testcase classname='PagoApiClientTests.PagoApiClientTests' name='testPerformanceExample' time='0.279'/>
-  </testsuite>
-</testsuites>
