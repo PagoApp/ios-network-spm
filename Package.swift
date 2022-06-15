@@ -34,5 +34,6 @@ let package = Package(
         .testTarget(
             name: "PagoNetworkSPMTests",
             dependencies: ["PagoNetworkSPM"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v4_2]
 )
